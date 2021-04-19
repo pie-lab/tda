@@ -1,14 +1,14 @@
-name: Data Analysis I
+name: Trait Descriptive Adjectives
 output_dir: "."
 navbar:
-  title: "PSY 611"
+  title: "TDA"
   left:
-    - text: Syllabus
-      href: schedule.html
+    - text: TDA Difficulty
+      href: tda-difficulty.html
 
   right:
     - icon: fa-github
-      href: https://github.com/uopsych/psy611
+      href: https://github.com/pie-lab/tda
 output:
   html_document:
     lib_dir: site_libs

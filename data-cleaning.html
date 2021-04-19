@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Cleaning and summarizing</title>
+
+<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">TDA</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="tda-difficulty.html">TDA Difficulty</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/pie-lab/tda">
+    <span class="fas fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Cleaning and summarizing</h1>
+<h4 class="date">Last updated 2021-04-19</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#load-data-and-packages">Load data and packages</a>
+<ul>
+<li><a href="#qualtrics-survey-responses">Qualtrics survey responses</a></li>
+<li><a href="#filter-participants">Filter participants</a></li>
+<li><a href="#scoring-keys">Scoring keys</a></li>
+</ul></li>
+<li><a href="#score-data-new">Score data new</a></li>
+<li><a href="#calculate-item-means">Calculate item means</a></li>
+<li><a href="#distractor-index">Distractor index</a></li>
+</ul>
+</div>
+
+<div id="load-data-and-packages" class="section level1">
+<h1>Load data and packages</h1>
+<pre class="r"><code>library(here) # for engaging with working environment
+library(rio) # for importing excel files
+library(tidyverse) # for data cleaning and manipulation
+library(psych) # for scoring multiple choice items
+library(DT) # for viewing data tables</code></pre>
+<div id="qualtrics-survey-responses" class="section level2">
+<h2>Qualtrics survey responses</h2>
+<p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a “names” data frame and then data starting at row 4, for the raw data.</p>
+<pre class="r"><code># read in form A (Prolific)
+formA_names = read_csv(
+  here(&quot;data/Form+A_Prolific_April+2,+2021_15.27.csv&quot;))
+
+formA = read_csv(
+  here(&quot;data/Form+A_Prolific_April+2,+2021_15.27.csv&quot;), 
+  col_names = F, skip = 3)
+
+names(formA) = names(formA_names)
+rm(formA_names)
+
+# read in form A (MTurk)
+formA_names = read_csv(
+  here(&quot;data/Form A_April 2, 2021_15.41.numeric.csv&quot;))
+
+formA2 = read_csv(
+  here(&quot;data/Form A_April 2, 2021_15.41.numeric.csv&quot;), 
+  col_names = F, skip = 3)
+
+names(formA2) = names(formA_names)
+rm(formA_names)
+
+formA = full_join(formA, formA2)
+rm(formA2)
+
+# read in form B (Prolific)
+formB_names = read_csv(
+  here(&quot;data/Form+B_Prolific_April+2,+2021_15.27.csv&quot;))
+
+formB = read_csv(
+  here(&quot;data/Form+B_Prolific_April+2,+2021_15.27.csv&quot;), 
+  col_names = F, skip = 3)
+
+names(formB) = names(formB_names)
+rm(formB_names)
+
+
+# read in form B (MTurk)
+formB_names = read_csv(
+  here(&quot;data/Form B_April 2, 2021_15.44.numeric.csv&quot;))
+
+formB2 = read_csv(
+  here(&quot;data/Form B_April 2, 2021_15.44.numeric.csv&quot;), 
+  col_names = F, skip = 3)
+
+names(formB2) = names(formB_names)
+rm(formB_names)
+
+formB = full_join(formB, formB2)
+rm(formB2)
+
+# read in form C (Prolific)
+formC_names = read_csv(
+  here(&quot;data/Form+C_April+16,+2021_17.21.csv&quot;))
+
+formC = read_csv(
+  here(&quot;data/Form+C_April+16,+2021_17.21.csv&quot;), 
+  col_names = F, skip = 3)
+
+names(formC) = names(formC_names)
+rm(formC_names)</code></pre>
+<p>In forms A and B, variable names composed solely of numbers (e.g., 20001) refer to the specific variable number as included in the dictionary. These must be prefaced by <code>q_</code> for readability.</p>
+<pre class="r"><code>names(formA) = str_replace(names(formA), # look in this vector of strings
+                           &quot;(^)([0-9]*$)&quot;, #match two parts. part 1: beginning of string, second part: digits 0 or more times and then the string ends
+                           &quot;q_\\2&quot;) # replace with q_ followed by the second part of the match
+
+names(formB) = str_replace(names(formB), 
+                           &quot;(^)([0-9]*$)&quot;, 
+                           &quot;q_\\2&quot;) 
+
+names(formC) = str_replace(names(formC), 
+                           &quot;^Q&quot;, 
+                           &quot;q_&quot;) </code></pre>
+</div>
+<div id="filter-participants" class="section level2">
+<h2>Filter participants</h2>
+<p>Remove participants without valid Prolific or MTurk IDs.</p>
+<pre class="r"><code>formA = formA %&gt;%
+  filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) &gt; 3)
+formB = formB %&gt;%
+  filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) &gt; 3)
+formC = formC %&gt;%
+  filter(str_length(PROLIFIC_PID) &gt; 3)</code></pre>
+<p>Remove participants who don’t speak English fluently.</p>
+<pre class="r"><code>formA = filter(formA, english &lt; 3)
+
+formB = filter(formB, english &lt; 3)
+
+formC = filter(formC, english &lt; 3)</code></pre>
+<p>Remove participants who grew up outside the US.</p>
+<pre class="r"><code>formA = filter(formA, growup == 1 )
+formB = filter(formB, growup == 1 )
+formC = filter(formC, growup == 1 )</code></pre>
+<p>Remove participants currently living outside the US.</p>
+<pre class="r"><code>formA = filter(formA, live == 1 )
+formB = filter(formB, live == 1 )
+formC = filter(formC, live == 1 )</code></pre>
+</div>
+<div id="scoring-keys" class="section level2">
+<h2>Scoring keys</h2>
+<pre class="r"><code>keyA = read_csv(here(&quot;keys/key_A.csv&quot;))
+keyB = read_csv(here(&quot;keys/key_B.csv&quot;))
+keyC = import(here(&quot;keys/key_C.xlsx&quot;), sheet = 1)</code></pre>
+<p>Variable names composed solely of numbers (e.g., 1) refer to the response choice number as presented to participants. These must be prefaced by <code>R_</code> for readability.</p>
+<pre class="r"><code>names(keyA) = str_replace(names(keyA), 
+                           &quot;(^)([0-9]{1}$)&quot;, 
+                           &quot;R_\\2&quot;) 
+
+names(keyB) = str_replace(names(keyB), 
+                           &quot;(^)([0-9]{1}$)&quot;, 
+                           &quot;R_\\2&quot;) 
+
+names(keyC) = str_replace(names(keyC), 
+                           &quot;(^)([0-9]{1}$)&quot;, 
+                           &quot;R_\\2&quot;) 
+keyC = rename(keyC, X1 = .)</code></pre>
+<p>The <code>Key</code> column indicates the position of the correct response. We create a key vector that contains the value of the correct response, not the position.</p>
+<pre class="r"><code>create_key = function(keydf){
+  # select only response variables and concatonate by row into vectors
+  keydf$response_vector = keydf %&gt;%
+    select(starts_with(&quot;R&quot;)) %&gt;%
+    pmap(~c(..1, ..2, ..3, ..4, ..5, ..6))
+
+  # map across response vectors and key positions to pull out correct answer
+  keydf = keydf %&gt;%
+    mutate(answer = map2_chr(response_vector, Key,
+                         ~.x[.y]))
+  return(keydf)
+}
+
+keyA = create_key(keyA) %&gt;%
+  mutate(form = &quot;A&quot;)
+keyB = create_key(keyB) %&gt;%
+  mutate(form = &quot;B&quot;)
+keyC = create_key(keyC) %&gt;%
+  group_by(Stimulus) %&gt;%
+  mutate(form = ifelse(row_number() == 1, &quot;C&quot;, &quot;D&quot;)) %&gt;%
+  ungroup()</code></pre>
+<p>Merge keys together.</p>
+<pre class="r"><code>masterKey = keyA %&gt;%
+  full_join(keyB) %&gt;%
+  full_join(keyC) %&gt;%
+  select(X1:Key, answer, form) %&gt;%
+  rename(item = X1)</code></pre>
+</div>
+</div>
+<div id="score-data-new" class="section level1">
+<h1>Score data new</h1>
+<p>First, we merge all raw datasets.</p>
+<pre class="r"><code>all_data = formA %&gt;%
+  full_join(formB) %&gt;%
+  full_join(formC)</code></pre>
+<pre class="r"><code>alldata_scored = score.multiple.choice(
+  key = masterKey$Key, 
+  data = all_data[, masterKey$item], 
+  score = FALSE)</code></pre>
+<p>Remove items which were mistakes (see key_C, sheet entitled linking C to A and B.)</p>
+<pre class="r"><code>remove_items = c(
+    &quot;q_21148&quot;,
+    &quot;q_22573&quot;,
+    &quot;q_22496&quot;,
+    &quot;q_20052&quot;,
+    &quot;q_21409&quot;,
+    &quot;q_22068&quot;,
+    &quot;q_22169&quot;,
+    &quot;q_21911&quot;,
+    &quot;q_21185&quot;,
+    &quot;q_21288&quot;,
+    &quot;q_20790&quot;,
+    &quot;q_20033&quot;,
+    &quot;q_24285&quot;,
+    &quot;q_23402&quot;,
+    &quot;q_24824&quot;,
+    &quot;q_23044&quot;,
+    &quot;q_25399&quot;,
+    &quot;q_23847&quot;,
+    &quot;q_23990&quot;,
+    &quot;q_23485&quot;,
+    &quot;q_24709&quot;,
+    &quot;q_23602&quot;,
+    &quot;q_24676&quot;,
+    &quot;q_25281&quot;,
+    &quot;q_23456&quot;)
+
+remove_which = which(masterKey$item %in% remove_items)
+
+alldata_scored = alldata_scored[, -remove_which]
+masterKey = filter(masterKey, !(item %in% remove_items))
+all_data = select(all_data, -all_of(remove_items))</code></pre>
+</div>
+<div id="calculate-item-means" class="section level1">
+<h1>Calculate item means</h1>
+<pre class="r"><code>alldata_means = colMeans(alldata_scored, na.rm = T)
+
+all_item_means = data.frame(
+  item = masterKey$item,
+  prop_correct = alldata_means
+)
+
+item_prop = masterKey %&gt;%
+  select(item, answer, Stimulus:R_6, form) %&gt;%
+  full_join(all_item_means) %&gt;%
+  mutate(prop_correct = round(prop_correct, 2)) 
+
+# number of administrations
+count_valid = function(x){
+  n = length(which(!is.na(x)))
+  return(n)
+}</code></pre>
+<p>Count number of assessments for each item.</p>
+<pre class="r"><code>item_prop$N = apply(alldata_scored, 2, count_valid)</code></pre>
+</div>
+<div id="distractor-index" class="section level1">
+<h1>Distractor index</h1>
+<pre class="r"><code>distract = all_data %&gt;%
+  select(starts_with(&quot;q_&quot;)) %&gt;%
+  gather(&quot;item&quot;, &quot;response&quot;) %&gt;%
+  filter(!is.na(response)) %&gt;%
+  full_join(select(masterKey, item, Key))
+
+distract = distract %&gt;%
+  mutate(response = ifelse(response == Key, NA, response))
+
+distract = distract %&gt;%
+  group_by(item, response) %&gt;%
+  count() %&gt;%
+  group_by(item) %&gt;%
+  mutate(total_n = sum(n)) %&gt;%
+  filter(!is.na(response)) %&gt;%
+  mutate(wrong_n = sum(n),
+         prop_total = n/total_n,
+         prop_wrong = n/wrong_n) %&gt;%
+  filter(response &lt; 7) %&gt;%
+  summarise(prop_total = max(prop_total),
+            prop_wrong = max(prop_wrong),
+            n_wrong = max(wrong_n)) 
+
+item_prop = item_prop %&gt;%
+  full_join(distract) 
+
+item_prop = item_prop %&gt;%
+  mutate(across(where(is.double), round, 2)) 
+
+
+save(item_prop, file = here(&quot;data/item_prop.Rdata&quot;))</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

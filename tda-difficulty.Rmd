@@ -1,0 +1,39 @@
+---
+title: "TDA Difficulty"
+date: "Last updated `r Sys.Date()`"
+output: 
+  html_document:
+    toc: TRUE
+---
+
+
+```{r, include = F}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+```
+
+```{r}
+library(here) # for engaging with working environment
+library(tidyverse) # for data cleaning and manipulation
+library(Hmisc) # for weighted means
+library(DT) # for viewing data tables
+
+load(here("data/item_prop.Rdata"))
+```
+
+```{r, results = 'asis'}
+item_prop %>%
+  group_by(answer) %>%
+  mutate(weight = N/sum(N)) %>%
+  summarise(
+    N = sum(N),
+    prop = wtd.mean(prop_correct, weights = weight, na.rm=T)
+  ) %>%
+  mutate(prop = round(prop, 2)) %>%
+  DT::datatable(
+    colnames = c("Adjective", "N (total)", "Proportion Correct"), 
+    filter = "top", 
+    rownames = F
+  )
+```
+
+
