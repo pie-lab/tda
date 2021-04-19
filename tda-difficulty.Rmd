@@ -6,6 +6,10 @@ output:
     toc: TRUE
 ---
 
+We present here the difficulty of nearly 2,900 trait descriptive adjectives, each assessed using two different, randomly-generated definition-term items. For each item, we report the total number of responses across both forms of the item, as well as the total proportion correct. 
+
+Individual item statistic can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
+
 
 ```{r, include = F}
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
