@@ -1,8 +1,13 @@
 ---
-title: "Untitled"
-author: "Sara Weston"
-date: "4/19/2021"
-output: html_document
+title: "Trait Descriptive Adjectives"
+subtitle: "Code and supplemental material"
+author: "Davd M. Condon, Joshua Coughlin, & Sara J. Weston"
+output: 
+  html_document:
+    toc: TRUE
+    toc_depth: 2
+    toc_float: TRUE
+    theme: cosmo
 ---
 
 This is the main page for the website. 

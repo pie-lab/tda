@@ -1,0 +1,15 @@
+name: Data Analysis I
+output_dir: "."
+navbar:
+  title: "PSY 611"
+  left:
+    - text: Syllabus
+      href: schedule.html
+
+  right:
+    - icon: fa-github
+      href: https://github.com/uopsych/psy611
+output:
+  html_document:
+    lib_dir: site_libs
+    self_contained: no
