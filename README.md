@@ -1,0 +1,2 @@
+# tda
+Trait Descriptive Adjectives
