@@ -34,7 +34,7 @@ item_prop %>%
  )) %>%
   select(item, answer, N, prop_correct, prop_wrong, form) %>%
   DT::datatable(
-    colnames = c("Item", "Adjective", "N (total)", "Proportion Correct", "Distractor Index", "Form"), 
+    colnames = c("Item", "Adjective", "N", "Proportion Correct", "Distractor Index", "Form"), 
     filter = "top", 
     rownames = F
   )
