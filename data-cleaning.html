@@ -290,6 +290,9 @@ $(document).ready(function () {
 <li>
   <a href="item-difficulty.html">Item Difficulty</a>
 </li>
+<li>
+  <a href="data-cleaning.html">Data Cleaning Code</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -308,7 +311,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Cleaning and summarizing</h1>
-<h4 class="date">Last updated 2021-04-19</h4>
+<h4 class="date">Last updated 2021-04-21</h4>
 
 </div>
 
@@ -317,10 +320,15 @@ $(document).ready(function () {
 <li><a href="#load-data-and-packages">Load data and packages</a>
 <ul>
 <li><a href="#qualtrics-survey-responses">Qualtrics survey responses</a></li>
-<li><a href="#filter-participants">Filter participants</a></li>
 <li><a href="#scoring-keys">Scoring keys</a></li>
 </ul></li>
 <li><a href="#score-data-new">Score data new</a></li>
+<li><a href="#data-for-publication">Data for publication</a>
+<ul>
+<li><a href="#demographics">Demographics</a></li>
+<li><a href="#correct-or-incorrect">Correct or incorrect</a></li>
+<li><a href="#response-option">Response option</a></li>
+</ul></li>
 <li><a href="#calculate-item-means">Calculate item means</a></li>
 <li><a href="#distractor-index">Distractor index</a></li>
 </ul>
@@ -332,6 +340,7 @@ $(document).ready(function () {
 library(rio) # for importing excel files
 library(tidyverse) # for data cleaning and manipulation
 library(psych) # for scoring multiple choice items
+library(R.utils) # just for the insert() function
 library(DT) # for viewing data tables</code></pre>
 <div id="qualtrics-survey-responses" class="section level2">
 <h2>Qualtrics survey responses</h2>
@@ -408,10 +417,11 @@ names(formB) = str_replace(names(formB),
 
 names(formC) = str_replace(names(formC), 
                            &quot;^Q&quot;, 
-                           &quot;q_&quot;) </code></pre>
-</div>
-<div id="filter-participants" class="section level2">
-<h2>Filter participants</h2>
+                           &quot;q_&quot;) 
+
+# an additional error in form C -- some variable names were coded with only the last 4 digits (i.e., missing the first &quot;2&quot;)
+names(formC) = str_replace(names(formC), 
+                           &quot;(q_)(\\d{4}$)&quot;, &quot;\\12\\2&quot;)</code></pre>
 <p>Remove participants without valid Prolific or MTurk IDs.</p>
 <pre class="r"><code>formA = formA %&gt;%
   filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) &gt; 3)
@@ -419,20 +429,6 @@ formB = formB %&gt;%
   filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) &gt; 3)
 formC = formC %&gt;%
   filter(str_length(PROLIFIC_PID) &gt; 3)</code></pre>
-<p>Remove participants who don’t speak English fluently.</p>
-<pre class="r"><code>formA = filter(formA, english &lt; 3)
-
-formB = filter(formB, english &lt; 3)
-
-formC = filter(formC, english &lt; 3)</code></pre>
-<p>Remove participants who grew up outside the US.</p>
-<pre class="r"><code>formA = filter(formA, growup == 1 )
-formB = filter(formB, growup == 1 )
-formC = filter(formC, growup == 1 )</code></pre>
-<p>Remove participants currently living outside the US.</p>
-<pre class="r"><code>formA = filter(formA, live == 1 )
-formB = filter(formB, live == 1 )
-formC = filter(formC, live == 1 )</code></pre>
 </div>
 <div id="scoring-keys" class="section level2">
 <h2>Scoring keys</h2>
@@ -526,9 +522,177 @@ alldata_scored = alldata_scored[, -remove_which]
 masterKey = filter(masterKey, !(item %in% remove_items))
 all_data = select(all_data, -all_of(remove_items))</code></pre>
 </div>
+<div id="data-for-publication" class="section level1">
+<h1>Data for publication</h1>
+<div id="demographics" class="section level2">
+<h2>Demographics</h2>
+<pre class="r"><code>demo = all_data %&gt;%
+  mutate(comb_id = case_when(
+    !is.na(prolificID) ~ prolificID,
+    !is.na(mTurkCode) ~ as.character(mTurkCode),
+    TRUE ~ NA_character_
+  )) %&gt;%
+  mutate(row = row_number() + 1000) %&gt;%
+  group_by(comb_id) %&gt;%
+  mutate(row = min(row)) %&gt;%
+  mutate(PID = paste0(&quot;R&quot;, row)) %&gt;%
+  ungroup() %&gt;%
+  mutate(
+    english_cat = case_when(
+      english == 1 ~ &quot;Very well (fluent/native)&quot;,
+      english == 2 ~ &quot;Well&quot;,
+      english == 3 ~ &quot;Not well&quot;,
+      english == 4 ~ &quot;Not at all (Need translation)&quot;,
+      TRUE ~ NA_character_),
+    growup_cat = case_when(
+      growup == 1 ~ &quot;United States of America&quot;,
+      growup == 2 ~ &quot;Outside of the US&quot;),
+    live_cat = case_when(
+      live == 1 ~ &quot;Yes&quot;,
+      live == 2 ~ &quot;No&quot;),
+    states = recode(states, 
+                    !!!c(state.name[1:8], &quot;District of Columbia&quot;, state.name[9:50])
+                    ),
+    sex = case_when(
+      sex == 1 ~ &quot;Male&quot;,
+      sex == 2 ~ &quot;Female&quot;,
+      sex == 3 ~ &quot;Other&quot;,
+      sex == 4 ~ &quot;Prefer not to say&quot;),
+    edu = case_when(
+      edu == 0 ~ &quot;Less than 12 years&quot;, 
+      edu == 1 ~  &quot;High school grad/GED&quot;,
+      edu == 2 ~  &quot;Currently in college/university&quot;,
+      edu == 3 ~  &quot;Some college/university, but did not graduate&quot;,
+      edu == 4 ~  &quot;Associate degree (2 yr)&quot;,
+      edu == 5 ~  &quot;College/university degree (4 yr)&quot;,
+      edu == 6 ~  &quot;Currently in grad/professional school&quot;,
+      edu == 7 ~  &quot;Grad/professional degree&quot;),
+    ethnic = case_when(
+     ethnic == 1 ~ &quot;American Indian/Alaskan Native&quot;,
+     ethnic == 2 ~ &quot;Asian&quot;,
+     ethnic == 3 ~ &quot;Black&quot;,
+     ethnic == 4 ~ &quot;Hispanic&quot;,
+     ethnic == 5 ~ &quot;White&quot;,
+     ethnic == 6 ~ &quot;Mixed (two or more)&quot;,
+     ethnic == 7 ~ &quot;Other&quot;),
+    hhinc = case_when(
+      hhinc == 1 ~ &quot;&lt; 20K&quot;,
+      hhinc == 2 ~ &quot;20K-40K&quot;,
+      hhinc == 3 ~ &quot;40K-60K&quot;,
+      hhinc == 4 ~ &quot;60K-80K&quot;,
+      hhinc == 5 ~ &quot;80K-100K&quot;,
+      hhinc == 6 ~ &quot;100K-120K&quot;,
+      hhinc == 7 ~ &quot;120K-150K&quot;,
+      hhinc == 8 ~ &quot;150K-200K&quot;,
+      hhinc == 9 ~ &quot;200K-250K&quot;,
+      hhinc == 10 ~ &quot;250K-350K&quot;,
+      hhinc == 11 ~ &quot;350K-500K&quot;,
+      hhinc == 12 ~ &quot;&gt; 500K&quot;,
+      hhinc == 13 ~ &quot;Prefer not to say&quot;))</code></pre>
+<p>Participants are excluded from analyses if they * don’t speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
+<pre class="r"><code>demo = demo %&gt;%
+  mutate(included = case_when(
+    english &gt; 2 ~ &quot;No&quot;,
+    growup == 2 ~ &quot;No&quot;,
+    live == 2 ~ &quot;No&quot;,
+    TRUE ~ &quot;Yes&quot;
+  ))</code></pre>
+<p>163 rows are excluded on this basis.</p>
+<pre class="r"><code>demo = demo %&gt;%
+  select(PID, StartDate, `Duration (in seconds)`, english_cat, growup_cat, live_cat, states, age, sex, edu, ethnic, hhinc, included)
+
+names(demo) = str_remove(names(demo), &quot;_cat&quot;)</code></pre>
+</div>
+<div id="correct-or-incorrect" class="section level2">
+<h2>Correct or incorrect</h2>
+<pre class="r"><code>alldata_scored_df = as.data.frame(alldata_scored)
+data_scored = cbind(demo, alldata_scored)
+write.csv(data_scored, file = here(&quot;data/TDA_data_scored.csv&quot;))</code></pre>
+</div>
+<div id="response-option" class="section level2">
+<h2>Response option</h2>
+<p>First we create a vector for each item that specifies the new labels. All distractors take the form <code>R1</code> through <code>R5</code>. <code>Ans</code> (for the correct answer) is then inserted in the location of the correct response.</p>
+<pre class="r"><code>masterKey = masterKey %&gt;%
+  mutate(relevel = map(Key, 
+                       ~insert(c(&quot;R1&quot;,&quot;R2&quot;,&quot;R3&quot;,&quot;R4&quot;,&quot;R5&quot;,&quot;I don&#39;t know&quot;, &quot;None of these&quot;), 
+                              at = .x, &quot;Ans&quot;)))</code></pre>
+<p>Next we create a function that takes a vector of responses and the name of the item. The item name is used to identify the correct vector created in the previous code chunk. This is applied using the recode function and the new vector is returned.</p>
+<pre class="r"><code>relevel_fun = function(response, item_name){
+  relevel_vector = masterKey$relevel[masterKey$item == item_name][[1]]
+  new_vector = recode(response, !!!relevel_vector)
+  return(new_vector)
+}</code></pre>
+<p>We select just the TDA items and assign each row a unique number. This will help ensure all the responses end up in the correct place when we spread later. Then we stack questions and nest, to create a separate data frame for each item, containing a column called “response.”</p>
+<pre class="r"><code>raw_items = all_data %&gt;%
+  select(starts_with(&quot;q_&quot;)) %&gt;%
+  mutate(row = row_number()) %&gt;%
+  gather(&quot;item&quot;, &quot;response&quot;, starts_with(&quot;q_&quot;)) %&gt;%
+  group_by(item) %&gt;%
+  nest()
+
+# what does this look like
+head(raw_items)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+## # Groups:   item [6]
+##   item    data                
+##   &lt;chr&gt;   &lt;list&gt;              
+## 1 q_20001 &lt;tibble [3,540 × 2]&gt;
+## 2 q_20002 &lt;tibble [3,540 × 2]&gt;
+## 3 q_20003 &lt;tibble [3,540 × 2]&gt;
+## 4 q_20004 &lt;tibble [3,540 × 2]&gt;
+## 5 q_20005 &lt;tibble [3,540 × 2]&gt;
+## 6 q_20006 &lt;tibble [3,540 × 2]&gt;</code></pre>
+<pre class="r"><code>head(raw_items$data[[1]]) </code></pre>
+<pre><code>## # A tibble: 6 x 2
+##     row response
+##   &lt;int&gt;    &lt;dbl&gt;
+## 1     1        3
+## 2     2       NA
+## 3     3       NA
+## 4     4       NA
+## 5     5       NA
+## 6     6       NA</code></pre>
+<pre class="r"><code>table(raw_items$data[[1]]$response) </code></pre>
+<pre><code>## 
+##  1  2  3  4  5  6  7  8 
+##  1  1  5  1 20  1  6  2</code></pre>
+<p>Iterating across items, we apply the <code>relevel</code> function to the dataset, which replaces numeric values with the appropriate categorical value (Ans, R1:R5, I don’t know, and None of these)</p>
+<pre class="r"><code>recoded_items = raw_items %&gt;%
+  mutate(data = map2(data, item, 
+                     ~mutate(.x, response = relevel_fun(response, .y)))) 
+
+# what does this look like
+head(recoded_items$data[[1]]) </code></pre>
+<pre><code>## # A tibble: 6 x 2
+##     row response
+##   &lt;int&gt; &lt;chr&gt;   
+## 1     1 R3      
+## 2     2 &lt;NA&gt;    
+## 3     3 &lt;NA&gt;    
+## 4     4 &lt;NA&gt;    
+## 5     5 &lt;NA&gt;    
+## 6     6 &lt;NA&gt;</code></pre>
+<pre class="r"><code>table(recoded_items$data[[1]]$response) </code></pre>
+<pre><code>## 
+##           Ans  I don&#39;t know None of these            R1            R2 
+##            20             6             2             1             1 
+##            R3            R4            R5 
+##             5             1             1</code></pre>
+<p>We unnest the data frames and spread back into the original format, ending with arrange to ensure the data are in the same rows as before.</p>
+<pre class="r"><code>recoded_items = recoded_items %&gt;% 
+  unnest(cols = c(data)) %&gt;%
+  spread(item, response) %&gt;% 
+  arrange(row) %&gt;% 
+  select(-row)</code></pre>
+<p>Finally, we connect these responses to the demographic variables and save.</p>
+<pre class="r"><code>data_recode = cbind(demo, recoded_items)
+write.csv(data_recode, file = here(&quot;data/TDA_data_recoded.csv&quot;))</code></pre>
+</div>
+</div>
 <div id="calculate-item-means" class="section level1">
 <h1>Calculate item means</h1>
-<pre class="r"><code>alldata_means = colMeans(alldata_scored, na.rm = T)
+<pre class="r"><code>alldata_scored = alldata_scored[-which(demo$included == &quot;No&quot;), ]
+alldata_means = colMeans(alldata_scored, na.rm = T)
 
 all_item_means = data.frame(
   item = masterKey$item,
