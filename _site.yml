@@ -7,7 +7,9 @@ navbar:
       href: tda-difficulty.html
     - text: Item Difficulty
       href: item-difficulty.html
-    - text: Data Cleaning Code
+    - text: Sample characteristics
+      href: sample.html
+    - text: Data cleaning code
       href: data-cleaning.html
   right:
     - icon: fa-github

@@ -1,0 +1,243 @@
+---
+title: "Sample characteristics"
+date: "Last updated `r Sys.Date()`"
+output: 
+  html_document:
+    toc: TRUE
+---
+
+```{r, include = F}
+knitr::opts_chunk$set(message = F, warning = F, echo = F)
+```
+
+```{r}
+library(tidyverse)
+library(here)
+library(ggpubr)
+library(knitr)
+library(kableExtra)
+
+data = read_csv(here("data/TDA_data_scored.csv"))
+
+data = filter(data, included == "Yes")
+```
+
+
+```{r}
+data = data %>%
+  group_by(PID) %>%
+  mutate(n = n()) 
+
+data_part = data %>%
+  group_by(PID) %>%
+  filter(row_number() == 1) %>%
+  ungroup()
+```
+
+# Sample characteristics
+
+Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).
+
+## Age{.tabset}
+
+### By response
+
+```{r}
+data %>%
+  ggplot(aes(x = age)) +
+  geom_histogram(binwidth = 1, color = "white") +
+  labs(title = "Age in years", x= NULL) +
+  theme_pubr()
+```
+
+### By participant 
+
+
+```{r}
+data_part %>%
+  ggplot(aes(x = age)) +
+  geom_histogram(binwidth = 1, color = "white") +
+  labs(title = "Age in years", x= NULL) +
+  theme_pubr()
+```
+
+## Sex{.tabset}
+
+### By response
+
+```{r}
+data %>%
+  ggplot(aes(x = sex)) +
+  geom_bar(stat = "count") +
+  labs(title = "What was your biological sex at birth", x= NULL) +
+  theme_pubr()
+```
+
+### By participant
+
+```{r}
+data_part %>%
+  ggplot(aes(x = sex)) +
+  geom_bar(stat = "count") +
+  labs(title = "What was your biological sex at birth", x= NULL) +
+  theme_pubr()
+```
+
+## Education{.tabset}
+
+### By response
+
+```{r}
+data %>%
+  mutate(edu = factor(edu, levels = c(
+      "Less than 12 years", 
+      "High school grad/GED",
+      "Currently in college/university",
+      "Some college/university, but did not graduate",
+      "Associate degree (2 yr)",
+      "College/university degree (4 yr)",
+      "Currently in grad/professional school",
+      "Grad/professional degree"
+  ))) %>%
+  ggplot(aes(x = edu)) +
+  geom_bar(stat = "count") +
+  labs(title = "Level of education", x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+```
+
+### By participant
+
+
+```{r}
+data_part %>%
+  mutate(edu = factor(edu, levels = c(
+      "Less than 12 years", 
+      "High school grad/GED",
+      "Currently in college/university",
+      "Some college/university, but did not graduate",
+      "Associate degree (2 yr)",
+      "College/university degree (4 yr)",
+      "Currently in grad/professional school",
+      "Grad/professional degree"
+  ))) %>%
+  ggplot(aes(x = edu)) +
+  geom_bar(stat = "count") +
+  labs(title = "Level of education", x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+```
+
+## Ethnicity{.tabset}
+
+### By response
+
+```{r}
+data %>%
+  mutate(ethnic = factor(ethnic, levels = c(
+     "American Indian/Alaskan Native",
+     "Asian",
+     "Black",
+     "Hispanic",
+     "White",
+     "Mixed (two or more)",
+     "Other"
+  ))) %>%
+  ggplot(aes(x = ethnic)) +
+  geom_bar(stat = "count") +
+  labs(title = "Racial/ethnic identity", x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+```
+
+### By participant
+
+```{r}
+data_part %>%
+  mutate(ethnic = factor(ethnic, levels = c(
+     "American Indian/Alaskan Native",
+     "Asian",
+     "Black",
+     "Hispanic",
+     "White",
+     "Mixed (two or more)",
+     "Other"
+  ))) %>%
+  ggplot(aes(x = ethnic)) +
+  geom_bar(stat = "count") +
+  labs(title = "Racial/ethnic identity", x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+```
+
+## Household income{.tabset}
+
+### By response
+
+```{r}
+data %>%
+  mutate(hhinc = factor(hhinc, levels = c(
+      "< 20K",
+      "20K-40K",
+      "40K-60K",
+      "60K-80K",
+      "80K-100K",
+      "100K-120K",
+      "120K-150K",
+      "150K-200K",
+      "200K-250K",
+       "250K-350K",
+       "350K-500K",
+       "> 500K"
+  ))) %>%
+  ggplot(aes(x = hhinc)) +
+  geom_bar(stat = "count") +
+  labs(title = "Household Income", x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+```
+
+
+
+
+
+### By participant
+
+```{r}
+data_part %>%
+  mutate(hhinc = factor(hhinc, levels = c(
+      "< 20K",
+      "20K-40K",
+      "40K-60K",
+      "60K-80K",
+      "80K-100K",
+      "100K-120K",
+      "120K-150K",
+      "150K-200K",
+      "200K-250K",
+       "250K-350K",
+       "350K-500K",
+       "> 500K"
+  ))) %>%
+  ggplot(aes(x = hhinc)) +
+  geom_bar(stat = "count") +
+  labs(title = "Household Income", x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+```
+
+# Particiant response rates
+
+```{r}
+data %>%
+  group_by(PID) %>%
+  count() %>%
+  ggplot(aes(x = n)) +
+  geom_bar(stat = "count") +
+  scale_x_continuous(breaks = 1:13) +
+  labs(title = "Number of times participated in survey",
+       x = NULL) +
+  theme_pubr()
+```
+
+
