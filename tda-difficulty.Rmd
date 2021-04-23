@@ -4,15 +4,16 @@ date: "Last updated `r Sys.Date()`"
 output: 
   html_document:
     toc: TRUE
+    code_folding: hide
 ---
 
 We present here the difficulty of nearly 2,900 trait descriptive adjectives, each assessed using two different, randomly-generated definition-term items. For each adjective, we report the total number of responses across both forms of the item, as well as the total proportion correct. 
 
-Individual item statistic can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
+Individual item statistics can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
 
 
 ```{r, include = F}
-knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_chunk$set(echo = T, message = F, warning = F)
 ```
 
 ```{r}
@@ -21,22 +22,43 @@ library(tidyverse) # for data cleaning and manipulation
 library(Hmisc) # for weighted means
 library(DT) # for viewing data tables
 
-load(here("data/item_prop.Rdata"))
+data = read_csv(here("data/TDA_data_scored.csv"))
+masterKey = read_csv(here("data/masterkey.csv"))
+
+data = data %>%
+  filter(included == "Yes") %>% # remove participants screend out for demographic and quality reasons
+  select(starts_with("q_")) # select only TDA items
+
+data_means = colMeans(data, na.rm = T) #calculate column means
+
+all_item_means = data.frame( # create data frame with...
+  item = names(data_means), # ...variable name and...
+  prop_correct = data_means #... proportion correct
+)
+
+item_prop = masterKey %>% # join the masterKey (item name, correct answer, and form)
+  full_join(all_item_means) %>% # with proportion correct
+  mutate(prop_correct = round(prop_correct, 2)) # round to 2 decimal places
+
+# next we count the number of administrations of each item
+item_prop$N = colSums(!is.na(data)) # count non-missing
+
 ```
 
-```{r, results = 'asis'}
+```{r}
+# create table 
 item_prop %>%
-  group_by(answer) %>%
-  mutate(weight = N/sum(N)) %>%
+  group_by(answer) %>% # for each unique adjective
+  mutate(weight = N/sum(N)) %>% # create a new variable that is the number of responses (per item) divided by the total number of responses (across both items)
   summarise(
-    N = sum(N),
-    prop = wtd.mean(prop_correct, weights = weight, na.rm=T)
+    N = sum(N), # how many total responses 
+    prop = wtd.mean(prop_correct, weights = weight, na.rm=T) # average proportion, weighted by sample size
   ) %>%
-  mutate(prop = round(prop, 2)) %>%
-  DT::datatable(
-    colnames = c("Adjective", "N (total)", "Proportion Correct"), 
-    filter = "top", 
-    rownames = F
+  mutate(prop = round(prop, 2)) %>% # round to 2
+  DT::datatable( # put into interactive HTML table
+    colnames = c("Adjective", "N (total)", "Proportion Correct"), #colnames
+    filter = "top", # can filter
+    rownames = F # don't need rownames
   )
 ```
 

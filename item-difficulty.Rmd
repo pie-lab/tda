@@ -4,6 +4,7 @@ date: "Last updated `r Sys.Date()`"
 output: 
   html_document:
     toc: TRUE
+    code_folding: hide
 ---
 
 We present here the difficulty of more than 5,600 trait descriptive adjectives randomly-generated definition-term items (two forms for each adjective) For each item, we report the total number of responses, the proportion of responses that were correct, the distractor index (see below), and the form (A or B).
@@ -13,7 +14,7 @@ The distractor index reflects the extent to which a single wrong response distra
 Readers interested in the aggregated statistics for each adjective can find those numbers [here](https://pie-lab.github.io/tda/tda-difficulty.html).
 
 ```{r, include = F}
-knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_chunk$set(echo = T, message = F, warning = F)
 ```
 
 ```{r}
@@ -22,20 +23,71 @@ library(tidyverse) # for data cleaning and manipulation
 library(Hmisc) # for weighted means
 library(DT) # for viewing data tables
 
-load(here("data/item_prop.Rdata"))
+data = read_csv(here("data/TDA_data_scored.csv"))
+masterKey = read_csv(here("data/masterkey.csv"))
+
+data = data %>%
+  filter(included == "Yes") %>% # remove participants screend out for demographic and quality reasons
+  select(starts_with("q_")) # select only TDA items
+
+data_means = colMeans(data, na.rm = T) #calculate column means
+
+all_item_means = data.frame( # create data frame with...
+  item = names(data_means), # ...variable name and...
+  prop_correct = data_means #... proportion correct
+)
+
+item_prop = masterKey %>% # join the masterKey (item name, correct answer, and form)
+  full_join(all_item_means) %>% # with proportion correct
+  mutate(prop_correct = round(prop_correct, 2)) # round to 2 decimal places
+
+# next we count the number of administrations of each item
+item_prop$N = colSums(!is.na(data)) # count non-missing
+
+# now we calculate the distractor index
+
+data_re = read_csv(here("data/TDA_data_recoded.csv")) # use recoded dataset
+
+data_re = filter(data_re, included == "Yes") # remove participants screend out for demographic and quality reasons
+
+distract = data_re %>%
+  select(starts_with("q_")) %>% #select only TDA items
+  gather("item", "response") %>% # stack all columns: creates 2 column data frame
+  mutate(response = ifelse(response == "Ans", #if response is correct
+                           NA,  #make missing
+                           response)) %>% #else keep as is
+  filter(!is.na(response)) %>% # remove missing responses (including correct responses)
+  full_join(masterKey) # join with masterKey
+
+  
+distract = distract %>%
+  group_by(item, response) %>% # for each unique response for each item
+  count() %>% # count
+  group_by(item) %>% # for each item
+  mutate(wrong_n = sum(n), # how many counts (this is only incorrect responses)
+         prop_wrong = n/wrong_n) %>% # what proportion of wrong is each response
+  filter(str_detect(response, "^R")) %>% #select only distractors
+  summarise(prop_wrong = max(prop_wrong), #what's max proportion
+            n_wrong = max(wrong_n)) #how many wrong
+
+item_prop = item_prop %>%
+  full_join(distract) # add to item proportion table
+
+item_prop = item_prop %>%
+  mutate(across(where(is.double), round, 2)) #round all numbers to 2 decimal places
 ```
 
 ```{r, results = 'asis'}
 item_prop %>%
  mutate(form = case_when(
-   form == "C" ~ "A",
+   form == "C" ~ "A", # change these forms (C and D were fixes to poor or incorrect items)
    form == "D" ~ "B",
    TRUE ~ form
  )) %>%
-  select(item, answer, N, prop_correct, prop_wrong, form) %>%
-  DT::datatable(
-    colnames = c("Item", "Adjective", "N", "Proportion Correct", "Distractor Index", "Form"), 
-    filter = "top", 
-    rownames = F
+  select(item, answer, N, prop_correct, prop_wrong, form) %>% #just show these columns
+  DT::datatable( #make interactive html table
+    colnames = c("Item", "Adjective", "N", "Proportion Correct", "Distractor Index", "Form"), #col names
+    filter = "top", # can filter
+    rownames = F #don't need
   )
 ```

@@ -21,6 +21,7 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -258,6 +259,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -311,10 +315,18 @@ $(document).ready(function () {
 
 <div class="fluid-row" id="header">
 
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Sample characteristics</h1>
-<h4 class="date">Last updated 2021-04-21</h4>
+<h4 class="date">Last updated 2021-04-22</h4>
 
 </div>
 
@@ -352,6 +364,23 @@ $(document).ready(function () {
 </ul>
 </div>
 
+<pre class="r"><code>library(tidyverse)
+library(here)
+library(ggpubr)
+library(knitr)
+library(kableExtra)
+
+data = read_csv(here(&quot;data/TDA_data_scored.csv&quot;))
+
+data = filter(data, included == &quot;Yes&quot;)</code></pre>
+<pre class="r"><code>data = data %&gt;%
+  group_by(PID) %&gt;%
+  mutate(n = n()) 
+
+data_part = data %&gt;%
+  group_by(PID) %&gt;%
+  filter(row_number() == 1) %&gt;%
+  ungroup()</code></pre>
 <div id="sample-characteristics" class="section level1">
 <h1>Sample characteristics</h1>
 <p>Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).</p>
@@ -359,10 +388,20 @@ $(document).ready(function () {
 <h2 class="tabset">Age</h2>
 <div id="by-response" class="section level3">
 <h3>By response</h3>
+<pre class="r"><code>data %&gt;%
+  ggplot(aes(x = age)) +
+  geom_histogram(binwidth = 1, color = &quot;white&quot;) +
+  labs(title = &quot;Age in years&quot;, x= NULL) +
+  theme_pubr()</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="by-participant" class="section level3">
 <h3>By participant</h3>
+<pre class="r"><code>data_part %&gt;%
+  ggplot(aes(x = age)) +
+  geom_histogram(binwidth = 1, color = &quot;white&quot;) +
+  labs(title = &quot;Age in years&quot;, x= NULL) +
+  theme_pubr()</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 </div>
@@ -370,10 +409,34 @@ $(document).ready(function () {
 <h2 class="tabset">Sex</h2>
 <div id="by-response-1" class="section level3">
 <h3>By response</h3>
+<pre class="r"><code>data %&gt;%
+  group_by(sex) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, &quot;%&quot;)) %&gt;%
+  ggplot(aes(x = sex, y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = percent), vjust = 0) +
+  labs(title = &quot;What was your biological sex at birth&quot;, x= NULL) +
+  theme_pubr()</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="by-participant-1" class="section level3">
 <h3>By participant</h3>
+<pre class="r"><code>data_part %&gt;%
+ group_by(sex) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, &quot;%&quot;)) %&gt;%
+  ggplot(aes(x = sex, y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = percent), vjust = 0) +
+  labs(title = &quot;What was your biological sex at birth&quot;, x= NULL) +
+  theme_pubr()</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 </div>
@@ -381,10 +444,56 @@ $(document).ready(function () {
 <h2 class="tabset">Education</h2>
 <div id="by-response-2" class="section level3">
 <h3>By response</h3>
+<pre class="r"><code>data %&gt;%
+  mutate(edu = factor(edu, levels = c(
+      &quot;Less than 12 years&quot;, 
+      &quot;High school grad/GED&quot;,
+      &quot;Currently in college/university&quot;,
+      &quot;Some college/university, but did not graduate&quot;,
+      &quot;Associate degree (2 yr)&quot;,
+      &quot;College/university degree (4 yr)&quot;,
+      &quot;Currently in grad/professional school&quot;,
+      &quot;Grad/professional degree&quot;
+  ))) %&gt;%
+  group_by(edu) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, &quot;%&quot;)) %&gt;%
+  ggplot(aes(x = edu, y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = percent), vjust = 0) +
+  labs(title = &quot;Level of education&quot;, x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="by-participant-2" class="section level3">
 <h3>By participant</h3>
+<pre class="r"><code>data_part %&gt;%
+  mutate(edu = factor(edu, levels = c(
+      &quot;Less than 12 years&quot;, 
+      &quot;High school grad/GED&quot;,
+      &quot;Currently in college/university&quot;,
+      &quot;Some college/university, but did not graduate&quot;,
+      &quot;Associate degree (2 yr)&quot;,
+      &quot;College/university degree (4 yr)&quot;,
+      &quot;Currently in grad/professional school&quot;,
+      &quot;Grad/professional degree&quot;
+  ))) %&gt;%
+  group_by(edu) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, &quot;%&quot;)) %&gt;%
+  ggplot(aes(x = edu, y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = percent), vjust = 0) +
+  labs(title = &quot;Level of education&quot;, x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 </div>
@@ -392,10 +501,54 @@ $(document).ready(function () {
 <h2 class="tabset">Ethnicity</h2>
 <div id="by-response-3" class="section level3">
 <h3>By response</h3>
+<pre class="r"><code>data %&gt;%
+  mutate(ethnic = factor(ethnic, levels = c(
+     &quot;American Indian/Alaskan Native&quot;,
+     &quot;Asian&quot;,
+     &quot;Black&quot;,
+     &quot;Hispanic&quot;,
+     &quot;White&quot;,
+     &quot;Mixed (two or more)&quot;,
+     &quot;Other&quot;
+  ))) %&gt;%
+  group_by(ethnic) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, &quot;%&quot;)) %&gt;%
+  ggplot(aes(x = ethnic, y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = percent), vjust = 0) +
+  labs(title = &quot;Racial/ethnic identity&quot;, x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="by-participant-3" class="section level3">
 <h3>By participant</h3>
+<pre class="r"><code>data_part %&gt;%
+  mutate(ethnic = factor(ethnic, levels = c(
+     &quot;American Indian/Alaskan Native&quot;,
+     &quot;Asian&quot;,
+     &quot;Black&quot;,
+     &quot;Hispanic&quot;,
+     &quot;White&quot;,
+     &quot;Mixed (two or more)&quot;,
+     &quot;Other&quot;
+  ))) %&gt;%
+  group_by(ethnic) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, &quot;%&quot;)) %&gt;%
+  ggplot(aes(x = ethnic, y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = percent), vjust = 0) +
+  labs(title = &quot;Racial/ethnic identity&quot;, x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 </div>
@@ -403,16 +556,79 @@ $(document).ready(function () {
 <h2 class="tabset">Household income</h2>
 <div id="by-response-4" class="section level3">
 <h3>By response</h3>
+<pre class="r"><code>data %&gt;%
+  mutate(hhinc = factor(hhinc, levels = c(
+      &quot;&lt; 20K&quot;,
+      &quot;20K-40K&quot;,
+      &quot;40K-60K&quot;,
+      &quot;60K-80K&quot;,
+      &quot;80K-100K&quot;,
+      &quot;100K-120K&quot;,
+      &quot;120K-150K&quot;,
+      &quot;150K-200K&quot;,
+      &quot;200K-250K&quot;,
+       &quot;250K-350K&quot;,
+       &quot;350K-500K&quot;,
+       &quot;&gt; 500K&quot;
+  ))) %&gt;%
+  group_by(hhinc) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, &quot;%&quot;)) %&gt;%
+  ggplot(aes(x = hhinc, y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = percent), vjust = 0) +
+  labs(title = &quot;Household Income&quot;, x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="by-participant-4" class="section level3">
 <h3>By participant</h3>
+<pre class="r"><code>data_part %&gt;%
+  mutate(hhinc = factor(hhinc, levels = c(
+      &quot;&lt; 20K&quot;,
+      &quot;20K-40K&quot;,
+      &quot;40K-60K&quot;,
+      &quot;60K-80K&quot;,
+      &quot;80K-100K&quot;,
+      &quot;100K-120K&quot;,
+      &quot;120K-150K&quot;,
+      &quot;150K-200K&quot;,
+      &quot;200K-250K&quot;,
+       &quot;250K-350K&quot;,
+       &quot;350K-500K&quot;,
+       &quot;&gt; 500K&quot;
+  ))) %&gt;%
+  group_by(hhinc) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, &quot;%&quot;)) %&gt;%
+  ggplot(aes(x = hhinc, y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  geom_text(aes(label = percent), vjust = 0) +
+  labs(title = &quot;Household Income&quot;, x= NULL) +
+  theme_pubr() +
+  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
 </div>
 <div id="particiant-response-rates" class="section level1">
 <h1>Particiant response rates</h1>
+<pre class="r"><code>data %&gt;%
+  group_by(PID) %&gt;%
+  count() %&gt;%
+  ggplot(aes(x = n)) +
+  geom_bar(stat = &quot;count&quot;) +
+  scale_x_continuous(breaks = 1:13) +
+  labs(title = &quot;Number of times participated in survey&quot;,
+       x = NULL) +
+  theme_pubr()</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
 
@@ -449,6 +665,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

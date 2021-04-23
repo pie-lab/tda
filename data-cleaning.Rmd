@@ -19,7 +19,6 @@ library(rio) # for importing excel files
 library(tidyverse) # for data cleaning and manipulation
 library(psych) # for scoring multiple choice items
 library(R.utils) # just for the insert() function
-library(DT) # for viewing data tables
 ```
 
 ## Qualtrics survey responses
@@ -309,6 +308,7 @@ demo = all_data %>%
 ```
 
 Participants are excluded from analyses if they
+* complete the survey in less than 3 minutes (180 seconds),
 * don't speak fluent English,
 * grew up outside the US, or
 * are currently living outside the US.
@@ -316,6 +316,7 @@ Participants are excluded from analyses if they
 ```{r}
 demo = demo %>%
   mutate(included = case_when(
+    `Duration (in seconds)` < 180 ~ "No",
     english > 2 ~ "No",
     growup == 2 ~ "No",
     live == 2 ~ "No",
@@ -338,7 +339,8 @@ names(demo) = str_remove(names(demo), "_cat")
 ```{r}
 alldata_scored_df = as.data.frame(alldata_scored)
 data_scored = cbind(demo, alldata_scored)
-write.csv(data_scored, file = here("data/TDA_data_scored.csv"))
+write_csv(data_scored, 
+          file = here("data/TDA_data_scored.csv"))
 ```
 
 ## Response option
@@ -405,74 +407,16 @@ Finally, we connect these responses to the demographic variables and save.
 
 ```{r}
 data_recode = cbind(demo, recoded_items)
-write.csv(data_recode, file = here("data/TDA_data_recoded.csv"))
+write_csv(data_recode, 
+          file = here("data/TDA_data_recoded.csv"))
 ```
 
-
-# Calculate item means
-
-```{r, results = 'asis'}
-alldata_scored = alldata_scored[-which(demo$included == "No"), ]
-alldata_means = colMeans(alldata_scored, na.rm = T)
-
-all_item_means = data.frame(
-  item = masterKey$item,
-  prop_correct = alldata_means
-)
-
-item_prop = masterKey %>%
-  select(item, answer, Stimulus:R_6, form) %>%
-  full_join(all_item_means) %>%
-  mutate(prop_correct = round(prop_correct, 2)) 
-
-# number of administrations
-count_valid = function(x){
-  n = length(which(!is.na(x)))
-  return(n)
-}
-
-```
-
-Count number of assessments for each item.
+We also save a shortened version of the master key object.
 
 ```{r}
-item_prop$N = apply(alldata_scored, 2, count_valid)
-```
-
-# Distractor index
-
-```{r}
-distract = all_data %>%
-  select(starts_with("q_")) %>%
-  gather("item", "response") %>%
-  filter(!is.na(response)) %>%
-  full_join(select(masterKey, item, Key))
-
-distract = distract %>%
-  mutate(response = ifelse(response == Key, NA, response))
-
-distract = distract %>%
-  group_by(item, response) %>%
-  count() %>%
-  group_by(item) %>%
-  mutate(total_n = sum(n)) %>%
-  filter(!is.na(response)) %>%
-  mutate(wrong_n = sum(n),
-         prop_total = n/total_n,
-         prop_wrong = n/wrong_n) %>%
-  filter(response < 7) %>%
-  summarise(prop_total = max(prop_total),
-            prop_wrong = max(prop_wrong),
-            n_wrong = max(wrong_n)) 
-
-item_prop = item_prop %>%
-  full_join(distract) 
-
-item_prop = item_prop %>%
-  mutate(across(where(is.double), round, 2)) 
-
-
-save(item_prop, file = here("data/item_prop.Rdata"))
+masterKey %>%
+  select(item, answer, form) %>%
+  write_csv(file = here("data/masterkey.csv"))
 ```
 
 

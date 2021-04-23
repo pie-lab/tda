@@ -4,10 +4,11 @@ date: "Last updated `r Sys.Date()`"
 output: 
   html_document:
     toc: TRUE
+    code_folding: hide
 ---
 
 ```{r, include = F}
-knitr::opts_chunk$set(message = F, warning = F, echo = F)
+knitr::opts_chunk$set(message = F, warning = F)
 ```
 
 ```{r}
@@ -67,8 +68,15 @@ data_part %>%
 
 ```{r}
 data %>%
-  ggplot(aes(x = sex)) +
-  geom_bar(stat = "count") +
+  group_by(sex) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, "%")) %>%
+  ggplot(aes(x = sex, y = n)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = percent), vjust = 0) +
   labs(title = "What was your biological sex at birth", x= NULL) +
   theme_pubr()
 ```
@@ -77,8 +85,15 @@ data %>%
 
 ```{r}
 data_part %>%
-  ggplot(aes(x = sex)) +
-  geom_bar(stat = "count") +
+ group_by(sex) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, "%")) %>%
+  ggplot(aes(x = sex, y = n)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = percent), vjust = 0) +
   labs(title = "What was your biological sex at birth", x= NULL) +
   theme_pubr()
 ```
@@ -99,8 +114,15 @@ data %>%
       "Currently in grad/professional school",
       "Grad/professional degree"
   ))) %>%
-  ggplot(aes(x = edu)) +
-  geom_bar(stat = "count") +
+  group_by(edu) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, "%")) %>%
+  ggplot(aes(x = edu, y = n)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = percent), vjust = 0) +
   labs(title = "Level of education", x= NULL) +
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
@@ -121,8 +143,15 @@ data_part %>%
       "Currently in grad/professional school",
       "Grad/professional degree"
   ))) %>%
-  ggplot(aes(x = edu)) +
-  geom_bar(stat = "count") +
+  group_by(edu) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, "%")) %>%
+  ggplot(aes(x = edu, y = n)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = percent), vjust = 0) +
   labs(title = "Level of education", x= NULL) +
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
@@ -143,8 +172,15 @@ data %>%
      "Mixed (two or more)",
      "Other"
   ))) %>%
-  ggplot(aes(x = ethnic)) +
-  geom_bar(stat = "count") +
+  group_by(ethnic) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, "%")) %>%
+  ggplot(aes(x = ethnic, y = n)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = percent), vjust = 0) +
   labs(title = "Racial/ethnic identity", x= NULL) +
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
@@ -163,8 +199,15 @@ data_part %>%
      "Mixed (two or more)",
      "Other"
   ))) %>%
-  ggplot(aes(x = ethnic)) +
-  geom_bar(stat = "count") +
+  group_by(ethnic) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, "%")) %>%
+  ggplot(aes(x = ethnic, y = n)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = percent), vjust = 0) +
   labs(title = "Racial/ethnic identity", x= NULL) +
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
@@ -190,8 +233,15 @@ data %>%
        "350K-500K",
        "> 500K"
   ))) %>%
-  ggplot(aes(x = hhinc)) +
-  geom_bar(stat = "count") +
+  group_by(hhinc) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, "%")) %>%
+  ggplot(aes(x = hhinc, y = n)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = percent), vjust = 0) +
   labs(title = "Household Income", x= NULL) +
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
@@ -219,8 +269,15 @@ data_part %>%
        "350K-500K",
        "> 500K"
   ))) %>%
-  ggplot(aes(x = hhinc)) +
-  geom_bar(stat = "count") +
+  group_by(hhinc) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(percent = 100*(n/sum(n)),
+         percent = round(percent),
+         percent = paste(percent, "%")) %>%
+  ggplot(aes(x = hhinc, y = n)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = percent), vjust = 0) +
   labs(title = "Household Income", x= NULL) +
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))

@@ -314,7 +314,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Cleaning and summarizing</h1>
-<h4 class="date">Last updated 2021-04-21</h4>
+<h4 class="date">Last updated 2021-04-22</h4>
 
 </div>
 
@@ -332,8 +332,6 @@ $(document).ready(function () {
 <li><a href="#correct-or-incorrect">Correct or incorrect</a></li>
 <li><a href="#response-option">Response option</a></li>
 </ul></li>
-<li><a href="#calculate-item-means">Calculate item means</a></li>
-<li><a href="#distractor-index">Distractor index</a></li>
 </ul>
 </div>
 
@@ -343,8 +341,7 @@ $(document).ready(function () {
 library(rio) # for importing excel files
 library(tidyverse) # for data cleaning and manipulation
 library(psych) # for scoring multiple choice items
-library(R.utils) # just for the insert() function
-library(DT) # for viewing data tables</code></pre>
+library(R.utils) # just for the insert() function</code></pre>
 <div id="qualtrics-survey-responses" class="section level2">
 <h2>Qualtrics survey responses</h2>
 <p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a “names” data frame and then data starting at row 4, for the raw data.</p>
@@ -592,9 +589,10 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
       hhinc == 11 ~ &quot;350K-500K&quot;,
       hhinc == 12 ~ &quot;&gt; 500K&quot;,
       hhinc == 13 ~ &quot;Prefer not to say&quot;))</code></pre>
-<p>Participants are excluded from analyses if they * don’t speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
+<p>Participants are excluded from analyses if they * complete the survey in less than 3 minutes (180 seconds), * don’t speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
 <pre class="r"><code>demo = demo %&gt;%
   mutate(included = case_when(
+    `Duration (in seconds)` &lt; 180 ~ &quot;No&quot;,
     english &gt; 2 ~ &quot;No&quot;,
     growup == 2 ~ &quot;No&quot;,
     live == 2 ~ &quot;No&quot;,
@@ -610,7 +608,8 @@ names(demo) = str_remove(names(demo), &quot;_cat&quot;)</code></pre>
 <h2>Correct or incorrect</h2>
 <pre class="r"><code>alldata_scored_df = as.data.frame(alldata_scored)
 data_scored = cbind(demo, alldata_scored)
-write.csv(data_scored, file = here(&quot;data/TDA_data_scored.csv&quot;))</code></pre>
+write_csv(data_scored, 
+          file = here(&quot;data/TDA_data_scored.csv&quot;))</code></pre>
 </div>
 <div id="response-option" class="section level2">
 <h2>Response option</h2>
@@ -689,65 +688,13 @@ head(recoded_items$data[[1]]) </code></pre>
   select(-row)</code></pre>
 <p>Finally, we connect these responses to the demographic variables and save.</p>
 <pre class="r"><code>data_recode = cbind(demo, recoded_items)
-write.csv(data_recode, file = here(&quot;data/TDA_data_recoded.csv&quot;))</code></pre>
+write_csv(data_recode, 
+          file = here(&quot;data/TDA_data_recoded.csv&quot;))</code></pre>
+<p>We also save a shortened version of the master key object.</p>
+<pre class="r"><code>masterKey %&gt;%
+  select(item, answer, form) %&gt;%
+  write_csv(file = here(&quot;data/masterkey.csv&quot;))</code></pre>
 </div>
-</div>
-<div id="calculate-item-means" class="section level1">
-<h1>Calculate item means</h1>
-<pre class="r"><code>alldata_scored = alldata_scored[-which(demo$included == &quot;No&quot;), ]
-alldata_means = colMeans(alldata_scored, na.rm = T)
-
-all_item_means = data.frame(
-  item = masterKey$item,
-  prop_correct = alldata_means
-)
-
-item_prop = masterKey %&gt;%
-  select(item, answer, Stimulus:R_6, form) %&gt;%
-  full_join(all_item_means) %&gt;%
-  mutate(prop_correct = round(prop_correct, 2)) 
-
-# number of administrations
-count_valid = function(x){
-  n = length(which(!is.na(x)))
-  return(n)
-}</code></pre>
-<p>Count number of assessments for each item.</p>
-<pre class="r"><code>item_prop$N = apply(alldata_scored, 2, count_valid)</code></pre>
-</div>
-<div id="distractor-index" class="section level1">
-<h1>Distractor index</h1>
-<pre class="r"><code>distract = all_data %&gt;%
-  select(starts_with(&quot;q_&quot;)) %&gt;%
-  gather(&quot;item&quot;, &quot;response&quot;) %&gt;%
-  filter(!is.na(response)) %&gt;%
-  full_join(select(masterKey, item, Key))
-
-distract = distract %&gt;%
-  mutate(response = ifelse(response == Key, NA, response))
-
-distract = distract %&gt;%
-  group_by(item, response) %&gt;%
-  count() %&gt;%
-  group_by(item) %&gt;%
-  mutate(total_n = sum(n)) %&gt;%
-  filter(!is.na(response)) %&gt;%
-  mutate(wrong_n = sum(n),
-         prop_total = n/total_n,
-         prop_wrong = n/wrong_n) %&gt;%
-  filter(response &lt; 7) %&gt;%
-  summarise(prop_total = max(prop_total),
-            prop_wrong = max(prop_wrong),
-            n_wrong = max(wrong_n)) 
-
-item_prop = item_prop %&gt;%
-  full_join(distract) 
-
-item_prop = item_prop %&gt;%
-  mutate(across(where(is.double), round, 2)) 
-
-
-save(item_prop, file = here(&quot;data/item_prop.Rdata&quot;))</code></pre>
 </div>
 
 
