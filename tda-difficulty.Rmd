@@ -36,7 +36,7 @@ all_item_means = data.frame( # create data frame with...
   prop_correct = data_means #... proportion correct
 )
 
-item_prop = masterKey %>% # join the masterKey (item name, correct answer, and form)
+item_prop = masterKey %>% # join the masterKey (item name, correct adjective, and form)
   full_join(all_item_means) %>% # with proportion correct
   mutate(prop_correct = round(prop_correct, 2)) # round to 2 decimal places
 
@@ -47,19 +47,26 @@ item_prop$N = colSums(!is.na(data)) # count non-missing
 
 ```{r}
 # create table 
-item_prop %>%
-  group_by(answer) %>% # for each unique adjective
+item_prop = item_prop %>%
+  group_by(adjective) %>% # for each unique adjective
   mutate(weight = N/sum(N)) %>% # create a new variable that is the number of responses (per item) divided by the total number of responses (across both items)
   summarise(
     N = sum(N), # how many total responses 
     prop = wtd.mean(prop_correct, weights = weight, na.rm=T) # average proportion, weighted by sample size
   ) %>%
-  mutate(prop = round(prop, 2)) %>% # round to 2
+  mutate(prop = round(prop, 2)) # round to 2
+
+item_prop %>%
   DT::datatable( # put into interactive HTML table
     colnames = c("Adjective", "N (total)", "Proportion Correct"), #colnames
     filter = "top", # can filter
     rownames = F # don't need rownames
   )
 ```
+
+```{r}
+write_csv(item_prop, file = here("data/tda_difficulty.csv"))
+```
+
 
 

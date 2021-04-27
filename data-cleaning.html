@@ -296,6 +296,9 @@ $(document).ready(function () {
 <li>
   <a href="data-cleaning.html">Data cleaning code</a>
 </li>
+<li>
+  <a href="codebook-scored.html">Codebook</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -314,7 +317,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Cleaning and summarizing</h1>
-<h4 class="date">Last updated 2021-04-22</h4>
+<h4 class="date">Last updated 2021-04-27</h4>
 
 </div>
 
@@ -530,13 +533,17 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
   mutate(comb_id = case_when(
     !is.na(prolificID) ~ prolificID,
     !is.na(mTurkCode) ~ as.character(mTurkCode),
-    TRUE ~ NA_character_
-  )) %&gt;%
+    TRUE ~ NA_character_)) %&gt;%
+  mutate(source = case_when(
+    !is.na(prolificID) ~ &quot;Prolific&quot;,
+    !is.na(mTurkCode) ~ &quot;MTurk&quot;,
+    TRUE ~ NA_character_)) %&gt;%
   mutate(row = row_number() + 1000) %&gt;%
   group_by(comb_id) %&gt;%
   mutate(row = min(row)) %&gt;%
   mutate(PID = paste0(&quot;R&quot;, row)) %&gt;%
   ungroup() %&gt;%
+  rename(duration = `Duration (in seconds)`) %&gt;%
   mutate(
     english_cat = case_when(
       english == 1 ~ &quot;Very well (fluent/native)&quot;,
@@ -550,7 +557,7 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
     live_cat = case_when(
       live == 1 ~ &quot;Yes&quot;,
       live == 2 ~ &quot;No&quot;),
-    states = recode(states, 
+    state = recode(states, 
                     !!!c(state.name[1:8], &quot;District of Columbia&quot;, state.name[9:50])
                     ),
     sex = case_when(
@@ -592,7 +599,7 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
 <p>Participants are excluded from analyses if they * complete the survey in less than 3 minutes (180 seconds), * don’t speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
 <pre class="r"><code>demo = demo %&gt;%
   mutate(included = case_when(
-    `Duration (in seconds)` &lt; 180 ~ &quot;No&quot;,
+    duration &lt; 180 ~ &quot;No&quot;,
     english &gt; 2 ~ &quot;No&quot;,
     growup == 2 ~ &quot;No&quot;,
     live == 2 ~ &quot;No&quot;,
@@ -600,9 +607,11 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
   ))</code></pre>
 <p>163 rows are excluded on this basis.</p>
 <pre class="r"><code>demo = demo %&gt;%
-  select(PID, StartDate, `Duration (in seconds)`, english_cat, growup_cat, live_cat, states, age, sex, edu, ethnic, hhinc, included)
+  select(PID, source, StartDate, duration, english_cat, growup_cat, live_cat, state, age, sex, edu, ethnic, hhinc, included)
 
-names(demo) = str_remove(names(demo), &quot;_cat&quot;)</code></pre>
+names(demo) = str_remove(names(demo), &quot;_cat&quot;)
+
+demo$prop_correct &lt;- alldata_scored %&gt;% rowMeans(na.rm = T)</code></pre>
 </div>
 <div id="correct-or-incorrect" class="section level2">
 <h2>Correct or incorrect</h2>
@@ -693,6 +702,7 @@ write_csv(data_recode,
 <p>We also save a shortened version of the master key object.</p>
 <pre class="r"><code>masterKey %&gt;%
   select(item, answer, form) %&gt;%
+  rename(adjective = answer) %&gt;%
   write_csv(file = here(&quot;data/masterkey.csv&quot;))</code></pre>
 </div>
 </div>

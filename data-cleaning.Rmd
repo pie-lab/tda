@@ -246,13 +246,17 @@ demo = all_data %>%
   mutate(comb_id = case_when(
     !is.na(prolificID) ~ prolificID,
     !is.na(mTurkCode) ~ as.character(mTurkCode),
-    TRUE ~ NA_character_
-  )) %>%
+    TRUE ~ NA_character_)) %>%
+  mutate(source = case_when(
+    !is.na(prolificID) ~ "Prolific",
+    !is.na(mTurkCode) ~ "MTurk",
+    TRUE ~ NA_character_)) %>%
   mutate(row = row_number() + 1000) %>%
   group_by(comb_id) %>%
   mutate(row = min(row)) %>%
   mutate(PID = paste0("R", row)) %>%
   ungroup() %>%
+  rename(duration = `Duration (in seconds)`) %>%
   mutate(
     english_cat = case_when(
       english == 1 ~ "Very well (fluent/native)",
@@ -266,7 +270,7 @@ demo = all_data %>%
     live_cat = case_when(
       live == 1 ~ "Yes",
       live == 2 ~ "No"),
-    states = recode(states, 
+    state = recode(states, 
                     !!!c(state.name[1:8], "District of Columbia", state.name[9:50])
                     ),
     sex = case_when(
@@ -316,7 +320,7 @@ Participants are excluded from analyses if they
 ```{r}
 demo = demo %>%
   mutate(included = case_when(
-    `Duration (in seconds)` < 180 ~ "No",
+    duration < 180 ~ "No",
     english > 2 ~ "No",
     growup == 2 ~ "No",
     live == 2 ~ "No",
@@ -328,9 +332,12 @@ demo = demo %>%
 
 ```{r}
 demo = demo %>%
-  select(PID, StartDate, `Duration (in seconds)`, english_cat, growup_cat, live_cat, states, age, sex, edu, ethnic, hhinc, included)
+  select(PID, source, StartDate, duration, english_cat, growup_cat, live_cat, state, age, sex, edu, ethnic, hhinc, included)
 
 names(demo) = str_remove(names(demo), "_cat")
+
+demo$prop_correct <- alldata_scored %>% rowMeans(na.rm = T)
+
 ```
 
 
@@ -416,6 +423,7 @@ We also save a shortened version of the master key object.
 ```{r}
 masterKey %>%
   select(item, answer, form) %>%
+  rename(adjective = answer) %>%
   write_csv(file = here("data/masterkey.csv"))
 ```
 

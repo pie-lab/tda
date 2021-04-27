@@ -11,6 +11,8 @@ navbar:
       href: sample.html
     - text: Data cleaning code
       href: data-cleaning.html
+    - text: Codebook
+      href: codebook-scored.html
   right:
     - icon: fa-github
       href: https://github.com/pie-lab/tda
