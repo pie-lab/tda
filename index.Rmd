@@ -10,4 +10,18 @@ output:
     theme: cosmo
 ---
 
-This is the main page for the website. 
+# Background
+
+A foundational theory in personality assessment – the “Lexical Hypothesis” – posits that all relevant psychological differences between people are marked by trait descriptive adjectives (TDAs), and thus these adjectives could serve as the universe of stimuli which would inform the structure of personality. The full number of TDAs is in the many thousands, and so cannot be administered to any single participant; as a result, early personality psychologists subjectively reduced the set of adjectives administered. This is potentially problematic, as academic researchers may not recognize the obscure nature of some adjectives, especially to individuals with lower levels of education. Later research compounded such bias by using as participants homogenous samples of White, educated, and young individuals (e.g., the Eugene-Springfield Community Sample).  The current study sought to quantify the knowledge of TDAs using a sample of participants recruited to be (close to) representative in terms of age, race/ethnicity, gender, and education. 
+
+# Materials
+
+Using a set of 2,819 TDA adjectives and their definitions, we randomly generated multiple-choice items to test recognition of each TDA. Each item took the following form: the definition was presented, and participants were asked to select the correct adjective from a list of six words. Participants were also given the options of “I don’t know” and “None of these.” The five distractor items were randomly chosen from the set of 2,819. Two items were randomly generated for each TDA, to avoid the possibility that item difficulty estimates were driven artificially low by the chance-inclusion of a similar word. 
+
+Items were separated into Forms A and B (i.e., each TDA had one item on each form). Forms were administered as separate projects on Prolific and MTurk. The correct adjective for each item is stored in the file masterkey.csv. We do not present the definitions in these data, as they may be used in future research. Instead, this information will be added to the International Cognitive Ability Resource project (https://icar-project.com), where interested researchers can access the information after registering.
+
+When participants took the survey, they were presented with a random set of 75 adjective items, in addition to demographic questions. Participant were allowed to take the survey multiple times and also allowed to take both forms A and B. Across all 1,572 participants, we obtained 3,290 responses to the survey. For more information about the participants, see the [Sample characteristics](https://pie-lab.github.io/tda/sample.html) page. 
+
+# Summary statistics 
+
+We calculate for each item the proportion of correct responses. We also calculate the “distractor index”, which reflects the extent to which a single wrong response distracted participants or was selected as the correct answer. This value is calculated by identifying the incorrect answer which received the most endorsements and dividing by the total number of incorrect responses. Responses “I don’t know” and “None of these” will ineligible for being the most endorsed distractor item, although they contribute to the denominator of the index. Thus, the distractor index may be blank if either (1) all participants selected the correct answer or (2) all incorrect responses were either “I don’t know” or “None of these.” These values are presented for each item on the [Item Difficulty](https://pie-lab.github.io/tda/item-difficulty.html) page. The average difficulty of each adjective across forms is included on the [TDA Difficulty](https://pie-lab.github.io/tda/tda-difficulty.html) page.

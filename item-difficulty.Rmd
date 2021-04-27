@@ -9,7 +9,7 @@ output:
 
 We present here the difficulty of more than 5,600 trait descriptive adjectives randomly-generated definition-term items (two forms for each adjective) For each item, we report the total number of responses, the proportion of responses that were correct, the distractor index (see below), and the form (A or B).
 
-The distractor index reflects the extent to which a single wrong response distracted participants, or was selected as the correct answer. This value is calculated by identifying the incorrect answer which received the most endorsements and dividing by the total number of incorrect responses. Responses "I don't know" and "None of these" will inelligible for being the most endorsed distractor item, although they contribute to the denominator of the index. Thus, the distractor index may be blank if either (1) all participants selected the correct answer or (2) all incorrect responses were either "I don't know" or "None of these."
+The distractor index reflects the extent to which a single wrong response distracted participants or was selected as the correct answer. This value is calculated by identifying the incorrect answer which received the most endorsements and dividing by the total number of incorrect responses. Responses "I don't know" and "None of these" will ineligible  for being the most endorsed distractor item, although they contribute to the denominator of the index. Thus, the distractor index may be blank if either (1) all participants selected the correct answer or (2) all incorrect responses were either "I don't know" or "None of these."
 
 Readers interested in the aggregated statistics for each adjective can find those numbers [here](https://pie-lab.github.io/tda/tda-difficulty.html).
 
@@ -93,6 +93,9 @@ item_prop %>%
 ```
 
 ```{r}
-write_csv(item_prop, file = here("data/item_difficulty.csv"))
+item_prop %>%
+  select(item, adjective, N, prop_correct, prop_wrong, form) %>%
+  rename(distractor = prop_wrong) %>%
+  write_csv(file = here("data/item_difficulty.csv"))
 ```
 
