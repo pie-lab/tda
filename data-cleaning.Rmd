@@ -352,14 +352,14 @@ write_csv(data_scored,
 
 ## Response option
 
-First we create a vector for each item that specifies the new labels. All distractors take the form `R1` through `R5`. `Ans` (for the correct answer) is then inserted in the location of the correct response.
+First we create a vector for each item that specifies the new labels. All distractors take the form `D1` through `D5`. `Ans` (for the correct answer) is then inserted in the location of the correct response. We use `IDK` to represent "I don't know" and `None` to represent "None of these."
 
 ```{r}
 
 
 masterKey = masterKey %>%
   mutate(relevel = map(Key, 
-                       ~insert(c("R1","R2","R3","R4","R5","I don't know", "None of these"), 
+                       ~insert(c("D1","D2","D3","D4","D5","IDK", "None"), 
                               at = .x, "Ans")))
 ```
 

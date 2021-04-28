@@ -317,7 +317,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Cleaning and summarizing</h1>
-<h4 class="date">Last updated 2021-04-27</h4>
+<h4 class="date">Last updated 2021-04-28</h4>
 
 </div>
 
@@ -622,10 +622,10 @@ write_csv(data_scored,
 </div>
 <div id="response-option" class="section level2">
 <h2>Response option</h2>
-<p>First we create a vector for each item that specifies the new labels. All distractors take the form <code>R1</code> through <code>R5</code>. <code>Ans</code> (for the correct answer) is then inserted in the location of the correct response.</p>
+<p>First we create a vector for each item that specifies the new labels. All distractors take the form <code>D1</code> through <code>D5</code>. <code>Ans</code> (for the correct answer) is then inserted in the location of the correct response. We use <code>IDK</code> to represent “I don’t know” and <code>None</code> to represent “None of these.”</p>
 <pre class="r"><code>masterKey = masterKey %&gt;%
   mutate(relevel = map(Key, 
-                       ~insert(c(&quot;R1&quot;,&quot;R2&quot;,&quot;R3&quot;,&quot;R4&quot;,&quot;R5&quot;,&quot;I don&#39;t know&quot;, &quot;None of these&quot;), 
+                       ~insert(c(&quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;,&quot;D4&quot;,&quot;D5&quot;,&quot;IDK&quot;, &quot;None&quot;), 
                               at = .x, &quot;Ans&quot;)))</code></pre>
 <p>Next we create a function that takes a vector of responses and the name of the item. The item name is used to identify the correct vector created in the previous code chunk. This is applied using the recode function and the new vector is returned.</p>
 <pre class="r"><code>relevel_fun = function(response, item_name){
@@ -677,7 +677,7 @@ head(recoded_items$data[[1]]) </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##     row response
 ##   &lt;int&gt; &lt;chr&gt;   
-## 1     1 R3      
+## 1     1 D3      
 ## 2     2 &lt;NA&gt;    
 ## 3     3 &lt;NA&gt;    
 ## 4     4 &lt;NA&gt;    
@@ -685,10 +685,8 @@ head(recoded_items$data[[1]]) </code></pre>
 ## 6     6 &lt;NA&gt;</code></pre>
 <pre class="r"><code>table(recoded_items$data[[1]]$response) </code></pre>
 <pre><code>## 
-##           Ans  I don&#39;t know None of these            R1            R2 
-##            20             6             2             1             1 
-##            R3            R4            R5 
-##             5             1             1</code></pre>
+##  Ans   D1   D2   D3   D4   D5  IDK None 
+##   20    1    1    5    1    1    6    2</code></pre>
 <p>We unnest the data frames and spread back into the original format, ending with arrange to ensure the data are in the same rows as before.</p>
 <pre class="r"><code>recoded_items = recoded_items %&gt;% 
   unnest(cols = c(data)) %&gt;%
