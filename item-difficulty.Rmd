@@ -27,7 +27,7 @@ data = read_csv(here("data/TDA_data_scored.csv"))
 masterKey = read_csv(here("data/masterkey.csv"))
 
 data = data %>%
-  filter(included == "Yes") %>% # remove participants screend out for demographic and quality reasons
+  filter(included == "Yes") %>% # remove participants screened out for demographic and quality reasons
   select(starts_with("q_")) # select only TDA items
 
 data_means = colMeans(data, na.rm = T) #calculate column means
