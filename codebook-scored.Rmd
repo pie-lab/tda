@@ -4,7 +4,12 @@ date: "Last updated `r Sys.Date()`"
 output: html_document
 ---
 
-Here we present variable names, descriptions, and summary statistics for the demographic variables and total score column present in both versions of the dataset. We omit the specific items, as there are more than 5,000 of them.
+To cite these data:
+[add data paper reference here]
+
+Here we present codebook information for the demographic variables including summary statistics and distributions for each variable. This information illustrates the specific response options provided for each of these variables. 
+
+We do not provide codebook information for the 5,636 vocabulary items as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to these items.
 
 ```{r setup, include=FALSE}
 knit_by_pkgdown <- !is.null(knitr::opts_chunk$get("fig.retina"))
@@ -31,7 +36,7 @@ codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
 ```
 
 ```{r remove_items}
-codebook_data = select(codebook_data, -starts_with("q_"))
+codebook_data = select(codebook_data, -starts_with("q_"), -PID)
 ```
 
 
@@ -101,7 +106,6 @@ codebook_data = codebook_data %>%
 
 
 ```{r variable labels}
-attributes(codebook_data$PID)$label <- "Participant ID number."
 attributes(codebook_data$source)$label <- "Data collection platform."
 attributes(codebook_data$StartDate)$label <- "Date and time started survey."
 attributes(codebook_data$duration)$label <- "Time in seconds."

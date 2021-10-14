@@ -26,6 +26,8 @@ Items were separated into Forms A and B (i.e., each TDA had one item on each for
 
 When participants took the survey, they were presented with a random set of 75 adjective items, in addition to demographic questions. Participant were allowed to take the survey multiple times and also allowed to take both forms A and B. Across all 1,572 participants, we obtained 3,290 responses to the survey. For more information about the participants, see the [Sample characteristics](https://pie-lab.github.io/tda/sample.html) page. 
 
+FIX https://pie-lab.github.io/tda/data-cleaning.html
+
 # Summary statistics 
 
 We calculate for each item the proportion of correct responses. We also calculate the “distractor index”, which reflects the extent to which a single wrong response distracted participants or was selected as the correct answer. This value is calculated by identifying the incorrect answer which received the most endorsements and dividing by the total number of incorrect responses. Responses “I don’t know” and “None of these” will ineligible for being the most endorsed distractor item, although they contribute to the denominator of the index. Thus, the distractor index may be blank if either (1) all participants selected the correct answer or (2) all incorrect responses were either “I don’t know” or “None of these.” These values are presented for each item on the [Item Difficulty](https://pie-lab.github.io/tda/item-difficulty.html) page. The average difficulty of each adjective across forms is included on the [TDA Difficulty](https://pie-lab.github.io/tda/tda-difficulty.html) page.

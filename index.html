@@ -14,13 +14,21 @@
 
 <title>Trait Descriptive Adjectives</title>
 
-<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -40,11 +48,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -57,32 +60,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
 
@@ -93,10 +70,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -113,40 +86,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -174,7 +120,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -186,7 +132,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -197,10 +143,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -212,7 +171,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -338,13 +296,13 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
 
 
 
@@ -371,9 +329,6 @@ div.tocify {
   <a href="sample.html">Sample characteristics</a>
 </li>
 <li>
-  <a href="data-cleaning.html">Data cleaning code</a>
-</li>
-<li>
   <a href="codebook-scored.html">Codebook</a>
 </li>
       </ul>
@@ -389,7 +344,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -400,8 +355,8 @@ div.tocify {
 </div>
 
 
-<p>All data described on this website are available for download at <a href="https://doi.org/10.7910/DVN/5T80PF">https://doi.org/10.7910/DVN/5T80PF</a>.</p>
-<p>The code used to create this website is available at <a href="https://github.com/pie-lab/tda">https://github.com/pie-lab/tda</a>.</p>
+<p>All data described on this website are available for download at <a href="https://doi.org/10.7910/DVN/5T80PF" class="uri">https://doi.org/10.7910/DVN/5T80PF</a>.</p>
+<p>The code used to create this website is available at <a href="https://github.com/pie-lab/tda" class="uri">https://github.com/pie-lab/tda</a>.</p>
 <div id="background" class="section level1">
 <h1>Background</h1>
 <p>A foundational theory in personality assessment – the “Lexical Hypothesis” – posits that all relevant psychological differences between people are marked by trait descriptive adjectives (TDAs), and thus these adjectives could serve as the universe of stimuli which would inform the structure of personality. The full number of TDAs is in the many thousands, and so cannot be administered to any single participant; as a result, early personality psychologists subjectively reduced the set of adjectives administered. This is potentially problematic, as academic researchers may not recognize the obscure nature of some adjectives, especially to individuals with lower levels of education. Later research compounded such bias by using as participants homogenous samples of White, educated, and young individuals (e.g., the Eugene-Springfield Community Sample). The current study sought to quantify the knowledge of TDAs using a sample of participants recruited to be (close to) representative in terms of age, race/ethnicity, gender, and education.</p>
@@ -411,6 +366,7 @@ div.tocify {
 <p>Using a set of 2,819 TDA adjectives and their definitions, we randomly generated multiple-choice items to test recognition of each TDA. Each item took the following form: the definition was presented, and participants were asked to select the correct adjective from a list of six words. Participants were also given the options of “I don’t know” and “None of these.” The five distractor items were randomly chosen from the set of 2,819. Two items were randomly generated for each TDA, to avoid the possibility that item difficulty estimates were driven artificially low by the chance-inclusion of a similar word.</p>
 <p>Items were separated into Forms A and B (i.e., each TDA had one item on each form). Forms were administered as separate projects on Prolific and MTurk. The correct adjective for each item is stored in the file masterkey.csv. We do not present the definitions in these data, as they may be used in future research. Instead, this information will be added to the International Cognitive Ability Resource project (<a href="https://icar-project.com" class="uri">https://icar-project.com</a>), where interested researchers can access the information after registering.</p>
 <p>When participants took the survey, they were presented with a random set of 75 adjective items, in addition to demographic questions. Participant were allowed to take the survey multiple times and also allowed to take both forms A and B. Across all 1,572 participants, we obtained 3,290 responses to the survey. For more information about the participants, see the <a href="https://pie-lab.github.io/tda/sample.html">Sample characteristics</a> page.</p>
+<p>FIX <a href="https://pie-lab.github.io/tda/data-cleaning.html" class="uri">https://pie-lab.github.io/tda/data-cleaning.html</a></p>
 </div>
 <div id="summary-statistics" class="section level1">
 <h1>Summary statistics</h1>
@@ -446,7 +402,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

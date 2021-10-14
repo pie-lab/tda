@@ -13,13 +13,21 @@
 
 <title>Sample characteristics</title>
 
-<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
@@ -37,11 +45,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -54,32 +57,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
 
@@ -90,10 +67,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -110,40 +83,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -171,7 +117,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -183,7 +129,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -194,10 +140,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -209,7 +168,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -298,9 +256,6 @@ $(document).ready(function () {
   <a href="sample.html">Sample characteristics</a>
 </li>
 <li>
-  <a href="data-cleaning.html">Data cleaning code</a>
-</li>
-<li>
   <a href="codebook-scored.html">Codebook</a>
 </li>
       </ul>
@@ -316,11 +271,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -329,41 +284,35 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Sample characteristics</h1>
-<h4 class="date">Last updated 2021-04-27</h4>
+<h4 class="date">Last updated 2021-10-13</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#sample-characteristics">Sample characteristics</a>
-<ul>
-<li><a href="#age">Age</a>
-<ul>
+<li><a href="#sample-characteristics">Sample characteristics</a><ul>
+<li><a href="#age">Age</a><ul>
 <li><a href="#by-response">By response</a></li>
 <li><a href="#by-participant">By participant</a></li>
 </ul></li>
-<li><a href="#sex">Sex</a>
-<ul>
+<li><a href="#sex">Sex</a><ul>
 <li><a href="#by-response-1">By response</a></li>
 <li><a href="#by-participant-1">By participant</a></li>
 </ul></li>
-<li><a href="#education">Education</a>
-<ul>
+<li><a href="#education">Education</a><ul>
 <li><a href="#by-response-2">By response</a></li>
 <li><a href="#by-participant-2">By participant</a></li>
 </ul></li>
-<li><a href="#ethnicity">Ethnicity</a>
-<ul>
+<li><a href="#ethnicity">Ethnicity</a><ul>
 <li><a href="#by-response-3">By response</a></li>
 <li><a href="#by-participant-3">By participant</a></li>
 </ul></li>
-<li><a href="#household-income">Household income</a>
-<ul>
+<li><a href="#household-income">Household income</a><ul>
 <li><a href="#by-response-4">By response</a></li>
 <li><a href="#by-participant-4">By participant</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#particiant-response-rates">Particiant response rates</a></li>
+<li><a href="#participant-response-rates">Participant response rates</a></li>
 </ul>
 </div>
 
@@ -387,16 +336,15 @@ data_part = data %&gt;%
 <div id="sample-characteristics" class="section level1">
 <h1>Sample characteristics</h1>
 <p>Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).</p>
-<div id="age" class="section level2 tabset">
-<h2 class="tabset">Age</h2>
+<div id="age" class="section level2">
+<h2>Age</h2>
 <div id="by-response" class="section level3">
 <h3>By response</h3>
-<pre class="r"><code>data %&gt;%
-  ggplot(aes(x = age)) +
-  geom_histogram(binwidth = 1, color = &quot;white&quot;) +
-  labs(title = &quot;Age in years&quot;, x= NULL) +
-  theme_pubr()</code></pre>
-<p><img src="sample_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code># data %&gt;%
+#   ggplot(aes(x = age)) +
+#   geom_histogram(binwidth = 1, color = &quot;white&quot;) +
+#   labs(title = &quot;Age in years&quot;, x= NULL) +
+#   theme_pubr()</code></pre>
 </div>
 <div id="by-participant" class="section level3">
 <h3>By participant</h3>
@@ -409,7 +357,7 @@ data_part = data %&gt;%
 </div>
 </div>
 <div id="sex" class="section level2 tabset">
-<h2 class="tabset">Sex</h2>
+<h2>Sex</h2>
 <div id="by-response-1" class="section level3">
 <h3>By response</h3>
 <pre class="r"><code>data %&gt;%
@@ -444,7 +392,7 @@ data_part = data %&gt;%
 </div>
 </div>
 <div id="education" class="section level2 tabset">
-<h2 class="tabset">Education</h2>
+<h2>Education</h2>
 <div id="by-response-2" class="section level3">
 <h3>By response</h3>
 <pre class="r"><code>data %&gt;%
@@ -501,7 +449,7 @@ data_part = data %&gt;%
 </div>
 </div>
 <div id="ethnicity" class="section level2 tabset">
-<h2 class="tabset">Ethnicity</h2>
+<h2>Ethnicity</h2>
 <div id="by-response-3" class="section level3">
 <h3>By response</h3>
 <pre class="r"><code>data %&gt;%
@@ -556,7 +504,7 @@ data_part = data %&gt;%
 </div>
 </div>
 <div id="household-income" class="section level2 tabset">
-<h2 class="tabset">Household income</h2>
+<h2>Household income</h2>
 <div id="by-response-4" class="section level3">
 <h3>By response</h3>
 <pre class="r"><code>data %&gt;%
@@ -621,8 +569,8 @@ data_part = data %&gt;%
 </div>
 </div>
 </div>
-<div id="particiant-response-rates" class="section level1">
-<h1>Particiant response rates</h1>
+<div id="participant-response-rates" class="section level1">
+<h1>Participant response rates</h1>
 <pre class="r"><code>data %&gt;%
   group_by(PID) %&gt;%
   count() %&gt;%
@@ -662,7 +610,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

@@ -13,13 +13,21 @@
 
 <title>Cleaning and summarizing</title>
 
-<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -36,11 +44,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -53,32 +56,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
 
@@ -89,10 +66,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -109,40 +82,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -170,7 +116,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -182,7 +128,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -193,10 +139,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -208,7 +167,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -294,9 +252,6 @@ $(document).ready(function () {
   <a href="sample.html">Sample characteristics</a>
 </li>
 <li>
-  <a href="data-cleaning.html">Data cleaning code</a>
-</li>
-<li>
   <a href="codebook-scored.html">Codebook</a>
 </li>
       </ul>
@@ -312,25 +267,23 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
 <h1 class="title toc-ignore">Cleaning and summarizing</h1>
-<h4 class="date">Last updated 2021-04-28</h4>
+<h4 class="date">Last updated 2021-10-13</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#load-data-and-packages">Load data and packages</a>
-<ul>
+<li><a href="#load-data-and-packages">Load data and packages</a><ul>
 <li><a href="#qualtrics-survey-responses">Qualtrics survey responses</a></li>
 <li><a href="#scoring-keys">Scoring keys</a></li>
 </ul></li>
 <li><a href="#score-data-new">Score data new</a></li>
-<li><a href="#data-for-publication">Data for publication</a>
-<ul>
+<li><a href="#data-for-publication">Data for publication</a><ul>
 <li><a href="#demographics">Demographics</a></li>
 <li><a href="#correct-or-incorrect">Correct or incorrect</a></li>
 <li><a href="#response-option">Response option</a></li>
@@ -347,7 +300,7 @@ library(psych) # for scoring multiple choice items
 library(R.utils) # just for the insert() function</code></pre>
 <div id="qualtrics-survey-responses" class="section level2">
 <h2>Qualtrics survey responses</h2>
-<p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a “names” data frame and then data starting at row 4, for the raw data.</p>
+<p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a &quot;names&quot; data frame and then data starting at row 4, for the raw data.</p>
 <pre class="r"><code># read in form A (Prolific)
 formA_names = read_csv(
   here(&quot;data/Form+A_Prolific_April+2,+2021_15.27.csv&quot;))
@@ -517,7 +470,9 @@ keyC = create_key(keyC) %&gt;%
     &quot;q_23602&quot;,
     &quot;q_24676&quot;,
     &quot;q_25281&quot;,
-    &quot;q_23456&quot;)
+    &quot;q_23456&quot;,
+    &quot;q_20479&quot;,
+    &quot;q_23832&quot;)
 
 remove_which = which(masterKey$item %in% remove_items)
 
@@ -596,7 +551,7 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
       hhinc == 11 ~ &quot;350K-500K&quot;,
       hhinc == 12 ~ &quot;&gt; 500K&quot;,
       hhinc == 13 ~ &quot;Prefer not to say&quot;))</code></pre>
-<p>Participants are excluded from analyses if they * complete the survey in less than 3 minutes (180 seconds), * don’t speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
+<p>Participants are excluded from analyses if they * complete the survey in less than 3 minutes (180 seconds), * don't speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
 <pre class="r"><code>demo = demo %&gt;%
   mutate(included = case_when(
     duration &lt; 180 ~ &quot;No&quot;,
@@ -622,7 +577,7 @@ write_csv(data_scored,
 </div>
 <div id="response-option" class="section level2">
 <h2>Response option</h2>
-<p>First we create a vector for each item that specifies the new labels. All distractors take the form <code>D1</code> through <code>D5</code>. <code>Ans</code> (for the correct answer) is then inserted in the location of the correct response. We use <code>IDK</code> to represent “I don’t know” and <code>None</code> to represent “None of these.”</p>
+<p>First we create a vector for each item that specifies the new labels. All distractors take the form <code>D1</code> through <code>D5</code>. <code>Ans</code> (for the correct answer) is then inserted in the location of the correct response. We use <code>IDK</code> to represent &quot;I don't know&quot; and <code>None</code> to represent &quot;None of these.&quot;</p>
 <pre class="r"><code>masterKey = masterKey %&gt;%
   mutate(relevel = map(Key, 
                        ~insert(c(&quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;,&quot;D4&quot;,&quot;D5&quot;,&quot;IDK&quot;, &quot;None&quot;), 
@@ -633,7 +588,7 @@ write_csv(data_scored,
   new_vector = recode(response, !!!relevel_vector)
   return(new_vector)
 }</code></pre>
-<p>We select just the TDA items and assign each row a unique number. This will help ensure all the responses end up in the correct place when we spread later. Then we stack questions and nest, to create a separate data frame for each item, containing a column called “response.”</p>
+<p>We select just the TDA items and assign each row a unique number. This will help ensure all the responses end up in the correct place when we spread later. Then we stack questions and nest, to create a separate data frame for each item, containing a column called &quot;response.&quot;</p>
 <pre class="r"><code>raw_items = all_data %&gt;%
   select(starts_with(&quot;q_&quot;)) %&gt;%
   mutate(row = row_number()) %&gt;%
@@ -645,14 +600,14 @@ write_csv(data_scored,
 head(raw_items)</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ## # Groups:   item [6]
-##   item    data                
-##   &lt;chr&gt;   &lt;list&gt;              
-## 1 q_20001 &lt;tibble [3,540 × 2]&gt;
-## 2 q_20002 &lt;tibble [3,540 × 2]&gt;
-## 3 q_20003 &lt;tibble [3,540 × 2]&gt;
-## 4 q_20004 &lt;tibble [3,540 × 2]&gt;
-## 5 q_20005 &lt;tibble [3,540 × 2]&gt;
-## 6 q_20006 &lt;tibble [3,540 × 2]&gt;</code></pre>
+##   item    data                    
+##   &lt;chr&gt;   &lt;list&gt;                  
+## 1 q_20001 &lt;tibble[,2] [3,540 × 2]&gt;
+## 2 q_20002 &lt;tibble[,2] [3,540 × 2]&gt;
+## 3 q_20003 &lt;tibble[,2] [3,540 × 2]&gt;
+## 4 q_20004 &lt;tibble[,2] [3,540 × 2]&gt;
+## 5 q_20005 &lt;tibble[,2] [3,540 × 2]&gt;
+## 6 q_20006 &lt;tibble[,2] [3,540 × 2]&gt;</code></pre>
 <pre class="r"><code>head(raw_items$data[[1]]) </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##     row response
@@ -667,7 +622,7 @@ head(raw_items)</code></pre>
 <pre><code>## 
 ##  1  2  3  4  5  6  7  8 
 ##  1  1  5  1 20  1  6  2</code></pre>
-<p>Iterating across items, we apply the <code>relevel</code> function to the dataset, which replaces numeric values with the appropriate categorical value (Ans, R1:R5, I don’t know, and None of these)</p>
+<p>Iterating across items, we apply the <code>relevel</code> function to the dataset, which replaces numeric values with the appropriate categorical value (Ans, R1:R5, I don't know, and None of these)</p>
 <pre class="r"><code>recoded_items = raw_items %&gt;%
   mutate(data = map2(data, item, 
                      ~mutate(.x, response = relevel_fun(response, .y)))) 
@@ -732,7 +687,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

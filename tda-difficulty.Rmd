@@ -7,13 +7,20 @@ output:
     code_folding: hide
 ---
 
-We present here the *average* difficulty of 2,818 trait descriptive adjectives, each assessed using two different, randomly-generated definition-term items. For each adjective, we report the total number of responses across both forms of the item, as well as the total proportion correct.
+To cite these data:
+[add data paper reference here]
 
-The total proportion correct provides an indication of both familiarity of the adjective and consensus among raters about its meaning, especially as a descriptor of personality. For example, most of the terms with a low proportion of correct responses are unfamiliar to many individuals (i.e., rarely encountered in everyday language) -- "goatish" (.07), "pithy" (.10), "splenetic" (.10). Other terms -- "dizzying" (), "smooth" () -- are familiar but ambiguous in meaning relative to personality. By contrast, terms with the highest proportion of correct responses are familiar and unambiguous -- "jolly" (1.00), "thankful" (1.00), "unreliable" (.99).
+We present here the *average* difficulty of 2,818 trait descriptive adjectives (TDAs) in American English. The average difficulty for each TDA was derived from the survey administration of two different, randomly-generated "definition-term" vocabulary items. 
 
-Individual item statistics can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
+On this page, we report the total number of responses across both forms of the item, as well as the average proportion correct across both forms. Two forms were used to reduce variability in the proportion correct resulting from the random generation of alternative response choices (i.e., distractors).
+
+The total proportion correct provides an indication of both familiarity of the adjective and consensus among raters about its meaning, especially as a descriptor of personality. For example, most of the terms with a low proportion of correct responses are unfamiliar to many individuals (i.e., rarely encountered in everyday language) -- "goatish" (.07), "pithy" (.10), "splenetic" (.10). Other terms -- "dizzying" (.04), "smooth" (.09) -- are familiar but ambiguous in meaning relative to personality. By contrast, terms with the highest proportion of correct responses are familiar and unambiguous -- "jolly" (1.00), "thankful" (1.00), "unreliable" (.99).
+
+Statistics from the individual administrations of each term can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
 
 The data can be downloaded [here](XXXXX)
+
+Please consult the reference listed above for more information about this project.
 
 ```{r, include = F}
 knitr::opts_chunk$set(echo = T, message = F, warning = F)

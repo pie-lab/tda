@@ -228,7 +228,9 @@ remove_items = c(
     "q_23602",
     "q_24676",
     "q_25281",
-    "q_23456")
+    "q_23456",
+    "q_20479",
+    "q_23832")
 
 remove_which = which(masterKey$item %in% remove_items)
 

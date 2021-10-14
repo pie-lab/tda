@@ -9,8 +9,6 @@ navbar:
       href: item-difficulty.html
     - text: Sample characteristics
       href: sample.html
-    - text: Data cleaning code
-      href: data-cleaning.html
     - text: Codebook
       href: codebook-scored.html
   right:

@@ -7,11 +7,16 @@ output:
     code_folding: hide
 ---
 
-We present here the difficulty of more than 5,600 trait descriptive adjectives randomly-generated definition-term items (two forms for each adjective) For each item, we report the total number of responses, the proportion of responses that were correct, the distractor index (see below), and the form (A or B).
+To cite these data:
+[add data paper reference here]
 
-The distractor index reflects the extent to which a single wrong response distracted participants or was selected as the correct answer. This value is calculated by identifying the incorrect answer which received the most endorsements and dividing by the total number of incorrect responses. Responses "I don't know" and "None of these" will ineligible  for being the most endorsed distractor item, although they contribute to the denominator of the index. Thus, the distractor index may be blank if either (1) all participants selected the correct answer or (2) all incorrect responses were either "I don't know" or "None of these."
+This page lists information from each of the two forms used to derive the [average proportion correct](https://pie-lab.github.io/tda/tda-difficulty.html) for each of the 2,818 unique trait descriptive adjectives. Specifically, it contains the item label ("q_2XXXX"), trait descriptive adjective (e.g., "stern"), total number of respondents for the item (N), the proportion of respondents who correctly matched the term with its definition (e.g., .92), the distractor index value (see below), and the form for the item (A or B). Again, each adjective was administered in two different forms (A and B), with different alternative response options across the two forms. The alternative response options were generated randomly from the full pool of adjectives (i.e., the remaining 2,817 options).
 
-Readers interested in the aggregated statistics for each adjective can find those numbers [here](https://pie-lab.github.io/tda/tda-difficulty.html).
+The mean proportion correct for each adjective across both forms can be found [here](https://pie-lab.github.io/tda/tda-difficulty.html).
+
+The data can be downloaded [here](XXXXX)
+
+Please consult the reference listed above for more information about this project.
 
 ```{r, include = F}
 knitr::opts_chunk$set(echo = T, message = F, warning = F)
