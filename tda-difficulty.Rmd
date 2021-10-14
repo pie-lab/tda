@@ -7,10 +7,13 @@ output:
     code_folding: hide
 ---
 
-We present here the difficulty of nearly 2,900 trait descriptive adjectives, each assessed using two different, randomly-generated definition-term items. For each adjective, we report the total number of responses across both forms of the item, as well as the total proportion correct. 
+We present here the *average* difficulty of 2,818 trait descriptive adjectives, each assessed using two different, randomly-generated definition-term items. For each adjective, we report the total number of responses across both forms of the item, as well as the total proportion correct.
+
+The total proportion correct provides an indication of both familiarity of the adjective and consensus among raters about its meaning, especially as a descriptor of personality. For example, most of the terms with a low proportion of correct responses are unfamiliar to many individuals (i.e., rarely encountered in everyday language) -- "goatish" (.07), "pithy" (.10), "splenetic" (.10). Other terms -- "dizzying" (), "smooth" () -- are familiar but ambiguous in meaning relative to personality. By contrast, terms with the highest proportion of correct responses are familiar and unambiguous -- "jolly" (1.00), "thankful" (1.00), "unreliable" (.99).
 
 Individual item statistics can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
 
+The data can be downloaded [here](XXXXX)
 
 ```{r, include = F}
 knitr::opts_chunk$set(echo = T, message = F, warning = F)
