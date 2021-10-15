@@ -300,15 +300,17 @@ $(document).ready(function () {
 </div>
 
 
-<p><u>To cite these data:</u></p>
+<p><u>**To cite these <a href="data:**" class="uri">data:**</a></u></p>
 <p>[add data paper reference here]</p>
 <p>Here we present codebook information for the demographic variables including summary statistics and distributions for each. Note that codebook information for the 5,636 vocabulary items has been omitted as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to this information.</p>
+<p>The data can be downloaded <a href="https://doi.org/10.7910/DVN/5T80PF">here</a>.</p>
+<p>Please consult the reference listed above for more information about this project.</p>
 <div id="metadata" class="section level3">
 <h3>Metadata</h3>
 <div id="description" class="section level4">
 <h4>Description</h4>
 <p><strong>Dataset name</strong>: Trait descriptive adjectives (scored)</p>
-<p>The dataset has N=3540 rows and 14 columns. 3320 rows have no missing values on any column.</p>
+<p>The dataset has N=3540 rows and 11 columns. 3320 rows have no missing values on any column.</p>
 <p><details> <summary title="Expand this section to see some additional metadata in a structured format that is useful for search engines">Metadata for search engines</summary></p>
 <ul>
 <li><strong>Temporal Coverage</strong>: Spring 2020 and Spring 2021</li>
@@ -345,12 +347,6 @@ $(document).ready(function () {
 <td align="left">source</td>
 </tr>
 <tr class="even">
-<td align="left">StartDate</td>
-</tr>
-<tr class="odd">
-<td align="left">duration</td>
-</tr>
-<tr class="even">
 <td align="left">english</td>
 </tr>
 <tr class="odd">
@@ -378,9 +374,6 @@ $(document).ready(function () {
 <td align="left">hhinc</td>
 </tr>
 <tr class="odd">
-<td align="left">included</td>
-</tr>
-<tr class="even">
 <td align="left">prop_correct</td>
 </tr>
 </tbody>
@@ -441,113 +434,13 @@ Distribution of values for source
 </table>
 </div>
 </div>
-<div id="StartDate" class="section level3 tabset">
-<h3>StartDate</h3>
-<p>Date and time started survey.</p>
-<div id="StartDate_distribution" class="section level4">
-<h4>Distribution</h4>
-<pre><code>## 60  unique, categorical values, so not shown.</code></pre>
-<p>0 missing values.</p>
-</div>
-<div id="StartDate_summary" class="section level4">
-<h4>Summary statistics</h4>
-<table style="width:100%;">
-<colgroup>
-<col width="8%" />
-<col width="24%" />
-<col width="8%" />
-<col width="8%" />
-<col width="11%" />
-<col width="7%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">name</th>
-<th align="left">label</th>
-<th align="left">data_type</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="right">n_unique</th>
-<th align="left">min</th>
-<th align="left">median</th>
-<th align="left">max</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">StartDate</td>
-<td align="left">Date and time started survey.</td>
-<td align="left">Date</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">60</td>
-<td align="left">2020-04-27</td>
-<td align="left">2020-06-18</td>
-<td align="left">2021-04-16</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="duration" class="section level3 tabset">
-<h3>duration</h3>
-<p>Time in seconds.</p>
-<div id="duration_distribution" class="section level4">
-<h4>Distribution</h4>
-<div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_duration_distribution-23-1.png" alt="Distribution of values for duration" width="672" />
-<p class="caption">
-Distribution of values for duration
-</p>
-</div>
-<p>0 missing values.</p>
-</div>
-<div id="duration_summary" class="section level4">
-<h4>Summary statistics</h4>
-<table>
-<thead>
-<tr class="header">
-<th align="left">name</th>
-<th align="left">label</th>
-<th align="left">data_type</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="left">min</th>
-<th align="left">median</th>
-<th align="left">max</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-<th align="left">hist</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">duration</td>
-<td align="left">Time in seconds.</td>
-<td align="left">numeric</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="left">2</td>
-<td align="left">822</td>
-<td align="left">244941</td>
-<td align="right">1072.066</td>
-<td align="right">5708.178</td>
-<td align="left">▇▁▁▁▁</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <div id="english" class="section level3 tabset">
 <h3>english</h3>
 <p>How well do you speak English?</p>
 <div id="english_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_english_distribution-30-1.png" alt="Distribution of values for english" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_english_distribution-16-1.png" alt="Distribution of values for english" width="672" />
 <p class="caption">
 Distribution of values for english
 </p>
@@ -603,7 +496,7 @@ Distribution of values for english
 <div id="growup_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_growup_distribution-37-1.png" alt="Distribution of values for growup" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_growup_distribution-23-1.png" alt="Distribution of values for growup" width="672" />
 <p class="caption">
 Distribution of values for growup
 </p>
@@ -659,7 +552,7 @@ Distribution of values for growup
 <div id="live_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_live_distribution-44-1.png" alt="Distribution of values for live" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_live_distribution-30-1.png" alt="Distribution of values for live" width="672" />
 <p class="caption">
 Distribution of values for live
 </p>
@@ -766,7 +659,7 @@ Distribution of values for live
 <div id="age_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_age_distribution-58-1.png" alt="Distribution of values for age" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_age_distribution-44-1.png" alt="Distribution of values for age" width="672" />
 <p class="caption">
 Distribution of values for age
 </p>
@@ -815,7 +708,7 @@ Distribution of values for age
 <div id="sex_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_sex_distribution-65-1.png" alt="Distribution of values for sex" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_sex_distribution-51-1.png" alt="Distribution of values for sex" width="672" />
 <p class="caption">
 Distribution of values for sex
 </p>
@@ -871,7 +764,7 @@ Distribution of values for sex
 <div id="edu_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_edu_distribution-72-1.png" alt="Distribution of values for edu" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_edu_distribution-58-1.png" alt="Distribution of values for edu" width="672" />
 <p class="caption">
 Distribution of values for edu
 </p>
@@ -927,7 +820,7 @@ Distribution of values for edu
 <div id="ethnic_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_ethnic_distribution-79-1.png" alt="Distribution of values for ethnic" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_ethnic_distribution-65-1.png" alt="Distribution of values for ethnic" width="672" />
 <p class="caption">
 Distribution of values for ethnic
 </p>
@@ -983,7 +876,7 @@ Distribution of values for ethnic
 <div id="hhinc_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_hhinc_distribution-86-1.png" alt="Distribution of values for hhinc" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_hhinc_distribution-72-1.png" alt="Distribution of values for hhinc" width="672" />
 <p class="caption">
 Distribution of values for hhinc
 </p>
@@ -1033,72 +926,13 @@ Distribution of values for hhinc
 </table>
 </div>
 </div>
-<div id="included" class="section level3 tabset">
-<h3>included</h3>
-<p>Row included in calculation of item and TDA difficulty.</p>
-<div id="included_distribution" class="section level4">
-<h4>Distribution</h4>
-<div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_included_distribution-93-1.png" alt="Distribution of values for included" width="672" />
-<p class="caption">
-Distribution of values for included
-</p>
-</div>
-<p>0 missing values.</p>
-</div>
-<div id="included_summary" class="section level4">
-<h4>Summary statistics</h4>
-<table>
-<colgroup>
-<col width="6%" />
-<col width="39%" />
-<col width="7%" />
-<col width="7%" />
-<col width="10%" />
-<col width="6%" />
-<col width="4%" />
-<col width="3%" />
-<col width="3%" />
-<col width="8%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">name</th>
-<th align="left">label</th>
-<th align="left">data_type</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="right">n_unique</th>
-<th align="right">empty</th>
-<th align="left">min</th>
-<th align="left">max</th>
-<th align="right">whitespace</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">included</td>
-<td align="left">Row included in calculation of item and TDA difficulty.</td>
-<td align="left">character</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="left">2</td>
-<td align="left">3</td>
-<td align="right">0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <div id="prop_correct" class="section level3 tabset">
 <h3>prop_correct</h3>
 <p>Proportion of correct responses.</p>
 <div id="prop_correct_distribution" class="section level4">
 <h4>Distribution</h4>
 <div class="figure">
-<img src="codebook-scored_files/figure-html/cb_codebook_data_prop_correct_distribution-100-1.png" alt="Distribution of values for prop_correct" width="672" />
+<img src="codebook-scored_files/figure-html/cb_codebook_data_prop_correct_distribution-79-1.png" alt="Distribution of values for prop_correct" width="672" />
 <p class="caption">
 Distribution of values for prop_correct
 </p>
@@ -1164,8 +998,8 @@ Distribution of values for prop_correct
 </div>
 <div id="codebook-table" class="section level2">
 <h2>Codebook table</h2>
-<div id="htmlwidget-cf73e2a44d9140fd7d73" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cf73e2a44d9140fd7d73">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"logical\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;true&quot;,&quot;false&quot;,&quot;na&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"192\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.945762711864406\" data-max=\"1\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"60\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.722307240801758\" data-max=\"1072.06610169492\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.196165833625404\" data-max=\"5708.17847879556\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["<a href=\"#source\">source<\/a>","<a href=\"#StartDate\">StartDate<\/a>","<a href=\"#duration\">duration<\/a>","<a href=\"#english\">english<\/a>","<a href=\"#growup\">growup<\/a>","<a href=\"#live\">live<\/a>","<a href=\"#state\">state<\/a>","<a href=\"#age\">age<\/a>","<a href=\"#sex\">sex<\/a>","<a href=\"#edu\">edu<\/a>","<a href=\"#ethnic\">ethnic<\/a>","<a href=\"#hhinc\">hhinc<\/a>","<a href=\"#included\">included<\/a>","<a href=\"#prop_correct\">prop_correct<\/a>"],["Data collection platform.","Date and time started survey.","Time in seconds.","How well do you speak English?","Where did you grow up?","Do you currently live in one of the 50 states of the USA or the District of Columbia?","Please select the state where you currently live (or spend the most time).","Age (in years).","Biological sex at birth.","Level of education.","Racial or ethnic background.","Household income.","Row included in calculation of item and TDA difficulty.","Proportion of correct responses."],["character","Date","numeric","factor","factor","factor","factor","numeric","factor","factor","factor","factor","character","numeric"],[null,null,null,false,false,false,false,null,false,false,false,false,null,null],[null,null,null,"1. Very well (fluent/native),<br>2. Well,<br>3. Not well,<br>4. Not at all (Need translation)","1. United States of America,<br>2. Outside of the US","1. Yes,<br>2. No","1. Alabama,<br>2. Alaska,<br>3. Arizona,<br>4. Arkansas,<br>5. California,<br>6. Colorado,<br>7. Connecticut,<br>8. Delaware,<br>9. District of Columbia,<br>10. Florida,<br>11. Georgia,<br>12. Hawaii,<br>13. Idaho,<br>14. Illinois,<br>15. Indiana,<br>16. Iowa,<br>17. Kansas,<br>18. Kentucky,<br>19. Louisiana,<br>20. Maine,<br>21. Maryland,<br>22. Massachusetts,<br>23. Michigan,<br>24. Minnesota,<br>25. Mississippi,<br>26. Missouri,<br>27. Montana,<br>28. Nebraska,<br>29. Nevada,<br>30. New Hampshire,<br>31. New Jersey,<br>32. New Mexico,<br>33. New York,<br>34. North Carolina,<br>35. North Dakota,<br>36. Ohio,<br>37. Oklahoma,<br>38. Oregon,<br>39. Pennsylvania,<br>40. Rhode Island,<br>41. South Carolina,<br>42. South Dakota,<br>43. Tennessee,<br>44. Texas,<br>45. Utah,<br>46. Vermont,<br>47. Virginia,<br>48. Washington,<br>49. West Virginia,<br>50. Wisconsin,<br>51. Wyoming",null,"1. Male,<br>2. Female,<br>3. Other,<br>4. Prefer not to say","1. Less than 12 years,<br>2. High school grad/GED,<br>3. Currently in college/university,<br>4. Some college/university, but did not graduate,<br>5. Associate degree (2 yr),<br>6. College/university degree (4 yr),<br>7. Currently in grad/professional school,<br>8. Grad/professional degree","1. American Indian/Alaskan Native,<br>2. Asian,<br>3. Black,<br>4. Hispanic,<br>5. White,<br>6. Mixed (two or more),<br>7. Other","1. &lt; 20K,<br>2. 20K-40K,<br>3. 40K-60K,<br>4. 60K-80K,<br>5. 80K-100K,<br>6. 100K-120K,<br>7. 120K-150K,<br>8. 150K-200K,<br>9. 200K-250K,<br>10. 250K-350K,<br>11. 350K-500K,<br>12. &gt; 500K,<br>13. Prefer not to say",null,null],[12,0,0,18,20,23,133,31,31,31,33,33,0,192],[0.996610169491525,1,1,0.994915254237288,0.994350282485876,0.993502824858757,0.962429378531073,0.991242937853107,0.991242937853107,0.991242937853107,0.990677966101695,0.990677966101695,1,0.945762711864407],[2,60,null,4,2,2,49,null,3,8,7,13,2,null],[0,null,null,null,null,null,null,null,null,null,null,null,0,null],[null,null,null,"Ver: 3391, Wel: 126, Not: 4, Not: 1","Uni: 3422, Out: 98","Yes: 3409, No: 108","Cal: 373, Ten: 256, Dis: 249, New: 249",null,"Fem: 1840, Mal: 1662, Oth: 7, Pre: 0","Som: 1468, Hig: 1388, Cur: 307, Ass: 137","Whi: 2556, Bla: 371, Asi: 218, His: 179","20K: 959, < 2: 723, 40K: 630, 60K: 448",null,null],["5","2020-04-27"," 2",null,null,null,null,"18",null,null,null,null,"2"," 0"],[null,"2020-06-18","822.00",null,null,null,null," 40.00",null,null,null,null,null,"  0.77"],["8","2021-04-16","244941",null,null,null,null,"    82",null,null,null,null,"3","     1"],[null,null,1072.06610169492,null,null,null,null,41.5314904531205,null,null,null,null,null,0.722307240801758],[null,null,5708.17847879556,null,null,null,null,15.4696688031948,null,null,null,null,null,0.196165833625405],[0,null,null,null,null,null,null,null,null,null,null,null,0,null],[null,null,"▇▁▁▁▁",null,null,null,null,"▇▇▆▅▁",null,null,null,null,null,"▁▁▂▇▇"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>label<\/th>\n      <th>data_type<\/th>\n      <th>ordered<\/th>\n      <th>value_labels<\/th>\n      <th>n_missing<\/th>\n      <th>complete_rate<\/th>\n      <th>n_unique<\/th>\n      <th>empty<\/th>\n      <th>top_counts<\/th>\n      <th>min<\/th>\n      <th>median<\/th>\n      <th>max<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n      <th>whitespace<\/th>\n      <th>hist<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["copy","csv","excel","pdf","print"],"pageLength":200,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,13,14,15]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,25,50,100,200]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-94c3d312e49a3e2bfad4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-94c3d312e49a3e2bfad4">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"logical\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;true&quot;,&quot;false&quot;,&quot;na&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"12\" data-max=\"192\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.945762711864406\" data-max=\"0.996610169491526\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"49\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.722307240801758\" data-max=\"41.5314904531205\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.196165833625404\" data-max=\"15.4696688031948\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["<a href=\"#source\">source<\/a>","<a href=\"#english\">english<\/a>","<a href=\"#growup\">growup<\/a>","<a href=\"#live\">live<\/a>","<a href=\"#state\">state<\/a>","<a href=\"#age\">age<\/a>","<a href=\"#sex\">sex<\/a>","<a href=\"#edu\">edu<\/a>","<a href=\"#ethnic\">ethnic<\/a>","<a href=\"#hhinc\">hhinc<\/a>","<a href=\"#prop_correct\">prop_correct<\/a>"],["Data collection platform.","How well do you speak English?","Where did you grow up?","Do you currently live in one of the 50 states of the USA or the District of Columbia?","Please select the state where you currently live (or spend the most time).","Age (in years).","Biological sex at birth.","Level of education.","Racial or ethnic background.","Household income.","Proportion of correct responses."],["character","factor","factor","factor","factor","numeric","factor","factor","factor","factor","numeric"],[null,false,false,false,false,null,false,false,false,false,null],[null,"1. Very well (fluent/native),<br>2. Well,<br>3. Not well,<br>4. Not at all (Need translation)","1. United States of America,<br>2. Outside of the US","1. Yes,<br>2. No","1. Alabama,<br>2. Alaska,<br>3. Arizona,<br>4. Arkansas,<br>5. California,<br>6. Colorado,<br>7. Connecticut,<br>8. Delaware,<br>9. District of Columbia,<br>10. Florida,<br>11. Georgia,<br>12. Hawaii,<br>13. Idaho,<br>14. Illinois,<br>15. Indiana,<br>16. Iowa,<br>17. Kansas,<br>18. Kentucky,<br>19. Louisiana,<br>20. Maine,<br>21. Maryland,<br>22. Massachusetts,<br>23. Michigan,<br>24. Minnesota,<br>25. Mississippi,<br>26. Missouri,<br>27. Montana,<br>28. Nebraska,<br>29. Nevada,<br>30. New Hampshire,<br>31. New Jersey,<br>32. New Mexico,<br>33. New York,<br>34. North Carolina,<br>35. North Dakota,<br>36. Ohio,<br>37. Oklahoma,<br>38. Oregon,<br>39. Pennsylvania,<br>40. Rhode Island,<br>41. South Carolina,<br>42. South Dakota,<br>43. Tennessee,<br>44. Texas,<br>45. Utah,<br>46. Vermont,<br>47. Virginia,<br>48. Washington,<br>49. West Virginia,<br>50. Wisconsin,<br>51. Wyoming",null,"1. Male,<br>2. Female,<br>3. Other,<br>4. Prefer not to say","1. Less than 12 years,<br>2. High school grad/GED,<br>3. Currently in college/university,<br>4. Some college/university, but did not graduate,<br>5. Associate degree (2 yr),<br>6. College/university degree (4 yr),<br>7. Currently in grad/professional school,<br>8. Grad/professional degree","1. American Indian/Alaskan Native,<br>2. Asian,<br>3. Black,<br>4. Hispanic,<br>5. White,<br>6. Mixed (two or more),<br>7. Other","1. &lt; 20K,<br>2. 20K-40K,<br>3. 40K-60K,<br>4. 60K-80K,<br>5. 80K-100K,<br>6. 100K-120K,<br>7. 120K-150K,<br>8. 150K-200K,<br>9. 200K-250K,<br>10. 250K-350K,<br>11. 350K-500K,<br>12. &gt; 500K,<br>13. Prefer not to say",null],[12,18,20,23,133,31,31,31,33,33,192],[0.996610169491525,0.994915254237288,0.994350282485876,0.993502824858757,0.962429378531073,0.991242937853107,0.991242937853107,0.991242937853107,0.990677966101695,0.990677966101695,0.945762711864407],[2,4,2,2,49,null,3,8,7,13,null],[0,null,null,null,null,null,null,null,null,null,null],[null,"Ver: 3391, Wel: 126, Not: 4, Not: 1","Uni: 3422, Out: 98","Yes: 3409, No: 108","Cal: 373, Ten: 256, Dis: 249, New: 249",null,"Fem: 1840, Mal: 1662, Oth: 7, Pre: 0","Som: 1468, Hig: 1388, Cur: 307, Ass: 137","Whi: 2556, Bla: 371, Asi: 218, His: 179","20K: 959, < 2: 723, 40K: 630, 60K: 448",null],["5",null,null,null,null,"18",null,null,null,null," 0"],[null,null,null,null,null,"40.00",null,null,null,null," 0.77"],["8",null,null,null,null,"82",null,null,null,null," 1"],[null,null,null,null,null,41.5314904531205,null,null,null,null,0.722307240801758],[null,null,null,null,null,15.4696688031948,null,null,null,null,0.196165833625405],[0,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,"▇▇▆▅▁",null,null,null,null,"▁▁▂▇▇"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>label<\/th>\n      <th>data_type<\/th>\n      <th>ordered<\/th>\n      <th>value_labels<\/th>\n      <th>n_missing<\/th>\n      <th>complete_rate<\/th>\n      <th>n_unique<\/th>\n      <th>empty<\/th>\n      <th>top_counts<\/th>\n      <th>min<\/th>\n      <th>median<\/th>\n      <th>max<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n      <th>whitespace<\/th>\n      <th>hist<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["copy","csv","excel","pdf","print"],"pageLength":200,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,13,14,15]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,25,50,100,200]}},"evals":[],"jsHooks":[]}</script>
 <script type="application/ld+json">
 {
   "name": "Trait descriptive adjectives (scored)",
@@ -1173,24 +1007,14 @@ Distribution of values for prop_correct
   "temporalCoverage": "Spring 2020 and Spring 2021",
   "spatialCoverage": "Online",
   "datePublished": "2021-10-14",
-  "description": "The dataset has N=3540 rows and 14 columns.\n3320 rows have no missing values on any column.\n\n\n## Table of variables\nThis table contains variable names, labels, and number of missing values.\nSee the complete codebook for more.\n\n|name         |label                                                                                 | n_missing|\n|:------------|:-------------------------------------------------------------------------------------|---------:|\n|source       |Data collection platform.                                                             |        12|\n|StartDate    |Date and time started survey.                                                         |         0|\n|duration     |Time in seconds.                                                                      |         0|\n|english      |How well do you speak English?                                                        |        18|\n|growup       |Where did you grow up?                                                                |        20|\n|live         |Do you currently live in one of the 50 states of the USA or the District of Columbia? |        23|\n|state        |Please select the state where you currently live (or spend the most time).            |       133|\n|age          |Age (in years).                                                                       |        31|\n|sex          |Biological sex at birth.                                                              |        31|\n|edu          |Level of education.                                                                   |        31|\n|ethnic       |Racial or ethnic background.                                                          |        33|\n|hhinc        |Household income.                                                                     |        33|\n|included     |Row included in calculation of item and TDA difficulty.                               |         0|\n|prop_correct |Proportion of correct responses.                                                      |       192|\n\n### Note\nThis dataset was automatically described using the [codebook R package](https://rubenarslan.github.io/codebook/) (version 0.9.2).",
-  "keywords": ["source", "StartDate", "duration", "english", "growup", "live", "state", "age", "sex", "edu", "ethnic", "hhinc", "included", "prop_correct"],
+  "description": "The dataset has N=3540 rows and 11 columns.\n3320 rows have no missing values on any column.\n\n\n## Table of variables\nThis table contains variable names, labels, and number of missing values.\nSee the complete codebook for more.\n\n|name         |label                                                                                 | n_missing|\n|:------------|:-------------------------------------------------------------------------------------|---------:|\n|source       |Data collection platform.                                                             |        12|\n|english      |How well do you speak English?                                                        |        18|\n|growup       |Where did you grow up?                                                                |        20|\n|live         |Do you currently live in one of the 50 states of the USA or the District of Columbia? |        23|\n|state        |Please select the state where you currently live (or spend the most time).            |       133|\n|age          |Age (in years).                                                                       |        31|\n|sex          |Biological sex at birth.                                                              |        31|\n|edu          |Level of education.                                                                   |        31|\n|ethnic       |Racial or ethnic background.                                                          |        33|\n|hhinc        |Household income.                                                                     |        33|\n|prop_correct |Proportion of correct responses.                                                      |       192|\n\n### Note\nThis dataset was automatically described using the [codebook R package](https://rubenarslan.github.io/codebook/) (version 0.9.2).",
+  "keywords": ["source", "english", "growup", "live", "state", "age", "sex", "edu", "ethnic", "hhinc", "prop_correct"],
   "@context": "http://schema.org/",
   "@type": "Dataset",
   "variableMeasured": [
     {
       "name": "source",
       "description": "Data collection platform.",
-      "@type": "propertyValue"
-    },
-    {
-      "name": "StartDate",
-      "description": "Date and time started survey.",
-      "@type": "propertyValue"
-    },
-    {
-      "name": "duration",
-      "description": "Time in seconds.",
       "@type": "propertyValue"
     },
     {
@@ -1247,11 +1071,6 @@ Distribution of values for prop_correct
       "@type": "propertyValue"
     },
     {
-      "name": "included",
-      "description": "Row included in calculation of item and TDA difficulty.",
-      "@type": "propertyValue"
-    },
-    {
       "name": "prop_correct",
       "description": "Proportion of correct responses.",
       "@type": "propertyValue"
@@ -1266,24 +1085,14 @@ Distribution of values for prop_correct
   &quot;temporalCoverage&quot;: &quot;Spring 2020 and Spring 2021&quot;,
   &quot;spatialCoverage&quot;: &quot;Online&quot;,
   &quot;datePublished&quot;: &quot;2021-10-14&quot;,
-  &quot;description&quot;: &quot;The dataset has N=3540 rows and 14 columns.\n3320 rows have no missing values on any column.\n\n\n## Table of variables\nThis table contains variable names, labels, and number of missing values.\nSee the complete codebook for more.\n\n|name         |label                                                                                 | n_missing|\n|:------------|:-------------------------------------------------------------------------------------|---------:|\n|source       |Data collection platform.                                                             |        12|\n|StartDate    |Date and time started survey.                                                         |         0|\n|duration     |Time in seconds.                                                                      |         0|\n|english      |How well do you speak English?                                                        |        18|\n|growup       |Where did you grow up?                                                                |        20|\n|live         |Do you currently live in one of the 50 states of the USA or the District of Columbia? |        23|\n|state        |Please select the state where you currently live (or spend the most time).            |       133|\n|age          |Age (in years).                                                                       |        31|\n|sex          |Biological sex at birth.                                                              |        31|\n|edu          |Level of education.                                                                   |        31|\n|ethnic       |Racial or ethnic background.                                                          |        33|\n|hhinc        |Household income.                                                                     |        33|\n|included     |Row included in calculation of item and TDA difficulty.                               |         0|\n|prop_correct |Proportion of correct responses.                                                      |       192|\n\n### Note\nThis dataset was automatically described using the [codebook R package](https://rubenarslan.github.io/codebook/) (version 0.9.2).&quot;,
-  &quot;keywords&quot;: [&quot;source&quot;, &quot;StartDate&quot;, &quot;duration&quot;, &quot;english&quot;, &quot;growup&quot;, &quot;live&quot;, &quot;state&quot;, &quot;age&quot;, &quot;sex&quot;, &quot;edu&quot;, &quot;ethnic&quot;, &quot;hhinc&quot;, &quot;included&quot;, &quot;prop_correct&quot;],
+  &quot;description&quot;: &quot;The dataset has N=3540 rows and 11 columns.\n3320 rows have no missing values on any column.\n\n\n## Table of variables\nThis table contains variable names, labels, and number of missing values.\nSee the complete codebook for more.\n\n|name         |label                                                                                 | n_missing|\n|:------------|:-------------------------------------------------------------------------------------|---------:|\n|source       |Data collection platform.                                                             |        12|\n|english      |How well do you speak English?                                                        |        18|\n|growup       |Where did you grow up?                                                                |        20|\n|live         |Do you currently live in one of the 50 states of the USA or the District of Columbia? |        23|\n|state        |Please select the state where you currently live (or spend the most time).            |       133|\n|age          |Age (in years).                                                                       |        31|\n|sex          |Biological sex at birth.                                                              |        31|\n|edu          |Level of education.                                                                   |        31|\n|ethnic       |Racial or ethnic background.                                                          |        33|\n|hhinc        |Household income.                                                                     |        33|\n|prop_correct |Proportion of correct responses.                                                      |       192|\n\n### Note\nThis dataset was automatically described using the [codebook R package](https://rubenarslan.github.io/codebook/) (version 0.9.2).&quot;,
+  &quot;keywords&quot;: [&quot;source&quot;, &quot;english&quot;, &quot;growup&quot;, &quot;live&quot;, &quot;state&quot;, &quot;age&quot;, &quot;sex&quot;, &quot;edu&quot;, &quot;ethnic&quot;, &quot;hhinc&quot;, &quot;prop_correct&quot;],
   &quot;@context&quot;: &quot;http://schema.org/&quot;,
   &quot;@type&quot;: &quot;Dataset&quot;,
   &quot;variableMeasured&quot;: [
     {
       &quot;name&quot;: &quot;source&quot;,
       &quot;description&quot;: &quot;Data collection platform.&quot;,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    },
-    {
-      &quot;name&quot;: &quot;StartDate&quot;,
-      &quot;description&quot;: &quot;Date and time started survey.&quot;,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    },
-    {
-      &quot;name&quot;: &quot;duration&quot;,
-      &quot;description&quot;: &quot;Time in seconds.&quot;,
       &quot;@type&quot;: &quot;propertyValue&quot;
     },
     {
@@ -1337,11 +1146,6 @@ Distribution of values for prop_correct
       &quot;name&quot;: &quot;hhinc&quot;,
       &quot;description&quot;: &quot;Household income.&quot;,
       &quot;value&quot;: &quot;1. &lt; 20K,\n2. 20K-40K,\n3. 40K-60K,\n4. 60K-80K,\n5. 80K-100K,\n6. 100K-120K,\n7. 120K-150K,\n8. 150K-200K,\n9. 200K-250K,\n10. 250K-350K,\n11. 350K-500K,\n12. &gt; 500K,\n13. Prefer not to say&quot;,
-      &quot;@type&quot;: &quot;propertyValue&quot;
-    },
-    {
-      &quot;name&quot;: &quot;included&quot;,
-      &quot;description&quot;: &quot;Row included in calculation of item and TDA difficulty.&quot;,
       &quot;@type&quot;: &quot;propertyValue&quot;
     },
     {
