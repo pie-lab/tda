@@ -4,11 +4,16 @@ date: "Last updated `r Sys.Date()`"
 output: html_document
 ---
 
-<u>To cite these data:</u>
+<u>**To cite these data:**</u>
 
 [add data paper reference here]
 
 Here we present codebook information for the demographic variables including summary statistics and distributions for each. Note that codebook information for the 5,636 vocabulary items has been omitted as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to this information.
+
+The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
+
+Please consult the reference listed above for more information about this project.
+
 
 ```{r setup, include=FALSE}
 knit_by_pkgdown <- !is.null(knitr::opts_chunk$get("fig.retina"))
@@ -35,16 +40,12 @@ codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
 ```
 
 ```{r remove_items}
-codebook_data = select(codebook_data, -starts_with("q_"), -PID)
+codebook_data = select(codebook_data, -starts_with("q_"), -PID, -StartDate, -duration, -included)
 ```
 
 
 ```{r}
 codebook_data = codebook_data %>%
-  mutate(
-    StartDate = str_remove(StartDate, "T"),
-    StartDate = str_remove(StartDate, "Z"),
-    StartDate = as.Date(StartDate)) %>%
   mutate(english = factor(english, 
                           levels = c(
                             "Very well (fluent/native)",
@@ -106,8 +107,8 @@ codebook_data = codebook_data %>%
 
 ```{r variable labels}
 attributes(codebook_data$source)$label <- "Data collection platform."
-attributes(codebook_data$StartDate)$label <- "Date and time started survey."
-attributes(codebook_data$duration)$label <- "Time in seconds."
+#attributes(codebook_data$StartDate)$label <- "Date and time started survey."
+#attributes(codebook_data$duration)$label <- "Time in seconds."
 attributes(codebook_data$english)$label <- "How well do you speak English?"
 attributes(codebook_data$growup)$label <- "Where did you grow up?"
 attributes(codebook_data$live)$label <- "Do you currently live in one of the 50 states of the USA or the District of Columbia?"
@@ -117,7 +118,7 @@ attributes(codebook_data$sex)$label <- "Biological sex at birth."
 attributes(codebook_data$edu)$label <- "Level of education."
 attributes(codebook_data$ethnic)$label <- "Racial or ethnic background."
 attributes(codebook_data$hhinc)$label <- "Household income."
-attributes(codebook_data$included)$label <- "Row included in calculation of item and TDA difficulty."
+#attributes(codebook_data$included)$label <- "Row included in calculation of item and TDA difficulty."
 attributes(codebook_data$prop_correct)$label <- "Proportion of correct responses."
 ```
 
