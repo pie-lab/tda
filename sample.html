@@ -290,7 +290,6 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#sample-characteristics">Sample characteristics</a><ul>
 <li><a href="#age">Age</a><ul>
 <li><a href="#by-response">By response</a></li>
 <li><a href="#by-participant">By participant</a></li>
@@ -311,11 +310,12 @@ $(document).ready(function () {
 <li><a href="#by-response-4">By response</a></li>
 <li><a href="#by-participant-4">By participant</a></li>
 </ul></li>
-</ul></li>
 <li><a href="#participant-response-rates">Participant response rates</a></li>
 </ul>
 </div>
 
+<p>**To cite these <a href="data:**" class="uri">data:**</a></p>
+<p>[add data paper reference here] Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).</p>
 <pre class="r"><code>library(tidyverse)
 library(here)
 library(ggpubr)
@@ -333,9 +333,6 @@ data_part = data %&gt;%
   group_by(PID) %&gt;%
   filter(row_number() == 1) %&gt;%
   ungroup()</code></pre>
-<div id="sample-characteristics" class="section level1">
-<h1>Sample characteristics</h1>
-<p>Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).</p>
 <div id="age" class="section level2">
 <h2>Age</h2>
 <div id="by-response" class="section level3">
@@ -566,7 +563,6 @@ data_part = data %&gt;%
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-</div>
 </div>
 </div>
 <div id="participant-response-rates" class="section level1">

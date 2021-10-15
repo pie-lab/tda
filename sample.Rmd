@@ -7,6 +7,12 @@ output:
     code_folding: hide
 ---
 
+**To cite these data:**
+
+[add data paper reference here]
+Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).
+
+
 ```{r, include = F}
 knitr::opts_chunk$set(message = F, warning = F)
 ```
@@ -34,10 +40,6 @@ data_part = data %>%
   filter(row_number() == 1) %>%
   ungroup()
 ```
-
-# Sample characteristics
-
-Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).
 
 ## Age
 
