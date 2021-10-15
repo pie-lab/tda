@@ -518,6 +518,19 @@ data_part = data %&gt;%
 </div>
 <div id="state-of-residence" class="section level1 tabset">
 <h1>State of residence</h1>
+<div id="count-by-state" class="section level2">
+<h2>Count by state</h2>
+<pre class="r"><code>data_part %&gt;% 
+  filter(!is.na(state)) %&gt;% 
+  group_by(state) %&gt;% 
+  count() %&gt;% 
+  ggplot(aes(x = reorder(state, n), y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  coord_flip() +
+  labs(x = NULL, y = &quot;Count&quot;) +
+  theme_pubr() </code></pre>
+<p><img src="sample_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
 <div id="map" class="section level2">
 <h2>Map</h2>
 <pre class="r"><code>MainStates &lt;- map_data(&quot;state&quot;)
@@ -533,19 +546,6 @@ data_part %&gt;%
   scale_y_continuous(breaks = NULL) +
   labs(x = NULL, y = NULL) +
   theme_pubr()</code></pre>
-<p><img src="sample_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-</div>
-<div id="count-by-state" class="section level2">
-<h2>Count by state</h2>
-<pre class="r"><code>data_part %&gt;% 
-  filter(!is.na(state)) %&gt;% 
-  group_by(state) %&gt;% 
-  count() %&gt;% 
-  ggplot(aes(x = reorder(state, n), y = n)) +
-  geom_bar(stat = &quot;identity&quot;) +
-  coord_flip() +
-  labs(x = NULL, y = &quot;Count&quot;) +
-  theme_pubr() </code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 </div>

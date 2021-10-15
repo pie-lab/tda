@@ -276,6 +276,20 @@ data_part %>%
 
 # State of residence{.tabset}
 
+## Count by state
+
+```{r, fig.height=10}
+data_part %>% 
+  filter(!is.na(state)) %>% 
+  group_by(state) %>% 
+  count() %>% 
+  ggplot(aes(x = reorder(state, n), y = n)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(x = NULL, y = "Count") +
+  theme_pubr() 
+```
+
 ## Map
 
 ```{r}
@@ -292,21 +306,6 @@ data_part %>%
   scale_y_continuous(breaks = NULL) +
   labs(x = NULL, y = NULL) +
   theme_pubr()
-```
-
-
-## Count by state
-
-```{r, fig.height=10}
-data_part %>% 
-  filter(!is.na(state)) %>% 
-  group_by(state) %>% 
-  count() %>% 
-  ggplot(aes(x = reorder(state, n), y = n)) +
-  geom_bar(stat = "identity") +
-  coord_flip() +
-  labs(x = NULL, y = "Count") +
-  theme_pubr() 
 ```
 
 
