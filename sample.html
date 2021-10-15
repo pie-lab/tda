@@ -291,7 +291,10 @@ $(document).ready(function () {
 
 <p><u>To cite these data:</u></p>
 <p>[add data paper reference here]</p>
-<p>Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).</p>
+<p>This page shows the demographic characteristics for the sample of participants who responded to the items. The sample contained participants from a wide range of ages, household incomes, and different geographies (by state) within the US. Slightly more than half of the sample identified as female, 73% reported identifying as White, and the majority had some college-level education (42%) or a high school degree/GED equivalent (40%).</p>
+<p>Note that most of the participants in the sample entered the survey through Prolific (90.7%), though a small proportion entered the survey through Amazon's Mechanical Turk platform. Participants were allowed to complete the survey multiple times, as each version of the survey contained only a small (random) subset of all possible terms. In other words, the possiblity of responding to the same term twice was low. The final figure on this page demonstrates that the majority of participants responded only once or twice.</p>
+<p>The data can be downloaded <a href="https://doi.org/10.7910/DVN/5T80PF">here</a>.</p>
+<p>Please consult the reference listed above for more information about this project.</p>
 <pre class="r"><code>library(tidyverse)
 library(here)
 library(ggpubr)
@@ -311,16 +314,12 @@ data_part = data %&gt;%
   ungroup()</code></pre>
 <div id="age" class="section level2">
 <h2>Age</h2>
-<div id="by-response" class="section level3">
-<h3>By response</h3>
-<pre class="r"><code># data %&gt;%
+<pre class="r"><code># Here we show code for analyzing the data by response instead of participant
+# data %&gt;%
 #   ggplot(aes(x = age)) +
 #   geom_histogram(binwidth = 1, color = &quot;white&quot;) +
 #   labs(title = &quot;Age in years&quot;, x= NULL) +
 #   theme_pubr()</code></pre>
-</div>
-<div id="by-participant" class="section level3">
-<h3>By participant</h3>
 <pre class="r"><code>data_part %&gt;%
   ggplot(aes(x = age)) +
   geom_histogram(binwidth = 1, color = &quot;white&quot;) +
@@ -328,27 +327,21 @@ data_part = data %&gt;%
   theme_pubr()</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
-</div>
 <div id="sex" class="section level2 tabset">
 <h2>Sex</h2>
-<div id="by-response-1" class="section level3">
-<h3>By response</h3>
-<pre class="r"><code>data %&gt;%
-  group_by(sex) %&gt;%
-  count() %&gt;%
-  ungroup() %&gt;%
-  mutate(percent = 100*(n/sum(n)),
-         percent = round(percent),
-         percent = paste(percent, &quot;%&quot;)) %&gt;%
-  ggplot(aes(x = sex, y = n)) +
-  geom_bar(stat = &quot;identity&quot;) +
-  geom_text(aes(label = percent), vjust = 0) +
-  labs(title = &quot;What was your biological sex at birth&quot;, x= NULL) +
-  theme_pubr()</code></pre>
-<p><img src="sample_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-</div>
-<div id="by-participant-1" class="section level3">
-<h3>By participant</h3>
+<pre class="r"><code># Here we show code for analyzing the data by response instead of participant
+# data %&gt;%
+#   group_by(sex) %&gt;%
+#   count() %&gt;%
+#   ungroup() %&gt;%
+#   mutate(percent = 100*(n/sum(n)),
+#          percent = round(percent),
+#          percent = paste(percent, &quot;%&quot;)) %&gt;%
+#   ggplot(aes(x = sex, y = n)) +
+#   geom_bar(stat = &quot;identity&quot;) +
+#   geom_text(aes(label = percent), vjust = 0) +
+#   labs(title = &quot;What was your biological sex at birth&quot;, x= NULL) +
+#   theme_pubr()</code></pre>
 <pre class="r"><code>data_part %&gt;%
  group_by(sex) %&gt;%
   count() %&gt;%
@@ -363,38 +356,32 @@ data_part = data %&gt;%
   theme_pubr()</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
-</div>
 <div id="education" class="section level2 tabset">
 <h2>Education</h2>
-<div id="by-response-2" class="section level3">
-<h3>By response</h3>
-<pre class="r"><code>data %&gt;%
-  mutate(edu = factor(edu, levels = c(
-      &quot;Less than 12 years&quot;, 
-      &quot;High school grad/GED&quot;,
-      &quot;Currently in college/university&quot;,
-      &quot;Some college/university, but did not graduate&quot;,
-      &quot;Associate degree (2 yr)&quot;,
-      &quot;College/university degree (4 yr)&quot;,
-      &quot;Currently in grad/professional school&quot;,
-      &quot;Grad/professional degree&quot;
-  ))) %&gt;%
-  group_by(edu) %&gt;%
-  count() %&gt;%
-  ungroup() %&gt;%
-  mutate(percent = 100*(n/sum(n)),
-         percent = round(percent),
-         percent = paste(percent, &quot;%&quot;)) %&gt;%
-  ggplot(aes(x = edu, y = n)) +
-  geom_bar(stat = &quot;identity&quot;) +
-  geom_text(aes(label = percent), vjust = 0) +
-  labs(title = &quot;Level of education&quot;, x= NULL) +
-  theme_pubr() +
-  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
-<p><img src="sample_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-</div>
-<div id="by-participant-2" class="section level3">
-<h3>By participant</h3>
+<pre class="r"><code># Here we show code for analyzing the data by response instead of participant
+# data %&gt;%
+#   mutate(edu = factor(edu, levels = c(
+#       &quot;Less than 12 years&quot;, 
+#       &quot;High school grad/GED&quot;,
+#       &quot;Currently in college/university&quot;,
+#       &quot;Some college/university, but did not graduate&quot;,
+#       &quot;Associate degree (2 yr)&quot;,
+#       &quot;College/university degree (4 yr)&quot;,
+#       &quot;Currently in grad/professional school&quot;,
+#       &quot;Grad/professional degree&quot;
+#   ))) %&gt;%
+#   group_by(edu) %&gt;%
+#   count() %&gt;%
+#   ungroup() %&gt;%
+#   mutate(percent = 100*(n/sum(n)),
+#          percent = round(percent),
+#          percent = paste(percent, &quot;%&quot;)) %&gt;%
+#   ggplot(aes(x = edu, y = n)) +
+#   geom_bar(stat = &quot;identity&quot;) +
+#   geom_text(aes(label = percent), vjust = 0) +
+#   labs(title = &quot;Level of education&quot;, x= NULL) +
+#   theme_pubr() +
+#   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <pre class="r"><code>data_part %&gt;%
   mutate(edu = factor(edu, levels = c(
       &quot;Less than 12 years&quot;, 
@@ -420,37 +407,31 @@ data_part = data %&gt;%
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
-</div>
 <div id="ethnicity" class="section level2 tabset">
 <h2>Ethnicity</h2>
-<div id="by-response-3" class="section level3">
-<h3>By response</h3>
-<pre class="r"><code>data %&gt;%
-  mutate(ethnic = factor(ethnic, levels = c(
-     &quot;American Indian/Alaskan Native&quot;,
-     &quot;Asian&quot;,
-     &quot;Black&quot;,
-     &quot;Hispanic&quot;,
-     &quot;White&quot;,
-     &quot;Mixed (two or more)&quot;,
-     &quot;Other&quot;
-  ))) %&gt;%
-  group_by(ethnic) %&gt;%
-  count() %&gt;%
-  ungroup() %&gt;%
-  mutate(percent = 100*(n/sum(n)),
-         percent = round(percent),
-         percent = paste(percent, &quot;%&quot;)) %&gt;%
-  ggplot(aes(x = ethnic, y = n)) +
-  geom_bar(stat = &quot;identity&quot;) +
-  geom_text(aes(label = percent), vjust = 0) +
-  labs(title = &quot;Racial/ethnic identity&quot;, x= NULL) +
-  theme_pubr() +
-  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
-<p><img src="sample_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-</div>
-<div id="by-participant-3" class="section level3">
-<h3>By participant</h3>
+<pre class="r"><code># Here we show code for analyzing the data by response instead of participant
+# data %&gt;%
+#   mutate(ethnic = factor(ethnic, levels = c(
+#      &quot;American Indian/Alaskan Native&quot;,
+#      &quot;Asian&quot;,
+#      &quot;Black&quot;,
+#      &quot;Hispanic&quot;,
+#      &quot;White&quot;,
+#      &quot;Mixed (two or more)&quot;,
+#      &quot;Other&quot;
+#   ))) %&gt;%
+#   group_by(ethnic) %&gt;%
+#   count() %&gt;%
+#   ungroup() %&gt;%
+#   mutate(percent = 100*(n/sum(n)),
+#          percent = round(percent),
+#          percent = paste(percent, &quot;%&quot;)) %&gt;%
+#   ggplot(aes(x = ethnic, y = n)) +
+#   geom_bar(stat = &quot;identity&quot;) +
+#   geom_text(aes(label = percent), vjust = 0) +
+#   labs(title = &quot;Racial/ethnic identity&quot;, x= NULL) +
+#   theme_pubr() +
+#   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <pre class="r"><code>data_part %&gt;%
   mutate(ethnic = factor(ethnic, levels = c(
      &quot;American Indian/Alaskan Native&quot;,
@@ -475,42 +456,36 @@ data_part = data %&gt;%
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
-</div>
 <div id="household-income" class="section level2 tabset">
 <h2>Household income</h2>
-<div id="by-response-4" class="section level3">
-<h3>By response</h3>
-<pre class="r"><code>data %&gt;%
-  mutate(hhinc = factor(hhinc, levels = c(
-      &quot;&lt; 20K&quot;,
-      &quot;20K-40K&quot;,
-      &quot;40K-60K&quot;,
-      &quot;60K-80K&quot;,
-      &quot;80K-100K&quot;,
-      &quot;100K-120K&quot;,
-      &quot;120K-150K&quot;,
-      &quot;150K-200K&quot;,
-      &quot;200K-250K&quot;,
-       &quot;250K-350K&quot;,
-       &quot;350K-500K&quot;,
-       &quot;&gt; 500K&quot;
-  ))) %&gt;%
-  group_by(hhinc) %&gt;%
-  count() %&gt;%
-  ungroup() %&gt;%
-  mutate(percent = 100*(n/sum(n)),
-         percent = round(percent),
-         percent = paste(percent, &quot;%&quot;)) %&gt;%
-  ggplot(aes(x = hhinc, y = n)) +
-  geom_bar(stat = &quot;identity&quot;) +
-  geom_text(aes(label = percent), vjust = 0) +
-  labs(title = &quot;Household Income&quot;, x= NULL) +
-  theme_pubr() +
-  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
-<p><img src="sample_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-</div>
-<div id="by-participant-4" class="section level3">
-<h3>By participant</h3>
+<pre class="r"><code># Here we show code for analyzing the data by response instead of participant
+# data %&gt;%
+#   mutate(hhinc = factor(hhinc, levels = c(
+#       &quot;&lt; 20K&quot;,
+#       &quot;20K-40K&quot;,
+#       &quot;40K-60K&quot;,
+#       &quot;60K-80K&quot;,
+#       &quot;80K-100K&quot;,
+#       &quot;100K-120K&quot;,
+#       &quot;120K-150K&quot;,
+#       &quot;150K-200K&quot;,
+#       &quot;200K-250K&quot;,
+#        &quot;250K-350K&quot;,
+#        &quot;350K-500K&quot;,
+#        &quot;&gt; 500K&quot;
+#   ))) %&gt;%
+#   group_by(hhinc) %&gt;%
+#   count() %&gt;%
+#   ungroup() %&gt;%
+#   mutate(percent = 100*(n/sum(n)),
+#          percent = round(percent),
+#          percent = paste(percent, &quot;%&quot;)) %&gt;%
+#   ggplot(aes(x = hhinc, y = n)) +
+#   geom_bar(stat = &quot;identity&quot;) +
+#   geom_text(aes(label = percent), vjust = 0) +
+#   labs(title = &quot;Household Income&quot;, x= NULL) +
+#   theme_pubr() +
+#   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <pre class="r"><code>data_part %&gt;%
   mutate(hhinc = factor(hhinc, levels = c(
       &quot;&lt; 20K&quot;,
@@ -539,7 +514,6 @@ data_part = data %&gt;%
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-</div>
 </div>
 <div id="participant-response-rates" class="section level1">
 <h1>Participant response rates</h1>
