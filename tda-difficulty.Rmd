@@ -10,13 +10,13 @@ output:
 To cite these data:
 [add data paper reference here]
 
-The goal of this project was to identify the *average* ``difficulty'' of 2,818 trait descriptive adjectives (TDAs) in American English. Difficulty, in this usage, denotes the extent to which people in our sample correctly matched the personality-relevant definition for each adjective to the adjective itself when presented as one of six options. The other five options presented as choices were randomly sampled from the remaining 2,817 adjectives in the set. To control for inevitable error resulting from similarity between distractor choices and the matching definition-adjective pair, each TDA was administered twice, with two different sets of distractor sets. On this page, we report the total number of responses and the average proportion correct across both forms.
+The goal of this project was to identify the *average* "difficulty"" of 2,818 trait descriptive adjectives (TDAs) in American English. Difficulty, in this usage, denotes the extent to which people in our sample correctly matched the personality-relevant definition for each adjective to the adjective itself when presented as one of six options. The other five options presented as choices were randomly sampled from the remaining 2,817 adjectives in the set. To control for inevitable error resulting from similarity between distractor choices and the matching definition-adjective pair, each TDA was administered twice, with two different sets of distractor sets. On this page, we report the total number of responses and the average proportion correct across both forms.
 
 In our view, the total proportion correct reflects *both* familiarity of the adjective and consensus among raters about its meaning, especially as a descriptor of personality. For example, most of the terms with a low proportion of correct responses are unfamiliar to many individuals (i.e., rarely encountered in everyday language) -- "goatish" (.07), "pithy" (.10), "splenetic" (.10). Other terms -- "dizzying" (.04), "smooth" (.09) -- are familiar but ambiguous in meaning relative to personality. By contrast, terms with the highest proportion of correct responses are familiar *and* unambiguous -- "jolly" (1.00), "thankful" (1.00), "unreliable" (.99). When using ratings of terms such as these to evaluate the structure of personality, it's important to consider the extent to which each term is known to raters and consistently interpreted.
 
-Statistics from the individual administrations of each term (i.e., each version or ``form'') can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
+Statistics from the individual administrations of each term (i.e., each version or "form"") can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
 
-The data can be downloaded [here](XXXXX)
+The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
 
 Please consult the reference listed above for more information about this project.
 

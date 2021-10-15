@@ -10,11 +10,15 @@ output:
 To cite these data:
 [add data paper reference here]
 
-This page lists information from each of the two forms used to derive the [average proportion correct](https://pie-lab.github.io/tda/tda-difficulty.html) for each of the 2,818 unique trait descriptive adjectives. Specifically, it contains the item label ("q_2XXXX"), trait descriptive adjective (e.g., "stern"), total number of respondents for the item (N), the proportion of respondents who correctly matched the term with its definition (e.g., .92), the distractor index value (see below), and the form for the item (A or B). Again, each adjective was administered in two different forms (A and B), with different alternative response options across the two forms. The alternative response options were generated randomly from the full pool of adjectives (i.e., the remaining 2,817 options).
+This page lists information from each of the two forms used to derive the [average proportion correct](https://pie-lab.github.io/tda/tda-difficulty.html) for each of the 2,818 unique trait descriptive adjectives. See the [top of this page](https://pie-lab.github.io/tda/tda-difficulty.html) for further explanation of the two different forms.
+
+Specifically, the table below contains the item label (e.g., "q_2XXXX"), the trait descriptive adjective (e.g., "stern"), the total number of respondents for the item (N), the proportion of respondents who correctly matched the term with its definition (e.g., .92), the distractor index value (see below), and the form corresponding with these statistics (A or B). Again, each adjective was administered in two different forms (A and B), with different alternative response options across the two forms. The alternative response options were generated randomly from the full pool of adjectives (i.e., the remaining 2,817 options).
+
+Note that we have intentionally omitted the definitions and distractor response options corresponding to each item label. This was done to protect the validity of the items for subsequent use. Contact the lead author for access to this information.
 
 The mean proportion correct for each adjective across both forms can be found [here](https://pie-lab.github.io/tda/tda-difficulty.html).
 
-The data can be downloaded [here](XXXXX)
+The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
 
 Please consult the reference listed above for more information about this project.
 
