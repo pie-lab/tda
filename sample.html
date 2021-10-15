@@ -13,6 +13,7 @@
 
 <title>Sample characteristics</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -262,7 +263,7 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/pie-lab/tda">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -297,8 +298,9 @@ library(here)
 library(ggpubr)
 library(knitr)
 library(kableExtra)
+library(maps)
 
-data = read_csv(here(&quot;data/TDA_data_scored.csv&quot;))
+data = read.csv(here(&quot;data/TDA_data_scored.csv&quot;))
 
 data = filter(data, included == &quot;Yes&quot;)</code></pre>
 <pre class="r"><code>data = data %&gt;%
@@ -330,7 +332,7 @@ data_part = data %&gt;%
 </div>
 </div>
 <div id="sex" class="section level2 tabset">
-<h2>Sex</h2>
+<h2 class="tabset">Sex</h2>
 <div id="by-response-1" class="section level3">
 <h3>By response</h3>
 <pre class="r"><code>data %&gt;%
@@ -365,7 +367,7 @@ data_part = data %&gt;%
 </div>
 </div>
 <div id="education" class="section level2 tabset">
-<h2>Education</h2>
+<h2 class="tabset">Education</h2>
 <div id="by-response-2" class="section level3">
 <h3>By response</h3>
 <pre class="r"><code>data %&gt;%
@@ -422,7 +424,7 @@ data_part = data %&gt;%
 </div>
 </div>
 <div id="ethnicity" class="section level2 tabset">
-<h2>Ethnicity</h2>
+<h2 class="tabset">Ethnicity</h2>
 <div id="by-response-3" class="section level3">
 <h3>By response</h3>
 <pre class="r"><code>data %&gt;%
@@ -477,7 +479,7 @@ data_part = data %&gt;%
 </div>
 </div>
 <div id="household-income" class="section level2 tabset">
-<h2>Household income</h2>
+<h2 class="tabset">Household income</h2>
 <div id="by-response-4" class="section level3">
 <h3>By response</h3>
 <pre class="r"><code>data %&gt;%
@@ -541,6 +543,39 @@ data_part = data %&gt;%
 <p><img src="sample_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
+<div id="state-of-residence" class="section level1 tabset">
+<h1 class="tabset">State of residence</h1>
+<div id="map" class="section level2">
+<h2>Map</h2>
+<pre class="r"><code>MainStates &lt;- map_data(&quot;state&quot;)
+
+data_part %&gt;% 
+  with_groups(state, count) %&gt;% 
+  mutate(region = tolower(state)) %&gt;% 
+  inner_join(MainStates) %&gt;% 
+  ggplot() + 
+  geom_polygon(aes(x=long, y=lat, group=group, fill = n),
+                color=&quot;black&quot;) +
+  scale_x_continuous(breaks = NULL) +
+  scale_y_continuous(breaks = NULL) +
+  labs(x = NULL, y = NULL) +
+  theme_pubr()</code></pre>
+<p><img src="sample_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="count-by-state" class="section level2">
+<h2>Count by state</h2>
+<pre class="r"><code>data_part %&gt;% 
+  filter(!is.na(state)) %&gt;% 
+  group_by(state) %&gt;% 
+  count() %&gt;% 
+  ggplot(aes(x = reorder(state, n), y = n)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  coord_flip() +
+  labs(x = NULL, y = &quot;Count&quot;) +
+  theme_pubr() </code></pre>
+<p><img src="sample_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+</div>
 <div id="participant-response-rates" class="section level1">
 <h1>Participant response rates</h1>
 <pre class="r"><code>data %&gt;%
@@ -552,7 +587,7 @@ data_part = data %&gt;%
   labs(title = &quot;Number of times participated in survey&quot;,
        x = NULL) +
   theme_pubr()</code></pre>
-<p><img src="sample_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="sample_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
 
 

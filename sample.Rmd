@@ -24,8 +24,9 @@ library(here)
 library(ggpubr)
 library(knitr)
 library(kableExtra)
+library(maps)
 
-data = read_csv(here("data/TDA_data_scored.csv"))
+data = read.csv(here("data/TDA_data_scored.csv"))
 
 data = filter(data, included == "Yes")
 ```
@@ -285,6 +286,42 @@ data_part %>%
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
 ```
+
+# State of residence{.tabset}
+
+## Map
+
+```{r}
+MainStates <- map_data("state")
+
+data_part %>% 
+  with_groups(state, count) %>% 
+  mutate(region = tolower(state)) %>% 
+  inner_join(MainStates) %>% 
+  ggplot() + 
+  geom_polygon(aes(x=long, y=lat, group=group, fill = n),
+                color="black") +
+  scale_x_continuous(breaks = NULL) +
+  scale_y_continuous(breaks = NULL) +
+  labs(x = NULL, y = NULL) +
+  theme_pubr()
+```
+
+
+## Count by state
+
+```{r, fig.height=10}
+data_part %>% 
+  filter(!is.na(state)) %>% 
+  group_by(state) %>% 
+  count() %>% 
+  ggplot(aes(x = reorder(state, n), y = n)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(x = NULL, y = "Count") +
+  theme_pubr() 
+```
+
 
 # Participant response rates
 

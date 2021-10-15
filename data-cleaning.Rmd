@@ -25,7 +25,7 @@ library(R.utils) # just for the insert() function
 
 The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a "names" data frame and then data starting at row 4, for the raw data. 
 
-```{r, message = F, warning = F}
+```{r, message = F, warning = F, eval = F}
 # read in form A (Prolific)
 formA_names = read_csv(
   here("data/Form+A_Prolific_April+2,+2021_15.27.csv"))
@@ -89,6 +89,14 @@ names(formC) = names(formC_names)
 rm(formC_names)
 ```
 
+```{r, eval = F, echo = F}
+save(formA, formB, formC, file = here("data/raw_data.Rdata"))
+```
+
+```{r, echo = F}
+load(here("data/raw_data.Rdata"))
+```
+
 In forms A and B, variable names composed solely of numbers (e.g., 20001) refer to the specific variable number as included in the dictionary. These must be prefaced by `q_` for readability. 
 
 ```{r}
@@ -123,8 +131,8 @@ formC = formC %>%
 ## Scoring keys
 
 ```{r, message = F, warning = F}
-keyA = read_csv(here("keys/key_A.csv"))
-keyB = read_csv(here("keys/key_B.csv"))
+keyA = read.csv(here("keys/key_A.csv"))
+keyB = read.csv(here("keys/key_B.csv"))
 keyC = import(here("keys/key_C.xlsx"), sheet = 1)
 ```
 
@@ -132,17 +140,17 @@ Variable names composed solely of numbers (e.g., 1) refer to the response choice
 
 ```{r}
 names(keyA) = str_replace(names(keyA), 
-                           "(^)([0-9]{1}$)", 
+                           "(^X)([0-9]{1}$)", 
                            "R_\\2") 
 
 names(keyB) = str_replace(names(keyB), 
-                           "(^)([0-9]{1}$)", 
+                           "(^X)([0-9]{1}$)", 
                            "R_\\2") 
 
 names(keyC) = str_replace(names(keyC), 
                            "(^)([0-9]{1}$)", 
                            "R_\\2") 
-keyC = rename(keyC, X1 = .)
+keyC = rename(keyC, X = .)
 ```
 
 The `Key` column indicates the position of the correct response. We create a key vector that contains the value of the correct response, not the position.
@@ -178,8 +186,8 @@ Merge keys together.
 masterKey = keyA %>%
   full_join(keyB) %>%
   full_join(keyC) %>%
-  select(X1:Key, answer, form) %>%
-  rename(item = X1)
+  select(X:Key, answer, form) %>%
+  rename(item = X)
 ```
 
 
@@ -273,7 +281,7 @@ demo = all_data %>%
       live == 1 ~ "Yes",
       live == 2 ~ "No"),
     state = recode(states, 
-                    !!!c(state.name[1:8], "District of Columbia", state.name[9:50])
+                    !!!c(state.name[1:50], "District of Columbia")
                     ),
     sex = case_when(
       sex == 1 ~ "Male",

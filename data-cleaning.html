@@ -13,6 +13,7 @@
 
 <title>Cleaning and summarizing</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -258,7 +259,7 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/pie-lab/tda">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -278,12 +279,14 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#load-data-and-packages">Load data and packages</a><ul>
+<li><a href="#load-data-and-packages">Load data and packages</a>
+<ul>
 <li><a href="#qualtrics-survey-responses">Qualtrics survey responses</a></li>
 <li><a href="#scoring-keys">Scoring keys</a></li>
 </ul></li>
 <li><a href="#score-data-new">Score data new</a></li>
-<li><a href="#data-for-publication">Data for publication</a><ul>
+<li><a href="#data-for-publication">Data for publication</a>
+<ul>
 <li><a href="#demographics">Demographics</a></li>
 <li><a href="#correct-or-incorrect">Correct or incorrect</a></li>
 <li><a href="#response-option">Response option</a></li>
@@ -300,7 +303,7 @@ library(psych) # for scoring multiple choice items
 library(R.utils) # just for the insert() function</code></pre>
 <div id="qualtrics-survey-responses" class="section level2">
 <h2>Qualtrics survey responses</h2>
-<p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a &quot;names&quot; data frame and then data starting at row 4, for the raw data.</p>
+<p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a “names” data frame and then data starting at row 4, for the raw data.</p>
 <pre class="r"><code># read in form A (Prolific)
 formA_names = read_csv(
   here(&quot;data/Form+A_Prolific_April+2,+2021_15.27.csv&quot;))
@@ -388,22 +391,22 @@ formC = formC %&gt;%
 </div>
 <div id="scoring-keys" class="section level2">
 <h2>Scoring keys</h2>
-<pre class="r"><code>keyA = read_csv(here(&quot;keys/key_A.csv&quot;))
-keyB = read_csv(here(&quot;keys/key_B.csv&quot;))
+<pre class="r"><code>keyA = read.csv(here(&quot;keys/key_A.csv&quot;))
+keyB = read.csv(here(&quot;keys/key_B.csv&quot;))
 keyC = import(here(&quot;keys/key_C.xlsx&quot;), sheet = 1)</code></pre>
 <p>Variable names composed solely of numbers (e.g., 1) refer to the response choice number as presented to participants. These must be prefaced by <code>R_</code> for readability.</p>
 <pre class="r"><code>names(keyA) = str_replace(names(keyA), 
-                           &quot;(^)([0-9]{1}$)&quot;, 
+                           &quot;(^X)([0-9]{1}$)&quot;, 
                            &quot;R_\\2&quot;) 
 
 names(keyB) = str_replace(names(keyB), 
-                           &quot;(^)([0-9]{1}$)&quot;, 
+                           &quot;(^X)([0-9]{1}$)&quot;, 
                            &quot;R_\\2&quot;) 
 
 names(keyC) = str_replace(names(keyC), 
                            &quot;(^)([0-9]{1}$)&quot;, 
                            &quot;R_\\2&quot;) 
-keyC = rename(keyC, X1 = .)</code></pre>
+keyC = rename(keyC, X = .)</code></pre>
 <p>The <code>Key</code> column indicates the position of the correct response. We create a key vector that contains the value of the correct response, not the position.</p>
 <pre class="r"><code>create_key = function(keydf){
   # select only response variables and concatonate by row into vectors
@@ -430,8 +433,8 @@ keyC = create_key(keyC) %&gt;%
 <pre class="r"><code>masterKey = keyA %&gt;%
   full_join(keyB) %&gt;%
   full_join(keyC) %&gt;%
-  select(X1:Key, answer, form) %&gt;%
-  rename(item = X1)</code></pre>
+  select(X:Key, answer, form) %&gt;%
+  rename(item = X)</code></pre>
 </div>
 </div>
 <div id="score-data-new" class="section level1">
@@ -513,7 +516,7 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
       live == 1 ~ &quot;Yes&quot;,
       live == 2 ~ &quot;No&quot;),
     state = recode(states, 
-                    !!!c(state.name[1:8], &quot;District of Columbia&quot;, state.name[9:50])
+                    !!!c(state.name[1:50], &quot;District of Columbia&quot;)
                     ),
     sex = case_when(
       sex == 1 ~ &quot;Male&quot;,
@@ -551,7 +554,7 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
       hhinc == 11 ~ &quot;350K-500K&quot;,
       hhinc == 12 ~ &quot;&gt; 500K&quot;,
       hhinc == 13 ~ &quot;Prefer not to say&quot;))</code></pre>
-<p>Participants are excluded from analyses if they * complete the survey in less than 3 minutes (180 seconds), * don't speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
+<p>Participants are excluded from analyses if they * complete the survey in less than 3 minutes (180 seconds), * don’t speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
 <pre class="r"><code>demo = demo %&gt;%
   mutate(included = case_when(
     duration &lt; 180 ~ &quot;No&quot;,
@@ -577,7 +580,7 @@ write_csv(data_scored,
 </div>
 <div id="response-option" class="section level2">
 <h2>Response option</h2>
-<p>First we create a vector for each item that specifies the new labels. All distractors take the form <code>D1</code> through <code>D5</code>. <code>Ans</code> (for the correct answer) is then inserted in the location of the correct response. We use <code>IDK</code> to represent &quot;I don't know&quot; and <code>None</code> to represent &quot;None of these.&quot;</p>
+<p>First we create a vector for each item that specifies the new labels. All distractors take the form <code>D1</code> through <code>D5</code>. <code>Ans</code> (for the correct answer) is then inserted in the location of the correct response. We use <code>IDK</code> to represent “I don’t know” and <code>None</code> to represent “None of these.”</p>
 <pre class="r"><code>masterKey = masterKey %&gt;%
   mutate(relevel = map(Key, 
                        ~insert(c(&quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;,&quot;D4&quot;,&quot;D5&quot;,&quot;IDK&quot;, &quot;None&quot;), 
@@ -588,7 +591,7 @@ write_csv(data_scored,
   new_vector = recode(response, !!!relevel_vector)
   return(new_vector)
 }</code></pre>
-<p>We select just the TDA items and assign each row a unique number. This will help ensure all the responses end up in the correct place when we spread later. Then we stack questions and nest, to create a separate data frame for each item, containing a column called &quot;response.&quot;</p>
+<p>We select just the TDA items and assign each row a unique number. This will help ensure all the responses end up in the correct place when we spread later. Then we stack questions and nest, to create a separate data frame for each item, containing a column called “response.”</p>
 <pre class="r"><code>raw_items = all_data %&gt;%
   select(starts_with(&quot;q_&quot;)) %&gt;%
   mutate(row = row_number()) %&gt;%
@@ -598,18 +601,18 @@ write_csv(data_scored,
 
 # what does this look like
 head(raw_items)</code></pre>
-<pre><code>## # A tibble: 6 x 2
+<pre><code>## # A tibble: 6 × 2
 ## # Groups:   item [6]
-##   item    data                    
-##   &lt;chr&gt;   &lt;list&gt;                  
-## 1 q_20001 &lt;tibble[,2] [3,540 × 2]&gt;
-## 2 q_20002 &lt;tibble[,2] [3,540 × 2]&gt;
-## 3 q_20003 &lt;tibble[,2] [3,540 × 2]&gt;
-## 4 q_20004 &lt;tibble[,2] [3,540 × 2]&gt;
-## 5 q_20005 &lt;tibble[,2] [3,540 × 2]&gt;
-## 6 q_20006 &lt;tibble[,2] [3,540 × 2]&gt;</code></pre>
+##   item    data                
+##   &lt;chr&gt;   &lt;list&gt;              
+## 1 q_20001 &lt;tibble [3,540 × 2]&gt;
+## 2 q_20002 &lt;tibble [3,540 × 2]&gt;
+## 3 q_20003 &lt;tibble [3,540 × 2]&gt;
+## 4 q_20004 &lt;tibble [3,540 × 2]&gt;
+## 5 q_20005 &lt;tibble [3,540 × 2]&gt;
+## 6 q_20006 &lt;tibble [3,540 × 2]&gt;</code></pre>
 <pre class="r"><code>head(raw_items$data[[1]]) </code></pre>
-<pre><code>## # A tibble: 6 x 2
+<pre><code>## # A tibble: 6 × 2
 ##     row response
 ##   &lt;int&gt;    &lt;dbl&gt;
 ## 1     1        3
@@ -622,14 +625,14 @@ head(raw_items)</code></pre>
 <pre><code>## 
 ##  1  2  3  4  5  6  7  8 
 ##  1  1  5  1 20  1  6  2</code></pre>
-<p>Iterating across items, we apply the <code>relevel</code> function to the dataset, which replaces numeric values with the appropriate categorical value (Ans, R1:R5, I don't know, and None of these)</p>
+<p>Iterating across items, we apply the <code>relevel</code> function to the dataset, which replaces numeric values with the appropriate categorical value (Ans, R1:R5, I don’t know, and None of these)</p>
 <pre class="r"><code>recoded_items = raw_items %&gt;%
   mutate(data = map2(data, item, 
                      ~mutate(.x, response = relevel_fun(response, .y)))) 
 
 # what does this look like
 head(recoded_items$data[[1]]) </code></pre>
-<pre><code>## # A tibble: 6 x 2
+<pre><code>## # A tibble: 6 × 2
 ##     row response
 ##   &lt;int&gt; &lt;chr&gt;   
 ## 1     1 D3      
