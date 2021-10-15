@@ -31,8 +31,8 @@ library(tidyverse) # for data cleaning and manipulation
 library(Hmisc) # for weighted means
 library(DT) # for viewing data tables
 
-data = read_csv(here("data/TDA_data_scored.csv"))
-masterKey = read_csv(here("data/masterkey.csv"))
+data = read.csv(here("data/TDA_data_scored.csv"))
+masterKey = read.csv(here("data/masterkey.csv"))
 
 data = data %>%
   filter(included == "Yes") %>% # remove participants screend out for demographic and quality reasons
