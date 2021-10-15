@@ -4,11 +4,11 @@ date: "Last updated `r Sys.Date()`"
 output: html_document
 ---
 
-**To cite these data:**
+<u>To cite these data:</u>
 
 [add data paper reference here]
 
-Here we present codebook information for the demographic variables including summary statistics and distributions for each. Codebook information for the 5,636 vocabulary items has been omitted as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to this information.
+Here we present codebook information for the demographic variables including summary statistics and distributions for each. Note that codebook information for the 5,636 vocabulary items has been omitted as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to this information.
 
 ```{r setup, include=FALSE}
 knit_by_pkgdown <- !is.null(knitr::opts_chunk$get("fig.retina"))
