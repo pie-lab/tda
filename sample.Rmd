@@ -276,7 +276,7 @@ data_part %>%
 
 # State of residence{.tabset}
 
-## Count by state
+## Map
 
 ```{r, fig.height=10}
 data_part %>% 
@@ -291,7 +291,7 @@ data_part %>%
 ```
 
 
-## Map
+## Count by state
 
 ```{r}
 MainStates <- map_data("state")
