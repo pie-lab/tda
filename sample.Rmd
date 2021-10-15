@@ -278,6 +278,21 @@ data_part %>%
 
 ## Count by state
 
+```{r, fig.height=10}
+data_part %>% 
+  filter(!is.na(state)) %>% 
+  group_by(state) %>% 
+  count() %>% 
+  ggplot(aes(x = reorder(state, n), y = n)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(x = NULL, y = "Count") +
+  theme_pubr() 
+```
+
+
+## Map
+
 ```{r}
 MainStates <- map_data("state")
 
@@ -294,19 +309,6 @@ data_part %>%
   theme_pubr()
 ```
 
-## Map
-
-```{r, fig.height=10}
-data_part %>% 
-  filter(!is.na(state)) %>% 
-  group_by(state) %>% 
-  count() %>% 
-  ggplot(aes(x = reorder(state, n), y = n)) +
-  geom_bar(stat = "identity") +
-  coord_flip() +
-  labs(x = NULL, y = "Count") +
-  theme_pubr() 
-```
 
 # Participant response rates
 
