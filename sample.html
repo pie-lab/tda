@@ -291,8 +291,8 @@ $(document).ready(function () {
 
 <p><u>To cite these data:</u></p>
 <p>[add data paper reference here]</p>
-<p>This page shows the demographic characteristics for the sample of participants who responded to the items. The sample contained participants from a wide range of ages, household incomes, and different geographies (by state) within the US. Slightly more than half of the sample identified as female, 73% reported identifying as White, and the majority had some college-level education (42%) or a high school degree/GED equivalent (40%).</p>
-<p>Note that most of the participants in the sample entered the survey through Prolific (90.7%); the remainder entered through Amazon's Mechanical Turk platform. Participants were allowed to complete the survey multiple times, as each version of the survey contained only a small (random) subset of all possible terms. In other words, the possiblity of responding to the same term twice was low. The final figure on this page demonstrates that the majority of participants completed the survey only once (44%) or twice (35%). Participants were compensated at the US minimum wage rate (at the time of data collection) using the mean response time as an estimate of the time required.</p>
+<p>This page shows the demographic characteristics for the sample of participants who responded to the items. The sample contained participants from a wide range of ages, household incomes, and different geographies (by state) within the US. Slightly more than half of the sample identified as female, 73% identified as White, and the majority had some college-level education (42%) or a high school degree/GED equivalent (40%).</p>
+<p>Note that most of the participants in the sample entered the survey through Prolific (90.7%); the remainder entered through Amazon's Mechanical Turk platform. Participants were compensated at the US minimum wage rate (at the time of data collection) using the mean response time as an estimate of the time required. Participants were allowed to complete the survey multiple times, as each version of the survey contained only a small (random) subset of all possible terms. In other words, the possiblity of responding to the same item twice was low. The final figure on this page demonstrates that the majority of participants completed the survey only once (44%) or twice (35%). Across all 3,290 responses to the survey (1,572 unique respondents), participants answered an average of 73.4 items (median = 75).</p>
 <p>The data can be downloaded <a href="https://doi.org/10.7910/DVN/5T80PF">here</a>.</p>
 <p>Please consult the reference listed above for more information about this project.</p>
 <pre class="r"><code>library(tidyverse)
@@ -518,8 +518,8 @@ data_part = data %&gt;%
 </div>
 <div id="state-of-residence" class="section level1 tabset">
 <h1>State of residence</h1>
-<div id="thing" class="section level2">
-<h2>Thing</h2>
+<div id="n-by-state" class="section level2">
+<h2>N by state</h2>
 <pre class="r"><code>data_part %&gt;% 
   filter(!is.na(state)) %&gt;% 
   group_by(state) %&gt;% 
