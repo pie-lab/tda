@@ -7,7 +7,7 @@ output:
     code_folding: hide
 ---
 
-<u>**To cite these data:**</u>
+<u>To cite these data:</u>
 
 [add data paper reference here]
 

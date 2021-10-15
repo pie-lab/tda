@@ -60,7 +60,57 @@ codebook_data = codebook_data %>%
                   levels = c(
                     "Yes",
                     "No")),
-    state = factor(state, levels = c(state.name[1:8], "District of Columbia", state.name[9:50])),
+    state = factor(state, levels = c(
+                   "Alabama",
+                   "Alaska",
+                   "Arizona",
+                   "Arkansas",
+                   "California",
+                   "Colorado",
+                   "Connecticut",
+                   "Delaware",
+                   "District of Columbia",
+                   "Georgia",
+                   "Hawaii",
+                   "Idaho",
+                   "Illinois",
+                   "Indiana",
+                   "Iowa",
+                   "Kansas",
+                   "Kentucky",
+                   "Louisiana",
+                   "Maine",
+                   "Maryland",
+                   "Massachusetts",
+                   "Michigan",
+                   "Minnesota",
+                   "Mississippi",
+                   "Missouri",
+                   "Montana",
+                   "Nebraska",
+                   "Nevada",
+                   "New Hampshire",
+                   "New Jersey",
+                   "New Mexico",
+                   "New York",
+                   "North Carolina",
+                   "North Dakota",
+                   "Ohio",
+                   "Oklahoma",
+                   "Oregon",
+                   "Pennsylvania",
+                   "Rhode Island",
+                   "South Carolina",
+                   "South Dakota",
+                   "Tennessee",
+                   "Texas",
+                   "Utah",
+                   "Vermont",
+                   "Virginia",
+                   "Washington",
+                   "West Virginia",
+                   "Wisconsin",
+                   "Wyoming")),
     sex = factor(sex, 
                  levels = c(
                    "Male",
@@ -106,7 +156,7 @@ codebook_data = codebook_data %>%
 
 
 ```{r variable labels}
-attributes(codebook_data$source)$label <- "Data collection platform."
+attributes(codebook_data$source)$label <- "The participant recruitment platform from which the data were sourced."
 #attributes(codebook_data$StartDate)$label <- "Date and time started survey."
 #attributes(codebook_data$duration)$label <- "Time in seconds."
 attributes(codebook_data$english)$label <- "How well do you speak English?"
