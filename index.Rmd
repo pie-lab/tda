@@ -12,6 +12,8 @@ output:
 
 All data described on this website are available for download at [https://doi.org/10.7910/DVN/5T80PF](https://doi.org/10.7910/DVN/5T80PF).
 
+The code for cleaning the data is available at [https://pie-lab.github.io/tda/data-cleaning.html](https://pie-lab.github.io/tda/data-cleaning.html).
+
 The code used to create this website is available at [https://github.com/pie-lab/tda](https://github.com/pie-lab/tda).
 
 # Background
@@ -24,9 +26,7 @@ Using a set of 2,819 TDA adjectives and their definitions, we randomly generated
 
 Items were separated into Forms A and B (i.e., each TDA had one item on each form). Forms were administered as separate projects on Prolific and MTurk. The correct adjective for each item is stored in the file masterkey.csv. We do not present the definitions in these data, as they may be used in future research. Instead, this information will be added to the International Cognitive Ability Resource project (https://icar-project.com), where interested researchers can access the information after registering.
 
-When participants took the survey, they were presented with a random set of 75 adjective items, in addition to demographic questions. Participant were allowed to take the survey multiple times and also allowed to take both forms A and B. Across all 1,572 participants, we obtained 3,290 responses to the survey. For more information about the participants, see the [Sample characteristics](https://pie-lab.github.io/tda/sample.html) page. 
-
-FIX https://pie-lab.github.io/tda/data-cleaning.html
+When participants took the survey, they were presented with a random set of 75 adjective items, in addition to demographic questions. Participant were allowed to take the survey multiple times and also allowed to take both forms A and B. Across all 1,572 participants, we obtained 3,290 responses to the survey. For more information about the participants, see the [Sample characteristics](https://pie-lab.github.io/tda/sample.html) page.
 
 # Summary statistics 
 

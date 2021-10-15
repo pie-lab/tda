@@ -11,8 +11,13 @@ output:
 
 [add data paper reference here]
 
-Prolific and MTurk workers were allowed to complete the survey multiple times, as each iteration would likely contain very few overlapping words. We present here both descriptive figures by response (i.e., each unique instance of survey completion) and also by participant (i.e., one record per unique Prolific or MTurk ID number).
+This page shows the demographic characteristics for the sample of participants who responded to the items. The sample contained participants from a wide range of ages, household incomes, and different geographies (by state) within the US. Slightly more than half of the sample identified as female, 73% reported identifying as White, and the majority had some college-level education (42%) or a high school degree/GED equivalent (40%). 
 
+Note that most of the participants in the sample entered the survey through Prolific (90.7%), though a small proportion entered the survey through Amazon's Mechanical Turk platform. Participants were allowed to complete the survey multiple times, as each version of the survey contained only a small (random) subset of all possible terms. In other words, the possiblity of responding to the same term twice was low. The final figure on this page demonstrates that the majority of participants responded only once or twice.
+
+The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
+
+Please consult the reference listed above for more information about this project.
 
 ```{r, include = F}
 knitr::opts_chunk$set(message = F, warning = F)
@@ -45,17 +50,14 @@ data_part = data %>%
 
 ## Age
 
-### By response
-
 ```{r}
+# Here we show code for analyzing the data by response instead of participant
 # data %>%
 #   ggplot(aes(x = age)) +
 #   geom_histogram(binwidth = 1, color = "white") +
 #   labs(title = "Age in years", x= NULL) +
 #   theme_pubr()
 ```
-
-### By participant 
 
 
 ```{r}
@@ -68,24 +70,21 @@ data_part %>%
 
 ## Sex{.tabset}
 
-### By response
-
 ```{r}
-data %>%
-  group_by(sex) %>%
-  count() %>%
-  ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
-         percent = round(percent),
-         percent = paste(percent, "%")) %>%
-  ggplot(aes(x = sex, y = n)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = percent), vjust = 0) +
-  labs(title = "What was your biological sex at birth", x= NULL) +
-  theme_pubr()
+# Here we show code for analyzing the data by response instead of participant
+# data %>%
+#   group_by(sex) %>%
+#   count() %>%
+#   ungroup() %>%
+#   mutate(percent = 100*(n/sum(n)),
+#          percent = round(percent),
+#          percent = paste(percent, "%")) %>%
+#   ggplot(aes(x = sex, y = n)) +
+#   geom_bar(stat = "identity") +
+#   geom_text(aes(label = percent), vjust = 0) +
+#   labs(title = "What was your biological sex at birth", x= NULL) +
+#   theme_pubr()
 ```
-
-### By participant
 
 ```{r}
 data_part %>%
@@ -104,35 +103,32 @@ data_part %>%
 
 ## Education{.tabset}
 
-### By response
-
 ```{r}
-data %>%
-  mutate(edu = factor(edu, levels = c(
-      "Less than 12 years", 
-      "High school grad/GED",
-      "Currently in college/university",
-      "Some college/university, but did not graduate",
-      "Associate degree (2 yr)",
-      "College/university degree (4 yr)",
-      "Currently in grad/professional school",
-      "Grad/professional degree"
-  ))) %>%
-  group_by(edu) %>%
-  count() %>%
-  ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
-         percent = round(percent),
-         percent = paste(percent, "%")) %>%
-  ggplot(aes(x = edu, y = n)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = percent), vjust = 0) +
-  labs(title = "Level of education", x= NULL) +
-  theme_pubr() +
-  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+# Here we show code for analyzing the data by response instead of participant
+# data %>%
+#   mutate(edu = factor(edu, levels = c(
+#       "Less than 12 years", 
+#       "High school grad/GED",
+#       "Currently in college/university",
+#       "Some college/university, but did not graduate",
+#       "Associate degree (2 yr)",
+#       "College/university degree (4 yr)",
+#       "Currently in grad/professional school",
+#       "Grad/professional degree"
+#   ))) %>%
+#   group_by(edu) %>%
+#   count() %>%
+#   ungroup() %>%
+#   mutate(percent = 100*(n/sum(n)),
+#          percent = round(percent),
+#          percent = paste(percent, "%")) %>%
+#   ggplot(aes(x = edu, y = n)) +
+#   geom_bar(stat = "identity") +
+#   geom_text(aes(label = percent), vjust = 0) +
+#   labs(title = "Level of education", x= NULL) +
+#   theme_pubr() +
+#   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
 ```
-
-### By participant
 
 
 ```{r}
@@ -163,34 +159,31 @@ data_part %>%
 
 ## Ethnicity{.tabset}
 
-### By response
-
 ```{r}
-data %>%
-  mutate(ethnic = factor(ethnic, levels = c(
-     "American Indian/Alaskan Native",
-     "Asian",
-     "Black",
-     "Hispanic",
-     "White",
-     "Mixed (two or more)",
-     "Other"
-  ))) %>%
-  group_by(ethnic) %>%
-  count() %>%
-  ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
-         percent = round(percent),
-         percent = paste(percent, "%")) %>%
-  ggplot(aes(x = ethnic, y = n)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = percent), vjust = 0) +
-  labs(title = "Racial/ethnic identity", x= NULL) +
-  theme_pubr() +
-  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+# Here we show code for analyzing the data by response instead of participant
+# data %>%
+#   mutate(ethnic = factor(ethnic, levels = c(
+#      "American Indian/Alaskan Native",
+#      "Asian",
+#      "Black",
+#      "Hispanic",
+#      "White",
+#      "Mixed (two or more)",
+#      "Other"
+#   ))) %>%
+#   group_by(ethnic) %>%
+#   count() %>%
+#   ungroup() %>%
+#   mutate(percent = 100*(n/sum(n)),
+#          percent = round(percent),
+#          percent = paste(percent, "%")) %>%
+#   ggplot(aes(x = ethnic, y = n)) +
+#   geom_bar(stat = "identity") +
+#   geom_text(aes(label = percent), vjust = 0) +
+#   labs(title = "Racial/ethnic identity", x= NULL) +
+#   theme_pubr() +
+#   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
 ```
-
-### By participant
 
 ```{r}
 data_part %>%
@@ -219,43 +212,37 @@ data_part %>%
 
 ## Household income{.tabset}
 
-### By response
-
 ```{r}
-data %>%
-  mutate(hhinc = factor(hhinc, levels = c(
-      "< 20K",
-      "20K-40K",
-      "40K-60K",
-      "60K-80K",
-      "80K-100K",
-      "100K-120K",
-      "120K-150K",
-      "150K-200K",
-      "200K-250K",
-       "250K-350K",
-       "350K-500K",
-       "> 500K"
-  ))) %>%
-  group_by(hhinc) %>%
-  count() %>%
-  ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
-         percent = round(percent),
-         percent = paste(percent, "%")) %>%
-  ggplot(aes(x = hhinc, y = n)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = percent), vjust = 0) +
-  labs(title = "Household Income", x= NULL) +
-  theme_pubr() +
-  theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
+# Here we show code for analyzing the data by response instead of participant
+# data %>%
+#   mutate(hhinc = factor(hhinc, levels = c(
+#       "< 20K",
+#       "20K-40K",
+#       "40K-60K",
+#       "60K-80K",
+#       "80K-100K",
+#       "100K-120K",
+#       "120K-150K",
+#       "150K-200K",
+#       "200K-250K",
+#        "250K-350K",
+#        "350K-500K",
+#        "> 500K"
+#   ))) %>%
+#   group_by(hhinc) %>%
+#   count() %>%
+#   ungroup() %>%
+#   mutate(percent = 100*(n/sum(n)),
+#          percent = round(percent),
+#          percent = paste(percent, "%")) %>%
+#   ggplot(aes(x = hhinc, y = n)) +
+#   geom_bar(stat = "identity") +
+#   geom_text(aes(label = percent), vjust = 0) +
+#   labs(title = "Household Income", x= NULL) +
+#   theme_pubr() +
+#   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))
 ```
 
-
-
-
-
-### By participant
 
 ```{r}
 data_part %>%
