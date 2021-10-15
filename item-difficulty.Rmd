@@ -60,29 +60,6 @@ data_re = read_csv(here("data/TDA_data_recoded.csv")) # use recoded dataset
 
 data_re = filter(data_re, included == "Yes") # remove participants screend out for demographic and quality reasons
 
-distract = data_re %>%
-  select(starts_with("q_")) %>% #select only TDA items
-  gather("item", "response") %>% # stack all columns: creates 2 column data frame
-  mutate(response = ifelse(response == "Ans", #if response is correct
-                           NA,  #make missing
-                           response)) %>% #else keep as is
-  filter(!is.na(response)) %>% # remove missing responses (including correct responses)
-  full_join(masterKey) # join with masterKey
-
-  
-distract = distract %>%
-  group_by(item, response) %>% # for each unique response for each item
-  count() %>% # count
-  group_by(item) %>% # for each item
-  mutate(wrong_n = sum(n), # how many counts (this is only incorrect responses)
-         prop_wrong = n/wrong_n) %>% # what proportion of wrong is each response
-  filter(str_detect(response, "^R")) %>% #select only distractors
-  summarise(prop_wrong = max(prop_wrong), #what's max proportion
-            n_wrong = max(wrong_n)) #how many wrong
-
-item_prop = item_prop %>%
-  full_join(distract) # add to item proportion table
-
 item_prop = item_prop %>%
   mutate(across(where(is.double), round, 2)) #round all numbers to 2 decimal places
 ```
@@ -94,9 +71,9 @@ item_prop %>%
    form == "D" ~ "B",
    TRUE ~ form
  )) %>%
-  select(item, adjective, N, prop_correct, prop_wrong, form) %>% #just show these columns
+  select(item, adjective, N, prop_correct, form) %>% #just show these columns
   DT::datatable( #make interactive html table
-    colnames = c("Item", "Adjective", "N", "Proportion Correct", "Distractor Index", "Form"), #col names
+    colnames = c("Item", "Adjective", "N", "Proportion Correct", "Form"), #col names
     filter = "top", # can filter
     rownames = F #don't need
   )
@@ -104,8 +81,7 @@ item_prop %>%
 
 ```{r}
 item_prop %>%
-  select(item, adjective, N, prop_correct, prop_wrong, form) %>%
-  rename(distractor = prop_wrong) %>%
+  select(item, adjective, N, prop_correct, form) %>%
   write_csv(file = here("data/item_difficulty.csv"))
 ```
 
