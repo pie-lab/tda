@@ -7,9 +7,7 @@ output: html_document
 To cite these data:
 [add data paper reference here]
 
-Here we present codebook information for the demographic variables including summary statistics and distributions for each variable. This information illustrates the specific response options provided for each of these variables. 
-
-We do not provide codebook information for the 5,636 vocabulary items as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to these items.
+Here we present codebook information for the demographic variables including summary statistics and distributions for each. Codebook information for the 5,636 vocabulary items has been omitted as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to this information.
 
 ```{r setup, include=FALSE}
 knit_by_pkgdown <- !is.null(knitr::opts_chunk$get("fig.retina"))
