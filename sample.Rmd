@@ -31,7 +31,8 @@ library(knitr)
 library(kableExtra)
 library(maps)
 
-data = read.csv(here("data/TDA_data_scored.csv"))
+# data = read.csv(here("data/TDA_data_scored.csv"))
+data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
 
 data = filter(data, included == "Yes")
 ```

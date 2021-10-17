@@ -31,8 +31,13 @@ library(tidyverse) # for data cleaning and manipulation
 library(Hmisc) # for weighted means
 library(DT) # for viewing data tables
 
-data = read.csv(here("data/TDA_data_scored.csv"))
-masterKey = read.csv(here("data/masterkey.csv"))
+#data = read.csv(here("data/TDA_data_scored.csv"))
+#masterKey = read.csv(here("data/masterkey.csv"))
+data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
+masterKey = read.csv("~/Downloads/PROPOSED UPDATE REMOVED TALL x 2 false blase masterkey.csv")
+
+masterKey$adjective <- sub("blas\x8e", "blasé", masterKey$adjective)
+masterKey$adjective <- sub("FALSE", "false", masterKey$adjective)
 
 data = data %>%
   filter(included == "Yes") %>% # remove participants screend out for demographic and quality reasons
@@ -65,16 +70,25 @@ item_prop = item_prop %>%
   ) %>%
   mutate(prop = round(prop, 2)) # round to 2
 
+frequencies = read.csv("~/Downloads/PROPOSED ADDITIONAL FILE TDA_frequencies.csv")
+
+frequencies$adjective <- sub("blas\x8e", "blasé", frequencies$adjective)
+frequencies$adjective <- sub("FALSE", "false", frequencies$adjective)
+
+item_prop = item_prop %>% # join the item properties (adjective, N, prop_correct)
+  full_join(frequencies) # with the coca.freq, gbooks.freq, and GN1710
+
 item_prop %>%
   DT::datatable( # put into interactive HTML table
-    colnames = c("Adjective", "N (total)", "Proportion Correct"), #colnames
+    colnames = c("Adjective", "N (total)", "Proportion Correct", "COCA frequency", "GBooks frequency", "G&N1710"), #colnames
     filter = "top", # can filter
     rownames = F # don't need rownames
   )
 ```
 
 ```{r}
-write_csv(item_prop, file = here("data/tda_difficulty.csv"))
+#write_csv(item_prop, file = here("data/tda_difficulty.csv"))
+write_csv(item_prop, file = "~/Downloads/tda_properties.csv")
 ```
 
 
