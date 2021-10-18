@@ -351,8 +351,6 @@ demo$prop_correct <- alldata_scored %>% rowMeans(na.rm = T)
 ```
 
 
-## Correct or incorrect
-
 ```{r}
 alldata_scored_df = as.data.frame(alldata_scored)
 data_scored = cbind(demo, alldata_scored)
@@ -360,73 +358,6 @@ write_csv(data_scored,
           file = here("data/TDA_data_scored.csv"))
 ```
 
-## Response option
-
-First we create a vector for each item that specifies the new labels. All distractors take the form `D1` through `D5`. `Ans` (for the correct answer) is then inserted in the location of the correct response. We use `IDK` to represent "I don't know" and `None` to represent "None of these."
-
-```{r}
-
-
-masterKey = masterKey %>%
-  mutate(relevel = map(Key, 
-                       ~insert(c("D1","D2","D3","D4","D5","IDK", "None"), 
-                              at = .x, "Ans")))
-```
-
-Next we create a function that takes a vector of responses and the name of the item. The item name is used to identify the correct vector created in the previous code chunk. This is applied using the recode function and the new vector is returned. 
-
-```{r}
-relevel_fun = function(response, item_name){
-  relevel_vector = masterKey$relevel[masterKey$item == item_name][[1]]
-  new_vector = recode(response, !!!relevel_vector)
-  return(new_vector)
-}
-```
-
-We select just the TDA items and assign each row a unique number. This will help ensure all the responses end up in the correct place when we spread later. Then we stack questions and nest, to create a separate data frame for each item, containing a column called "response."
-
-```{r}
-raw_items = all_data %>%
-  select(starts_with("q_")) %>%
-  mutate(row = row_number()) %>%
-  gather("item", "response", starts_with("q_")) %>%
-  group_by(item) %>%
-  nest()
-
-# what does this look like
-head(raw_items)
-head(raw_items$data[[1]]) 
-table(raw_items$data[[1]]$response) 
-```
-
-Iterating across items, we apply the `relevel` function to the dataset, which replaces numeric values with the appropriate categorical value (Ans, R1:R5, I don't know, and None of these)
-
-```{r}
-recoded_items = raw_items %>%
-  mutate(data = map2(data, item, 
-                     ~mutate(.x, response = relevel_fun(response, .y)))) 
-
-# what does this look like
-head(recoded_items$data[[1]]) 
-table(recoded_items$data[[1]]$response) 
-```
-
-We unnest the data frames and spread back into the original format, ending with arrange to ensure the data are in the same rows as before.
-```{r}
-recoded_items = recoded_items %>% 
-  unnest(cols = c(data)) %>%
-  spread(item, response) %>% 
-  arrange(row) %>% 
-  select(-row)
-```
-
-Finally, we connect these responses to the demographic variables and save. 
-
-```{r}
-data_recode = cbind(demo, recoded_items)
-write_csv(data_recode, 
-          file = here("data/TDA_data_recoded.csv"))
-```
 
 We also save a shortened version of the master key object.
 

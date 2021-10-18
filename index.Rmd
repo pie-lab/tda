@@ -1,7 +1,7 @@
 ---
 title: "Trait Descriptive Adjectives"
 subtitle: "Code and supplemental material"
-author: "Davd M. Condon, Joshua Coughlin, & Sara J. Weston"
+author: "Author names blinded for review"
 output: 
   html_document:
     toc: TRUE

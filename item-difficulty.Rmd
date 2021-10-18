@@ -19,7 +19,7 @@ Note that we have intentionally omitted the definitions and distractor response 
 
 The mean proportion correct for each adjective across both forms can be found [here](https://pie-lab.github.io/tda/tda-difficulty.html).
 
-The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
+The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF). NOTE that the csv version of this file will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Please consult the reference listed above for more information about this project.
 
@@ -35,8 +35,6 @@ library(DT) # for viewing data tables
 
 data = read.csv(here("data/TDA_data_scored.csv"))
 masterKey = read.csv(here("data/masterkey.csv"))
-#data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
-#masterKey = read.csv("~/Downloads/PROPOSED UPDATE REMOVED TALL x 2 false blase masterkey.csv")
 
 masterKey$adjective <- sub("blas\x8e", "blasé", masterKey$adjective)
 masterKey$adjective <- sub("FALSE", "false", masterKey$adjective)

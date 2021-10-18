@@ -285,8 +285,6 @@ $(document).ready(function () {
 <li><a href="#score-data-new">Score data new</a></li>
 <li><a href="#data-for-publication">Data for publication</a><ul>
 <li><a href="#demographics">Demographics</a></li>
-<li><a href="#correct-or-incorrect">Correct or incorrect</a></li>
-<li><a href="#response-option">Response option</a></li>
 </ul></li>
 </ul>
 </div>
@@ -567,91 +565,10 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
 names(demo) = str_remove(names(demo), &quot;_cat&quot;)
 
 demo$prop_correct &lt;- alldata_scored %&gt;% rowMeans(na.rm = T)</code></pre>
-</div>
-<div id="correct-or-incorrect" class="section level2">
-<h2>Correct or incorrect</h2>
 <pre class="r"><code>alldata_scored_df = as.data.frame(alldata_scored)
 data_scored = cbind(demo, alldata_scored)
 write_csv(data_scored, 
           file = here(&quot;data/TDA_data_scored.csv&quot;))</code></pre>
-</div>
-<div id="response-option" class="section level2">
-<h2>Response option</h2>
-<p>First we create a vector for each item that specifies the new labels. All distractors take the form <code>D1</code> through <code>D5</code>. <code>Ans</code> (for the correct answer) is then inserted in the location of the correct response. We use <code>IDK</code> to represent &quot;I don't know&quot; and <code>None</code> to represent &quot;None of these.&quot;</p>
-<pre class="r"><code>masterKey = masterKey %&gt;%
-  mutate(relevel = map(Key, 
-                       ~insert(c(&quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;,&quot;D4&quot;,&quot;D5&quot;,&quot;IDK&quot;, &quot;None&quot;), 
-                              at = .x, &quot;Ans&quot;)))</code></pre>
-<p>Next we create a function that takes a vector of responses and the name of the item. The item name is used to identify the correct vector created in the previous code chunk. This is applied using the recode function and the new vector is returned.</p>
-<pre class="r"><code>relevel_fun = function(response, item_name){
-  relevel_vector = masterKey$relevel[masterKey$item == item_name][[1]]
-  new_vector = recode(response, !!!relevel_vector)
-  return(new_vector)
-}</code></pre>
-<p>We select just the TDA items and assign each row a unique number. This will help ensure all the responses end up in the correct place when we spread later. Then we stack questions and nest, to create a separate data frame for each item, containing a column called &quot;response.&quot;</p>
-<pre class="r"><code>raw_items = all_data %&gt;%
-  select(starts_with(&quot;q_&quot;)) %&gt;%
-  mutate(row = row_number()) %&gt;%
-  gather(&quot;item&quot;, &quot;response&quot;, starts_with(&quot;q_&quot;)) %&gt;%
-  group_by(item) %&gt;%
-  nest()
-
-# what does this look like
-head(raw_items)</code></pre>
-<pre><code>## # A tibble: 6 x 2
-## # Groups:   item [6]
-##   item    data                    
-##   &lt;chr&gt;   &lt;list&gt;                  
-## 1 q_20001 &lt;tibble[,2] [3,540 × 2]&gt;
-## 2 q_20002 &lt;tibble[,2] [3,540 × 2]&gt;
-## 3 q_20003 &lt;tibble[,2] [3,540 × 2]&gt;
-## 4 q_20004 &lt;tibble[,2] [3,540 × 2]&gt;
-## 5 q_20005 &lt;tibble[,2] [3,540 × 2]&gt;
-## 6 q_20006 &lt;tibble[,2] [3,540 × 2]&gt;</code></pre>
-<pre class="r"><code>head(raw_items$data[[1]]) </code></pre>
-<pre><code>## # A tibble: 6 x 2
-##     row response
-##   &lt;int&gt;    &lt;dbl&gt;
-## 1     1        3
-## 2     2       NA
-## 3     3       NA
-## 4     4       NA
-## 5     5       NA
-## 6     6       NA</code></pre>
-<pre class="r"><code>table(raw_items$data[[1]]$response) </code></pre>
-<pre><code>## 
-##  1  2  3  4  5  6  7  8 
-##  1  1  5  1 20  1  6  2</code></pre>
-<p>Iterating across items, we apply the <code>relevel</code> function to the dataset, which replaces numeric values with the appropriate categorical value (Ans, R1:R5, I don't know, and None of these)</p>
-<pre class="r"><code>recoded_items = raw_items %&gt;%
-  mutate(data = map2(data, item, 
-                     ~mutate(.x, response = relevel_fun(response, .y)))) 
-
-# what does this look like
-head(recoded_items$data[[1]]) </code></pre>
-<pre><code>## # A tibble: 6 x 2
-##     row response
-##   &lt;int&gt; &lt;chr&gt;   
-## 1     1 D3      
-## 2     2 &lt;NA&gt;    
-## 3     3 &lt;NA&gt;    
-## 4     4 &lt;NA&gt;    
-## 5     5 &lt;NA&gt;    
-## 6     6 &lt;NA&gt;</code></pre>
-<pre class="r"><code>table(recoded_items$data[[1]]$response) </code></pre>
-<pre><code>## 
-##  Ans   D1   D2   D3   D4   D5  IDK None 
-##   20    1    1    5    1    1    6    2</code></pre>
-<p>We unnest the data frames and spread back into the original format, ending with arrange to ensure the data are in the same rows as before.</p>
-<pre class="r"><code>recoded_items = recoded_items %&gt;% 
-  unnest(cols = c(data)) %&gt;%
-  spread(item, response) %&gt;% 
-  arrange(row) %&gt;% 
-  select(-row)</code></pre>
-<p>Finally, we connect these responses to the demographic variables and save.</p>
-<pre class="r"><code>data_recode = cbind(demo, recoded_items)
-write_csv(data_recode, 
-          file = here(&quot;data/TDA_data_recoded.csv&quot;))</code></pre>
 <p>We also save a shortened version of the master key object.</p>
 <pre class="r"><code>masterKey %&gt;%
   select(item, answer, form) %&gt;%

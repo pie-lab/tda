@@ -35,8 +35,7 @@ library(codebook)
 
 
 ```{r load data}
-codebook_data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
-#codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
+codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
 ```
 
 ```{r remove_items}
