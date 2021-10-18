@@ -14,7 +14,8 @@
 
 <title>Trait Descriptive Adjectives</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -297,12 +298,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -335,7 +336,7 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/pie-lab/tda">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -355,9 +356,9 @@ div.tocify {
 </div>
 
 
-<p>All data described on this website are available for download at <a href="https://doi.org/10.7910/DVN/5T80PF" class="uri">https://doi.org/10.7910/DVN/5T80PF</a>.</p>
-<p>The code for cleaning the data is available at <a href="https://pie-lab.github.io/tda/data-cleaning.html" class="uri">https://pie-lab.github.io/tda/data-cleaning.html</a>.</p>
-<p>The code used to create this website is available at <a href="https://github.com/pie-lab/tda" class="uri">https://github.com/pie-lab/tda</a>.</p>
+<p>All data described on this website are available for download at <a href="https://doi.org/10.7910/DVN/5T80PF">https://doi.org/10.7910/DVN/5T80PF</a>.</p>
+<p>The code for cleaning the data is available at <a href="https://pie-lab.github.io/tda/data-cleaning.html">https://pie-lab.github.io/tda/data-cleaning.html</a>.</p>
+<p>The code used to create this website is available at <a href="https://github.com/pie-lab/tda">https://github.com/pie-lab/tda</a>.</p>
 <div id="background" class="section level1">
 <h1>Background</h1>
 <p>A foundational theory in personality assessment – the “Lexical Hypothesis” – posits that all relevant psychological differences between people are marked by trait descriptive adjectives (TDAs), and thus these adjectives could serve as the universe of stimuli which would inform the structure of personality. The full number of TDAs is in the many thousands, and so cannot be administered to any single participant; as a result, early personality psychologists subjectively reduced the set of adjectives administered. This is potentially problematic, as academic researchers may not recognize the obscure nature of some adjectives, especially to individuals with lower levels of education. Later research compounded such bias by using as participants homogenous samples of White, educated, and young individuals (e.g., the Eugene-Springfield Community Sample). The current study sought to quantify the knowledge of TDAs using a sample of participants recruited to be (close to) representative in terms of age, race/ethnicity, gender, and education.</p>
@@ -411,6 +412,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

@@ -13,7 +13,8 @@
 
 <title>Cleaning and summarizing</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -258,7 +259,7 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/pie-lab/tda">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -278,12 +279,14 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#load-data-and-packages">Load data and packages</a><ul>
+<li><a href="#load-data-and-packages">Load data and packages</a>
+<ul>
 <li><a href="#qualtrics-survey-responses">Qualtrics survey responses</a></li>
 <li><a href="#scoring-keys">Scoring keys</a></li>
 </ul></li>
 <li><a href="#score-data-new">Score data new</a></li>
-<li><a href="#data-for-publication">Data for publication</a><ul>
+<li><a href="#data-for-publication">Data for publication</a>
+<ul>
 <li><a href="#demographics">Demographics</a></li>
 </ul></li>
 </ul>
@@ -298,7 +301,7 @@ library(psych) # for scoring multiple choice items
 library(R.utils) # just for the insert() function</code></pre>
 <div id="qualtrics-survey-responses" class="section level2">
 <h2>Qualtrics survey responses</h2>
-<p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a &quot;names&quot; data frame and then data starting at row 4, for the raw data.</p>
+<p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a “names” data frame and then data starting at row 4, for the raw data.</p>
 <pre class="r"><code># read in form A (Prolific)
 formA_names = read_csv(
   here(&quot;data/Form+A_Prolific_April+2,+2021_15.27.csv&quot;))
@@ -549,7 +552,7 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
       hhinc == 11 ~ &quot;350K-500K&quot;,
       hhinc == 12 ~ &quot;&gt; 500K&quot;,
       hhinc == 13 ~ &quot;Prefer not to say&quot;))</code></pre>
-<p>Participants are excluded from analyses if they * complete the survey in less than 3 minutes (180 seconds), * don't speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
+<p>Participants are excluded from analyses if they * complete the survey in less than 3 minutes (180 seconds), * don’t speak fluent English, * grew up outside the US, or * are currently living outside the US.</p>
 <pre class="r"><code>demo = demo %&gt;%
   mutate(included = case_when(
     duration &lt; 180 ~ &quot;No&quot;,
