@@ -33,10 +33,10 @@ library(tidyverse) # for data cleaning and manipulation
 library(Hmisc) # for weighted means
 library(DT) # for viewing data tables
 
-#data = read.csv(here("data/TDA_data_scored.csv"))
-#masterKey = read.csv(here("data/masterkey.csv"))
-data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
-masterKey = read.csv("~/Downloads/PROPOSED UPDATE REMOVED TALL x 2 false blase masterkey.csv")
+data = read.csv(here("data/TDA_data_scored.csv"))
+masterKey = read.csv(here("data/masterkey.csv"))
+#data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
+#masterKey = read.csv("~/Downloads/PROPOSED UPDATE REMOVED TALL x 2 false blase masterkey.csv")
 
 masterKey$adjective <- sub("blas\x8e", "blasé", masterKey$adjective)
 masterKey$adjective <- sub("FALSE", "false", masterKey$adjective)
@@ -86,7 +86,6 @@ item_prop %>%
 ```{r}
 item_prop %>%
   select(item, adjective, N, prop_correct, form) %>%
-#  write_csv(file = here("data/item_difficulty.csv"))
-  write_csv(file = "~/Downloads/item_difficulty.csv")
+  write_csv(file = here("data/item_difficulty.csv"))
 ```
 
