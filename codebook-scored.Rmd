@@ -10,7 +10,7 @@ output: html_document
 
 Here we present codebook information for the demographic variables including summary statistics and distributions for each. Note that codebook information for the 5,636 vocabulary items has been omitted as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to this information.
 
-The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
+The data can be downloaded here [*disabled for peer review*]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Please consult the reference listed above for more information about this project.
 
@@ -35,6 +35,18 @@ library(codebook)
 
 
 ```{r load data}
+# Download the data manually from Dataverse using the doi link above
+
+# Or use the following lines to scrap the data file in directly
+# library(dataverse)
+# library(data.table)
+
+# Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+# writeBin(get_file("masterkey.tab", "doi:10.7910/DVN/5T80PF"), "masterkey.tab")
+# masterKey.tab <- fread("masterkey.tab", na.strings=getOption("<NA>","NA"))
+# masterKey <- as.data.frame(masterKey.tab)
+# rm(masterKey.tab)
+
 codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
 ```
 

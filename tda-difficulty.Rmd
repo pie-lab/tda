@@ -17,7 +17,7 @@ In our view, the total proportion correct reflects *both* familiarity of the adj
 
 Statistics from the individual administrations of each term (i.e., each version or "form") can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
 
-The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF). NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
+The data can be downloaded here [*disabled for peer review*]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Then, for reference and subsequent use in other personality projects, we sought to characterize these terms in several additional ways. To evaluate the frequency of usage for each term, there are at least two good options. One is to use the [Corpus of Contemporary American English](https://www.wordfrequency.info/100k.asp) ("COCA") and the second is to use data openly available from the [Google Books](http://storage.googleapis.com/books/ngrams/books/datasetsv2.html) project. Though extremely useful, the COCA resource is proprietary so it is not possible to post the frequency of term usage based on this list. The Google Books data is less complete (and has been documented to be problematic in several respects) but publicly accessible. The "GBooks frequency" column below reflects z-scores based on frequency among the first 58,600 or so terms. See this post on [StackExchange](https://english.stackexchange.com/questions/161478/what-website-will-give-me-the-frequency-of-a-word-in-the-english-language) for more information and attribution. 
 
@@ -34,6 +34,20 @@ library(here) # for engaging with working environment
 library(tidyverse) # for data cleaning and manipulation
 library(Hmisc) # for weighted means
 library(DT) # for viewing data tables
+
+# Download the data manually from Dataverse using the doi link above
+# https://doi.org/10.7910/DVN/5T80PF
+
+# Or use the following lines to scrap the data file in directly
+# library(dataverse)
+# library(data.table)
+
+# Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+# writeBin(get_file("masterkey.tab", "doi:10.7910/DVN/5T80PF"), "masterkey.tab")
+# masterKey.tab <- fread("masterkey.tab", na.strings=getOption("<NA>","NA"))
+# masterKey <- as.data.frame(masterKey.tab)
+# rm(masterKey.tab)
+
 
 data = read.csv(here("data/TDA_data_scored.csv"))
 masterKey = read.csv(here("data/masterkey.csv"))
@@ -83,13 +97,19 @@ item_prop = item_prop %>% # join the item properties (adjective, N, prop_correct
 item_prop %>%
   DT::datatable( # put into interactive HTML table
     colnames = c("Adjective", "N (total)", "Proportion Correct", "GBooks frequency", "G&N1710", "S&G435", "BFFM100"), #colnames
+    options = list(
+      lengthMenu = list(c(10, 50, -1), c('10', '50', 'All')),
+        pageLength = 10
+    ),
     filter = "top", # can filter
     rownames = F # don't need rownames
   )
 ```
 
 ```{r}
-write_csv(item_prop, file = "~/Downloads/TDA_properties.csv")
+write_csv(item_prop, file = here("data/TDA_properties.csv"))
+
+# This output file has been posted on Dataverse at the doi provided above.
 ```
 
 

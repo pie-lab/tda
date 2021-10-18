@@ -356,6 +356,9 @@ alldata_scored_df = as.data.frame(alldata_scored)
 data_scored = cbind(demo, alldata_scored)
 write_csv(data_scored, 
           file = here("data/TDA_data_scored.csv"))
+
+# This output file has been posted on Dataverse at
+# https://doi.org/10.7910/DVN/5T80PF
 ```
 
 
@@ -366,6 +369,9 @@ masterKey %>%
   select(item, answer, form) %>%
   rename(adjective = answer) %>%
   write_csv(file = here("data/masterkey.csv"))
+
+# This output file has been posted on Dataverse at
+# https://doi.org/10.7910/DVN/5T80PF
 ```
 
 

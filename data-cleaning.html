@@ -571,12 +571,18 @@ demo$prop_correct &lt;- alldata_scored %&gt;% rowMeans(na.rm = T)</code></pre>
 <pre class="r"><code>alldata_scored_df = as.data.frame(alldata_scored)
 data_scored = cbind(demo, alldata_scored)
 write_csv(data_scored, 
-          file = here(&quot;data/TDA_data_scored.csv&quot;))</code></pre>
+          file = here(&quot;data/TDA_data_scored.csv&quot;))
+
+# This output file has been posted on Dataverse at
+# https://doi.org/10.7910/DVN/5T80PF</code></pre>
 <p>We also save a shortened version of the master key object.</p>
 <pre class="r"><code>masterKey %&gt;%
   select(item, answer, form) %&gt;%
   rename(adjective = answer) %&gt;%
-  write_csv(file = here(&quot;data/masterkey.csv&quot;))</code></pre>
+  write_csv(file = here(&quot;data/masterkey.csv&quot;))
+
+# This output file has been posted on Dataverse at
+# https://doi.org/10.7910/DVN/5T80PF</code></pre>
 </div>
 </div>
 

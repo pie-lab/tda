@@ -19,7 +19,7 @@ Note that we have intentionally omitted the definitions and distractor response 
 
 The mean proportion correct for each adjective across both forms can be found [here](https://pie-lab.github.io/tda/tda-difficulty.html).
 
-The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF). NOTE that the csv version of this file will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
+The data can be downloaded here [*disabled for peer review*]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Please consult the reference listed above for more information about this project.
 
@@ -32,6 +32,19 @@ library(here) # for engaging with working environment
 library(tidyverse) # for data cleaning and manipulation
 library(Hmisc) # for weighted means
 library(DT) # for viewing data tables
+
+# Download the data manually from Dataverse using the doi link above
+# https://doi.org/10.7910/DVN/5T80PF
+
+# Or use the following lines to scrap the data file in directly
+# library(dataverse)
+# library(data.table)
+
+# Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+# writeBin(get_file("masterkey.tab", "doi:10.7910/DVN/5T80PF"), "masterkey.tab")
+# masterKey.tab <- fread("masterkey.tab", na.strings=getOption("<NA>","NA"))
+# masterKey <- as.data.frame(masterKey.tab)
+# rm(masterKey.tab)
 
 data = read.csv(here("data/TDA_data_scored.csv"))
 masterKey = read.csv(here("data/masterkey.csv"))
@@ -85,5 +98,7 @@ item_prop %>%
 item_prop %>%
   select(item, adjective, N, prop_correct, form) %>%
   write_csv(file = here("data/item_difficulty.csv"))
+
+# This output file has been posted on Dataverse at the doi provided above.
 ```
 
