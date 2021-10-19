@@ -6,7 +6,7 @@ output: html_document
 
 <u>To cite these data:</u>
 
-[add data paper reference here]
+[data paper reference would be added here]
 
 Here we present codebook information for the demographic variables including summary statistics and distributions for each. Note that codebook information for the 5,636 vocabulary items has been omitted as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to this information.
 

@@ -9,7 +9,7 @@ output:
 
 <u>To cite these data:</u>
 
-[add data paper reference here]
+[data paper reference would be added here]
 
 This page shows the demographic characteristics for the sample of participants who responded to the items. The sample contained participants from a wide range of ages, household incomes, and different geographies (by state) within the US. Note that residence in the US was a prerequisite for participation as the generalizability of the proportion of correct responses was intended to be limited to American English speakers only (i.e., not intended to extend to knowledge of American English terms among individuals residing outside of the US). Slightly more than half of the sample identified as female, roughly consistent with the US population. In terms of race/ethnicity (see figure below), the sample included a slightly higher proportion of participants identifying as White (73%) relative to the US population (64% of US adults according to the 2020 Census); the proportion of respondents identifying as Black or Hispanic was less than in the 2020 Census (9% vs 12% and 5% vs 16%, respectively). The majority had some college-level education (42%) or a high school degree/GED equivalent (40%).
 

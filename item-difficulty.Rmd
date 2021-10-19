@@ -9,7 +9,7 @@ output:
 
 <u>To cite these data:</u>
 
-[add data paper reference here]
+[data paper reference would be added here]
 
 This page lists information from each of the two forms used to derive the [average proportion correct](https://pie-lab.github.io/tda/tda-difficulty.html) for each of the 2,818 unique trait descriptive adjectives. See the [top of this page](https://pie-lab.github.io/tda/tda-difficulty.html) for further explanation of the two different forms.
 
