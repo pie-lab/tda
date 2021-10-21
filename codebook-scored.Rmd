@@ -36,17 +36,17 @@ library(codebook)
 
 ```{r load data}
 # Download the data manually from Dataverse using the doi link above
-# codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
+codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
 
 # Or use the following lines to scrap the data file in directly
-library(dataverse)
-library(data.table)
-
-Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
-writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
-TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
-codebook_data <- as.data.frame(TDA_data_scored.tab)
-rm(TDA_data_scored.tab)
+# library(dataverse)
+# library(data.table)
+# 
+# Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+# writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
+# TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
+# codebook_data <- as.data.frame(TDA_data_scored.tab)
+# rm(TDA_data_scored.tab)
 
 ```
 

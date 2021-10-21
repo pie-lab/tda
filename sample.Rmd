@@ -24,34 +24,39 @@ knitr::opts_chunk$set(message = F, warning = F)
 ```
 
 ```{r}
-library(tidyverse)
 library(here)
 library(ggpubr)
 library(knitr)
-library(kableExtra)
 library(maps)
+library(conflicted)
+library(tidyverse) # for data cleaning and manipulation
+conflict_prefer("here", "here")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("count", "dplyr")
+conflict_prefer("mutate", "dplyr")
+
 
 # Download the data manually from Dataverse using the doi link above
-# codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
+ data <- read.csv(here("data/TDA_data_scored.csv"))
 
 # Or use the following lines to scrap the data file in directly
-library(dataverse)
-library(data.table)
-
-Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
-writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
-TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
-data <- as.data.frame(TDA_data_scored.tab)
-rm(TDA_data_scored.tab)
-
-data = filter(data, included == "Yes")
+# library(dataverse)
+# library(data.table)
+# 
+# Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+# writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
+# TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
+# data <- as.data.frame(TDA_data_scored.tab)
+# rm(TDA_data_scored.tab)
+# 
+# data = filter(data, included == "Yes")
 ```
 
 
 ```{r}
 data = data %>%
   group_by(PID) %>%
-  mutate(n = n()) 
+  dplyr::mutate(n = n()) 
 
 data_part = data %>%
   group_by(PID) %>%
@@ -87,7 +92,7 @@ data_part %>%
 #   group_by(sex) %>%
 #   count() %>%
 #   ungroup() %>%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, "%")) %>%
 #   ggplot(aes(x = sex, y = n)) +
@@ -102,7 +107,7 @@ data_part %>%
  group_by(sex) %>%
   count() %>%
   ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, "%")) %>%
   ggplot(aes(x = sex, y = n)) +
@@ -117,7 +122,7 @@ data_part %>%
 ```{r}
 # Here we show code for analyzing the data by response instead of participant
 # data %>%
-#   mutate(edu = factor(edu, levels = c(
+#   dplyr::mutate(edu = factor(edu, levels = c(
 #       "Less than 12 years", 
 #       "High school grad/GED",
 #       "Currently in college/university",
@@ -130,7 +135,7 @@ data_part %>%
 #   group_by(edu) %>%
 #   count() %>%
 #   ungroup() %>%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, "%")) %>%
 #   ggplot(aes(x = edu, y = n)) +
@@ -144,7 +149,7 @@ data_part %>%
 
 ```{r}
 data_part %>%
-  mutate(edu = factor(edu, levels = c(
+  dplyr::mutate(edu = factor(edu, levels = c(
       "Less than 12 years", 
       "High school grad/GED",
       "Currently in college/university",
@@ -157,7 +162,7 @@ data_part %>%
   group_by(edu) %>%
   count() %>%
   ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, "%")) %>%
   ggplot(aes(x = edu, y = n)) +
@@ -173,7 +178,7 @@ data_part %>%
 ```{r}
 # Here we show code for analyzing the data by response instead of participant
 # data %>%
-#   mutate(ethnic = factor(ethnic, levels = c(
+#   dplyr::mutate(ethnic = factor(ethnic, levels = c(
 #      "American Indian/Alaskan Native",
 #      "Asian",
 #      "Black",
@@ -185,7 +190,7 @@ data_part %>%
 #   group_by(ethnic) %>%
 #   count() %>%
 #   ungroup() %>%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, "%")) %>%
 #   ggplot(aes(x = ethnic, y = n)) +
@@ -198,7 +203,7 @@ data_part %>%
 
 ```{r}
 data_part %>%
-  mutate(ethnic = factor(ethnic, levels = c(
+  dplyr::mutate(ethnic = factor(ethnic, levels = c(
      "American Indian/Alaskan Native",
      "Asian",
      "Black",
@@ -210,7 +215,7 @@ data_part %>%
   group_by(ethnic) %>%
   count() %>%
   ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, "%")) %>%
   ggplot(aes(x = ethnic, y = n)) +
@@ -226,7 +231,7 @@ data_part %>%
 ```{r}
 # Here we show code for analyzing the data by response instead of participant
 # data %>%
-#   mutate(hhinc = factor(hhinc, levels = c(
+#   dplyr::mutate(hhinc = factor(hhinc, levels = c(
 #       "< 20K",
 #       "20K-40K",
 #       "40K-60K",
@@ -243,7 +248,7 @@ data_part %>%
 #   group_by(hhinc) %>%
 #   count() %>%
 #   ungroup() %>%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, "%")) %>%
 #   ggplot(aes(x = hhinc, y = n)) +
@@ -257,7 +262,7 @@ data_part %>%
 
 ```{r}
 data_part %>%
-  mutate(hhinc = factor(hhinc, levels = c(
+  dplyr::mutate(hhinc = factor(hhinc, levels = c(
       "< 20K",
       "20K-40K",
       "40K-60K",
@@ -274,7 +279,7 @@ data_part %>%
   group_by(hhinc) %>%
   count() %>%
   ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, "%")) %>%
   ggplot(aes(x = hhinc, y = n)) +
@@ -309,13 +314,14 @@ MainStates <- map_data("state")
 
 data_part %>% 
   with_groups(state, count) %>% 
-  mutate(region = tolower(state)) %>% 
+  dplyr::mutate(region = tolower(state)) %>% 
   inner_join(MainStates) %>% 
   ggplot() + 
   geom_polygon(aes(x=long, y=lat, group=group, fill = n),
                 color="black") +
   scale_x_continuous(breaks = NULL) +
   scale_y_continuous(breaks = NULL) +
+  scale_fill_gradient(low = "white", high = "darkblue") +
   labs(x = NULL, y = NULL) +
   theme_pubr()
 ```

@@ -273,7 +273,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Cleaning and summarizing</h1>
-<h4 class="date">Last updated 2021-10-18</h4>
+<h4 class="date">Last updated 2021-10-20</h4>
 
 </div>
 
@@ -296,9 +296,14 @@ $(document).ready(function () {
 <h1>Load data and packages</h1>
 <pre class="r"><code>library(here) # for engaging with working environment
 library(rio) # for importing excel files
-library(tidyverse) # for data cleaning and manipulation
 library(psych) # for scoring multiple choice items
-library(R.utils) # just for the insert() function</code></pre>
+library(R.utils) # just for the insert() function
+library(conflicted)
+library(tidyverse) # for data cleaning and manipulation
+conflict_prefer(&quot;here&quot;, &quot;here&quot;)
+conflict_prefer(&quot;filter&quot;, &quot;dplyr&quot;)
+conflict_prefer(&quot;count&quot;, &quot;dplyr&quot;)
+conflict_prefer(&quot;mutate&quot;, &quot;dplyr&quot;)</code></pre>
 <div id="qualtrics-survey-responses" class="section level2">
 <h2>Qualtrics survey responses</h2>
 <p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a “names” data frame and then data starting at row 4, for the raw data.</p>
@@ -381,11 +386,11 @@ names(formC) = str_replace(names(formC),
                            &quot;(q_)(\\d{4}$)&quot;, &quot;\\12\\2&quot;)</code></pre>
 <p>Remove participants without valid Prolific or MTurk IDs.</p>
 <pre class="r"><code>formA = formA %&gt;%
-  filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) &gt; 3)
+  dplyr::filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) &gt; 3)
 formB = formB %&gt;%
-  filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) &gt; 3)
+  dplyr::filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) &gt; 3)
 formC = formC %&gt;%
-  filter(str_length(PROLIFIC_PID) &gt; 3)</code></pre>
+  dplyr::filter(str_length(PROLIFIC_PID) &gt; 3)</code></pre>
 </div>
 <div id="scoring-keys" class="section level2">
 <h2>Scoring keys</h2>
@@ -404,7 +409,7 @@ names(keyB) = str_replace(names(keyB),
 names(keyC) = str_replace(names(keyC), 
                            &quot;(^)([0-9]{1}$)&quot;, 
                            &quot;R_\\2&quot;) 
-keyC = rename(keyC, X = .)</code></pre>
+keyC = dplyr::rename(keyC, X = .)</code></pre>
 <p>The <code>Key</code> column indicates the position of the correct response. We create a key vector that contains the value of the correct response, not the position.</p>
 <pre class="r"><code>create_key = function(keydf){
   # select only response variables and concatonate by row into vectors
@@ -425,14 +430,14 @@ keyB = create_key(keyB) %&gt;%
   mutate(form = &quot;B&quot;)
 keyC = create_key(keyC) %&gt;%
   group_by(Stimulus) %&gt;%
-  mutate(form = ifelse(row_number() == 1, &quot;C&quot;, &quot;D&quot;)) %&gt;%
+  dplyr::mutate(form = ifelse(dplyr::row_number() == 1, &quot;C&quot;, &quot;D&quot;)) %&gt;%
   ungroup()</code></pre>
 <p>Merge keys together.</p>
 <pre class="r"><code>masterKey = keyA %&gt;%
   full_join(keyB) %&gt;%
   full_join(keyC) %&gt;%
   select(X:Key, answer, form) %&gt;%
-  rename(item = X)</code></pre>
+  dplyr::rename(item = X)</code></pre>
 </div>
 </div>
 <div id="score-data-new" class="section level1">
@@ -478,7 +483,7 @@ keyC = create_key(keyC) %&gt;%
 remove_which = which(masterKey$item %in% remove_items)
 
 alldata_scored = alldata_scored[, -remove_which]
-masterKey = filter(masterKey, !(item %in% remove_items))
+masterKey = dplyr::filter(masterKey, !(item %in% remove_items))
 all_data = select(all_data, -all_of(remove_items))</code></pre>
 </div>
 <div id="data-for-publication" class="section level1">
@@ -494,13 +499,13 @@ all_data = select(all_data, -all_of(remove_items))</code></pre>
     !is.na(prolificID) ~ &quot;Prolific&quot;,
     !is.na(mTurkCode) ~ &quot;MTurk&quot;,
     TRUE ~ NA_character_)) %&gt;%
-  mutate(row = row_number() + 1000) %&gt;%
+  dplyr::mutate(row = row_number() + 1000) %&gt;%
   group_by(comb_id) %&gt;%
-  mutate(row = min(row)) %&gt;%
-  mutate(PID = paste0(&quot;R&quot;, row)) %&gt;%
+  dplyr::mutate(row = min(row)) %&gt;%
+  dplyr::mutate(PID = paste0(&quot;R&quot;, row)) %&gt;%
   ungroup() %&gt;%
-  rename(duration = `Duration (in seconds)`) %&gt;%
-  mutate(
+  dplyr::rename(duration = `Duration (in seconds)`) %&gt;%
+  dplyr::mutate(
     english_cat = case_when(
       english == 1 ~ &quot;Very well (fluent/native)&quot;,
       english == 2 ~ &quot;Well&quot;,
@@ -578,7 +583,7 @@ write_csv(data_scored,
 <p>We also save a shortened version of the master key object.</p>
 <pre class="r"><code>masterKey %&gt;%
   select(item, answer, form) %&gt;%
-  rename(adjective = answer) %&gt;%
+  dplyr::rename(adjective = answer) %&gt;%
   write_csv(file = here(&quot;data/masterkey.csv&quot;))
 
 # This output file has been posted on Dataverse at

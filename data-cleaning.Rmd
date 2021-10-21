@@ -16,9 +16,14 @@ knitr::opts_chunk$set(message = F, warning = F)
 ```{r, message = F, warning = F}
 library(here) # for engaging with working environment
 library(rio) # for importing excel files
-library(tidyverse) # for data cleaning and manipulation
 library(psych) # for scoring multiple choice items
 library(R.utils) # just for the insert() function
+library(conflicted)
+library(tidyverse) # for data cleaning and manipulation
+conflict_prefer("here", "here")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("count", "dplyr")
+conflict_prefer("mutate", "dplyr")
 ```
 
 ## Qualtrics survey responses
@@ -121,11 +126,11 @@ Remove participants without valid Prolific or MTurk IDs.
 
 ```{r}
 formA = formA %>%
-  filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) > 3)
+  dplyr::filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) > 3)
 formB = formB %>%
-  filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) > 3)
+  dplyr::filter(!is.na(mTurkCode) | str_length(PROLIFIC_PID) > 3)
 formC = formC %>%
-  filter(str_length(PROLIFIC_PID) > 3)
+  dplyr::filter(str_length(PROLIFIC_PID) > 3)
 ```
 
 ## Scoring keys
@@ -150,7 +155,7 @@ names(keyB) = str_replace(names(keyB),
 names(keyC) = str_replace(names(keyC), 
                            "(^)([0-9]{1}$)", 
                            "R_\\2") 
-keyC = rename(keyC, X = .)
+keyC = dplyr::rename(keyC, X = .)
 ```
 
 The `Key` column indicates the position of the correct response. We create a key vector that contains the value of the correct response, not the position.
@@ -176,7 +181,7 @@ keyB = create_key(keyB) %>%
   mutate(form = "B")
 keyC = create_key(keyC) %>%
   group_by(Stimulus) %>%
-  mutate(form = ifelse(row_number() == 1, "C", "D")) %>%
+  dplyr::mutate(form = ifelse(dplyr::row_number() == 1, "C", "D")) %>%
   ungroup()
 ```
 
@@ -187,7 +192,7 @@ masterKey = keyA %>%
   full_join(keyB) %>%
   full_join(keyC) %>%
   select(X:Key, answer, form) %>%
-  rename(item = X)
+  dplyr::rename(item = X)
 ```
 
 
@@ -243,7 +248,7 @@ remove_items = c(
 remove_which = which(masterKey$item %in% remove_items)
 
 alldata_scored = alldata_scored[, -remove_which]
-masterKey = filter(masterKey, !(item %in% remove_items))
+masterKey = dplyr::filter(masterKey, !(item %in% remove_items))
 all_data = select(all_data, -all_of(remove_items))
 ```
 
@@ -261,13 +266,13 @@ demo = all_data %>%
     !is.na(prolificID) ~ "Prolific",
     !is.na(mTurkCode) ~ "MTurk",
     TRUE ~ NA_character_)) %>%
-  mutate(row = row_number() + 1000) %>%
+  dplyr::mutate(row = row_number() + 1000) %>%
   group_by(comb_id) %>%
-  mutate(row = min(row)) %>%
-  mutate(PID = paste0("R", row)) %>%
+  dplyr::mutate(row = min(row)) %>%
+  dplyr::mutate(PID = paste0("R", row)) %>%
   ungroup() %>%
-  rename(duration = `Duration (in seconds)`) %>%
-  mutate(
+  dplyr::rename(duration = `Duration (in seconds)`) %>%
+  dplyr::mutate(
     english_cat = case_when(
       english == 1 ~ "Very well (fluent/native)",
       english == 2 ~ "Well",
@@ -367,7 +372,7 @@ We also save a shortened version of the master key object.
 ```{r}
 masterKey %>%
   select(item, answer, form) %>%
-  rename(adjective = answer) %>%
+  dplyr::rename(adjective = answer) %>%
   write_csv(file = here("data/masterkey.csv"))
 
 # This output file has been posted on Dataverse at
