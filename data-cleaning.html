@@ -273,7 +273,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Cleaning and summarizing</h1>
-<h4 class="date">Last updated 2021-10-20</h4>
+<h4 class="date">Last updated 2021-10-22</h4>
 
 </div>
 
@@ -303,7 +303,8 @@ library(tidyverse) # for data cleaning and manipulation
 conflict_prefer(&quot;here&quot;, &quot;here&quot;)
 conflict_prefer(&quot;filter&quot;, &quot;dplyr&quot;)
 conflict_prefer(&quot;count&quot;, &quot;dplyr&quot;)
-conflict_prefer(&quot;mutate&quot;, &quot;dplyr&quot;)</code></pre>
+conflict_prefer(&quot;mutate&quot;, &quot;dplyr&quot;)
+conflict_prefer(&quot;summarise&quot;, &quot;dplyr&quot;)</code></pre>
 <div id="qualtrics-survey-responses" class="section level2">
 <h2>Qualtrics survey responses</h2>
 <p>The excel files contain raw data exported from Qualtrics. The first row of this file contains variable names, but rows 2 and 3 contain meta data. To account, we first load in all data as a “names” data frame and then data starting at row 4, for the raw data.</p>

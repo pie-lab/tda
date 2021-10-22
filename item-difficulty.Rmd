@@ -37,29 +37,30 @@ conflict_prefer("here", "here")
 conflict_prefer("filter", "dplyr")
 conflict_prefer("count", "dplyr")
 conflict_prefer("mutate", "dplyr")
+conflict_prefer("summarise", "dplyr")
 
 
 # Download the data manually from Dataverse using the doi link above
 # https://doi.org/10.7910/DVN/5T80PF
 
-data = read.csv(here("data/TDA_data_scored.csv"))
-masterKey = read.csv(here("data/masterkey.csv"))
+#data = read.csv(here("data/TDA_data_scored.csv"))
+#masterKey = read.csv(here("data/masterkey.csv"))
 
 # Or use the following lines to scrap the data file in directly
-# library(dataverse)
-# library(data.table)
-# 
-# Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
-# writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
-# TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
-# data <- as.data.frame(TDA_data_scored.tab)
-# rm(TDA_data_scored.tab)
-# 
-# Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
-# writeBin(get_file("masterkey.tab", "doi:10.7910/DVN/5T80PF"), "masterkey.tab")
-# masterKey.tab <- fread("masterkey.tab", na.strings=getOption("<NA>","NA"))
-# masterKey <- as.data.frame(masterKey.tab)
-# rm(masterKey.tab)
+library(dataverse)
+library(data.table)
+
+Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
+TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
+data <- as.data.frame(TDA_data_scored.tab)
+rm(TDA_data_scored.tab)
+
+Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+writeBin(get_file("masterkey.tab", "doi:10.7910/DVN/5T80PF"), "masterkey.tab")
+masterKey.tab <- fread("masterkey.tab", na.strings=getOption("<NA>","NA"))
+masterKey <- as.data.frame(masterKey.tab)
+rm(masterKey.tab)
 
 masterKey$adjective <- sub("blas\x8e", "blasé", masterKey$adjective)
 masterKey$adjective <- sub("FALSE", "false", masterKey$adjective)

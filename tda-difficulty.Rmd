@@ -91,7 +91,7 @@ item_prop$N = colSums(!is.na(data)) # count non-missing
 item_prop = item_prop %>%
   group_by(adjective) %>% # for each unique adjective
   mutate(weight = N/sum(N)) %>% # create a new variable that is the number of responses (per item) divided by the total number of responses (across both items)
-  summarise(
+  dplyr::summarise(
     N = sum(N), # how many total responses 
     prop = wtd.mean(prop_correct, weights = weight, na.rm=T) # average proportion, weighted by sample size
   ) %>%

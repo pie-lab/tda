@@ -285,7 +285,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Sample characteristics</h1>
-<h4 class="date">Last updated 2021-10-20</h4>
+<h4 class="date">Last updated 2021-10-22</h4>
 
 </div>
 
@@ -309,19 +309,19 @@ conflict_prefer(&quot;mutate&quot;, &quot;dplyr&quot;)
 
 
 # Download the data manually from Dataverse using the doi link above
- data &lt;- read.csv(here(&quot;data/TDA_data_scored.csv&quot;))
+# data &lt;- read.csv(here(&quot;data/TDA_data_scored.csv&quot;))
 
 # Or use the following lines to scrap the data file in directly
-# library(dataverse)
-# library(data.table)
-# 
-# Sys.setenv(&quot;DATAVERSE_SERVER&quot; = &quot;dataverse.harvard.edu&quot;)
-# writeBin(get_file(&quot;TDA_data_scored.tab&quot;, &quot;doi:10.7910/DVN/5T80PF&quot;), &quot;TDA_data_scored.tab&quot;)
-# TDA_data_scored.tab &lt;- fread(&quot;TDA_data_scored.tab&quot;, na.strings=getOption(&quot;&lt;NA&gt;&quot;,&quot;NA&quot;))
-# data &lt;- as.data.frame(TDA_data_scored.tab)
-# rm(TDA_data_scored.tab)
-# 
-# data = filter(data, included == &quot;Yes&quot;)</code></pre>
+library(dataverse)
+library(data.table)
+
+Sys.setenv(&quot;DATAVERSE_SERVER&quot; = &quot;dataverse.harvard.edu&quot;)
+writeBin(get_file(&quot;TDA_data_scored.tab&quot;, &quot;doi:10.7910/DVN/5T80PF&quot;), &quot;TDA_data_scored.tab&quot;)
+TDA_data_scored.tab &lt;- fread(&quot;TDA_data_scored.tab&quot;, na.strings=getOption(&quot;&lt;NA&gt;&quot;,&quot;NA&quot;))
+data &lt;- as.data.frame(TDA_data_scored.tab)
+rm(TDA_data_scored.tab)
+
+data = filter(data, included == &quot;Yes&quot;)</code></pre>
 <pre class="r"><code>data = data %&gt;%
   group_by(PID) %&gt;%
   dplyr::mutate(n = n()) 
