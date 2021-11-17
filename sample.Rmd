@@ -9,13 +9,13 @@ output:
 
 <u>To cite these data:</u>
 
-[add data paper reference here]
+[data paper reference would be added here]
 
 This page shows the demographic characteristics for the sample of participants who responded to the items. The sample contained participants from a wide range of ages, household incomes, and different geographies (by state) within the US. Note that residence in the US was a prerequisite for participation as the generalizability of the proportion of correct responses was intended to be limited to American English speakers only (i.e., not intended to extend to knowledge of American English terms among individuals residing outside of the US). Slightly more than half of the sample identified as female, roughly consistent with the US population. In terms of race/ethnicity (see figure below), the sample included a slightly higher proportion of participants identifying as White (73%) relative to the US population (64% of US adults according to the 2020 Census); the proportion of respondents identifying as Black or Hispanic was less than in the 2020 Census (9% vs 12% and 5% vs 16%, respectively). The majority had some college-level education (42%) or a high school degree/GED equivalent (40%).
 
 Note that most of the participants in the sample entered the survey through Prolific (90.7%); the remainder entered through Amazon's Mechanical Turk platform. Participants were compensated at the US minimum wage rate (at the time of data collection) using the mean response time as an estimate of the time required. Participants were allowed to complete the survey multiple times, as each version of the survey contained only a small (random) subset of all possible terms. In other words, the possiblity of responding to the same item twice was low. The final figure on this page demonstrates that the majority of participants completed the survey only once (44%) or twice (35%). Across all 3,290 responses to the survey (1,572 unique respondents), participants answered an average of 73.4 items (median = 75).
 
-The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
+The data can be downloaded here [*disabled for peer review*]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Please consult the reference listed above for more information about this project.
 
@@ -24,15 +24,30 @@ knitr::opts_chunk$set(message = F, warning = F)
 ```
 
 ```{r}
-library(tidyverse)
 library(here)
 library(ggpubr)
 library(knitr)
-library(kableExtra)
 library(maps)
+library(conflicted)
+library(tidyverse) # for data cleaning and manipulation
+conflict_prefer("here", "here")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("count", "dplyr")
+conflict_prefer("mutate", "dplyr")
 
-# data = read.csv(here("data/TDA_data_scored.csv"))
-data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
+
+# Download the data manually from Dataverse using the doi link above
+# data <- read.csv(here("data/TDA_data_scored.csv"))
+
+# Or use the following lines to scrap the data file in directly
+library(dataverse)
+library(data.table)
+
+Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
+TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
+data <- as.data.frame(TDA_data_scored.tab)
+rm(TDA_data_scored.tab)
 
 data = filter(data, included == "Yes")
 ```
@@ -41,7 +56,7 @@ data = filter(data, included == "Yes")
 ```{r}
 data = data %>%
   group_by(PID) %>%
-  mutate(n = n()) 
+  dplyr::mutate(n = n()) 
 
 data_part = data %>%
   group_by(PID) %>%
@@ -77,7 +92,7 @@ data_part %>%
 #   group_by(sex) %>%
 #   count() %>%
 #   ungroup() %>%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, "%")) %>%
 #   ggplot(aes(x = sex, y = n)) +
@@ -92,7 +107,7 @@ data_part %>%
  group_by(sex) %>%
   count() %>%
   ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, "%")) %>%
   ggplot(aes(x = sex, y = n)) +
@@ -107,7 +122,7 @@ data_part %>%
 ```{r}
 # Here we show code for analyzing the data by response instead of participant
 # data %>%
-#   mutate(edu = factor(edu, levels = c(
+#   dplyr::mutate(edu = factor(edu, levels = c(
 #       "Less than 12 years", 
 #       "High school grad/GED",
 #       "Currently in college/university",
@@ -120,7 +135,7 @@ data_part %>%
 #   group_by(edu) %>%
 #   count() %>%
 #   ungroup() %>%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, "%")) %>%
 #   ggplot(aes(x = edu, y = n)) +
@@ -134,7 +149,7 @@ data_part %>%
 
 ```{r}
 data_part %>%
-  mutate(edu = factor(edu, levels = c(
+  dplyr::mutate(edu = factor(edu, levels = c(
       "Less than 12 years", 
       "High school grad/GED",
       "Currently in college/university",
@@ -147,7 +162,7 @@ data_part %>%
   group_by(edu) %>%
   count() %>%
   ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, "%")) %>%
   ggplot(aes(x = edu, y = n)) +
@@ -163,7 +178,7 @@ data_part %>%
 ```{r}
 # Here we show code for analyzing the data by response instead of participant
 # data %>%
-#   mutate(ethnic = factor(ethnic, levels = c(
+#   dplyr::mutate(ethnic = factor(ethnic, levels = c(
 #      "American Indian/Alaskan Native",
 #      "Asian",
 #      "Black",
@@ -175,7 +190,7 @@ data_part %>%
 #   group_by(ethnic) %>%
 #   count() %>%
 #   ungroup() %>%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, "%")) %>%
 #   ggplot(aes(x = ethnic, y = n)) +
@@ -188,7 +203,7 @@ data_part %>%
 
 ```{r}
 data_part %>%
-  mutate(ethnic = factor(ethnic, levels = c(
+  dplyr::mutate(ethnic = factor(ethnic, levels = c(
      "American Indian/Alaskan Native",
      "Asian",
      "Black",
@@ -200,7 +215,7 @@ data_part %>%
   group_by(ethnic) %>%
   count() %>%
   ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, "%")) %>%
   ggplot(aes(x = ethnic, y = n)) +
@@ -216,7 +231,7 @@ data_part %>%
 ```{r}
 # Here we show code for analyzing the data by response instead of participant
 # data %>%
-#   mutate(hhinc = factor(hhinc, levels = c(
+#   dplyr::mutate(hhinc = factor(hhinc, levels = c(
 #       "< 20K",
 #       "20K-40K",
 #       "40K-60K",
@@ -233,7 +248,7 @@ data_part %>%
 #   group_by(hhinc) %>%
 #   count() %>%
 #   ungroup() %>%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, "%")) %>%
 #   ggplot(aes(x = hhinc, y = n)) +
@@ -247,7 +262,7 @@ data_part %>%
 
 ```{r}
 data_part %>%
-  mutate(hhinc = factor(hhinc, levels = c(
+  dplyr::mutate(hhinc = factor(hhinc, levels = c(
       "< 20K",
       "20K-40K",
       "40K-60K",
@@ -264,7 +279,7 @@ data_part %>%
   group_by(hhinc) %>%
   count() %>%
   ungroup() %>%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, "%")) %>%
   ggplot(aes(x = hhinc, y = n)) +
@@ -299,13 +314,14 @@ MainStates <- map_data("state")
 
 data_part %>% 
   with_groups(state, count) %>% 
-  mutate(region = tolower(state)) %>% 
+  dplyr::mutate(region = tolower(state)) %>% 
   inner_join(MainStates) %>% 
   ggplot() + 
   geom_polygon(aes(x=long, y=lat, group=group, fill = n),
                 color="black") +
   scale_x_continuous(breaks = NULL) +
   scale_y_continuous(breaks = NULL) +
+  scale_fill_gradient(low = "white", high = "darkblue") +
   labs(x = NULL, y = NULL) +
   theme_pubr()
 ```

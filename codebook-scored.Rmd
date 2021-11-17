@@ -6,11 +6,11 @@ output: html_document
 
 <u>To cite these data:</u>
 
-[add data paper reference here]
+[data paper reference would be added here]
 
 Here we present codebook information for the demographic variables including summary statistics and distributions for each. Note that codebook information for the 5,636 vocabulary items has been omitted as this would compromise their validity for subsequent use. Contact the lead author of the reference above for access to this information.
 
-The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
+The data can be downloaded here [*disabled for peer review*]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Please consult the reference listed above for more information about this project.
 
@@ -35,8 +35,19 @@ library(codebook)
 
 
 ```{r load data}
-codebook_data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
-#codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
+# Download the data manually from Dataverse using the doi link above
+# codebook_data <- read.csv(here("data/TDA_data_scored.csv"))
+
+# Or use the following lines to scrap the data file in directly
+library(dataverse)
+library(data.table)
+
+Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
+TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
+codebook_data <- as.data.frame(TDA_data_scored.tab)
+rm(TDA_data_scored.tab)
+
 ```
 
 ```{r remove_items}

@@ -13,7 +13,8 @@
 
 <title>Sample characteristics</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -262,7 +263,7 @@ $(document).ready(function () {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/pie-lab/tda">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -284,31 +285,46 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Sample characteristics</h1>
-<h4 class="date">Last updated 2021-10-17</h4>
+<h4 class="date">Last updated 2021-10-26</h4>
 
 </div>
 
 
 <p><u>To cite these data:</u></p>
-<p>[add data paper reference here]</p>
+<p>[data paper reference would be added here]</p>
 <p>This page shows the demographic characteristics for the sample of participants who responded to the items. The sample contained participants from a wide range of ages, household incomes, and different geographies (by state) within the US. Note that residence in the US was a prerequisite for participation as the generalizability of the proportion of correct responses was intended to be limited to American English speakers only (i.e., not intended to extend to knowledge of American English terms among individuals residing outside of the US). Slightly more than half of the sample identified as female, roughly consistent with the US population. In terms of race/ethnicity (see figure below), the sample included a slightly higher proportion of participants identifying as White (73%) relative to the US population (64% of US adults according to the 2020 Census); the proportion of respondents identifying as Black or Hispanic was less than in the 2020 Census (9% vs 12% and 5% vs 16%, respectively). The majority had some college-level education (42%) or a high school degree/GED equivalent (40%).</p>
-<p>Note that most of the participants in the sample entered the survey through Prolific (90.7%); the remainder entered through Amazon's Mechanical Turk platform. Participants were compensated at the US minimum wage rate (at the time of data collection) using the mean response time as an estimate of the time required. Participants were allowed to complete the survey multiple times, as each version of the survey contained only a small (random) subset of all possible terms. In other words, the possiblity of responding to the same item twice was low. The final figure on this page demonstrates that the majority of participants completed the survey only once (44%) or twice (35%). Across all 3,290 responses to the survey (1,572 unique respondents), participants answered an average of 73.4 items (median = 75).</p>
-<p>The data can be downloaded <a href="https://doi.org/10.7910/DVN/5T80PF">here</a>.</p>
+<p>Note that most of the participants in the sample entered the survey through Prolific (90.7%); the remainder entered through Amazon’s Mechanical Turk platform. Participants were compensated at the US minimum wage rate (at the time of data collection) using the mean response time as an estimate of the time required. Participants were allowed to complete the survey multiple times, as each version of the survey contained only a small (random) subset of all possible terms. In other words, the possiblity of responding to the same item twice was low. The final figure on this page demonstrates that the majority of participants completed the survey only once (44%) or twice (35%). Across all 3,290 responses to the survey (1,572 unique respondents), participants answered an average of 73.4 items (median = 75).</p>
+<p>The data can be downloaded here [<em>disabled for peer review</em>]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: “false” and “blasé”. These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).</p>
 <p>Please consult the reference listed above for more information about this project.</p>
-<pre class="r"><code>library(tidyverse)
-library(here)
+<pre class="r"><code>library(here)
 library(ggpubr)
 library(knitr)
-library(kableExtra)
 library(maps)
+library(conflicted)
+library(tidyverse) # for data cleaning and manipulation
+conflict_prefer(&quot;here&quot;, &quot;here&quot;)
+conflict_prefer(&quot;filter&quot;, &quot;dplyr&quot;)
+conflict_prefer(&quot;count&quot;, &quot;dplyr&quot;)
+conflict_prefer(&quot;mutate&quot;, &quot;dplyr&quot;)
 
-# data = read.csv(here(&quot;data/TDA_data_scored.csv&quot;))
-data = read.csv(&quot;~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv&quot;)
+
+# Download the data manually from Dataverse using the doi link above
+# data &lt;- read.csv(here(&quot;data/TDA_data_scored.csv&quot;))
+
+# Or use the following lines to scrap the data file in directly
+library(dataverse)
+library(data.table)
+
+Sys.setenv(&quot;DATAVERSE_SERVER&quot; = &quot;dataverse.harvard.edu&quot;)
+writeBin(get_file(&quot;TDA_data_scored.tab&quot;, &quot;doi:10.7910/DVN/5T80PF&quot;), &quot;TDA_data_scored.tab&quot;)
+TDA_data_scored.tab &lt;- fread(&quot;TDA_data_scored.tab&quot;, na.strings=getOption(&quot;&lt;NA&gt;&quot;,&quot;NA&quot;))
+data &lt;- as.data.frame(TDA_data_scored.tab)
+rm(TDA_data_scored.tab)
 
 data = filter(data, included == &quot;Yes&quot;)</code></pre>
 <pre class="r"><code>data = data %&gt;%
   group_by(PID) %&gt;%
-  mutate(n = n()) 
+  dplyr::mutate(n = n()) 
 
 data_part = data %&gt;%
   group_by(PID) %&gt;%
@@ -330,13 +346,13 @@ data_part = data %&gt;%
 <p><img src="sample_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="sex" class="section level2 tabset">
-<h2>Sex</h2>
+<h2 class="tabset">Sex</h2>
 <pre class="r"><code># Here we show code for analyzing the data by response instead of participant
 # data %&gt;%
 #   group_by(sex) %&gt;%
 #   count() %&gt;%
 #   ungroup() %&gt;%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, &quot;%&quot;)) %&gt;%
 #   ggplot(aes(x = sex, y = n)) +
@@ -348,7 +364,7 @@ data_part = data %&gt;%
  group_by(sex) %&gt;%
   count() %&gt;%
   ungroup() %&gt;%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, &quot;%&quot;)) %&gt;%
   ggplot(aes(x = sex, y = n)) +
@@ -359,10 +375,10 @@ data_part = data %&gt;%
 <p><img src="sample_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="education" class="section level2 tabset">
-<h2>Education</h2>
+<h2 class="tabset">Education</h2>
 <pre class="r"><code># Here we show code for analyzing the data by response instead of participant
 # data %&gt;%
-#   mutate(edu = factor(edu, levels = c(
+#   dplyr::mutate(edu = factor(edu, levels = c(
 #       &quot;Less than 12 years&quot;, 
 #       &quot;High school grad/GED&quot;,
 #       &quot;Currently in college/university&quot;,
@@ -375,7 +391,7 @@ data_part = data %&gt;%
 #   group_by(edu) %&gt;%
 #   count() %&gt;%
 #   ungroup() %&gt;%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, &quot;%&quot;)) %&gt;%
 #   ggplot(aes(x = edu, y = n)) +
@@ -385,7 +401,7 @@ data_part = data %&gt;%
 #   theme_pubr() +
 #   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <pre class="r"><code>data_part %&gt;%
-  mutate(edu = factor(edu, levels = c(
+  dplyr::mutate(edu = factor(edu, levels = c(
       &quot;Less than 12 years&quot;, 
       &quot;High school grad/GED&quot;,
       &quot;Currently in college/university&quot;,
@@ -398,7 +414,7 @@ data_part = data %&gt;%
   group_by(edu) %&gt;%
   count() %&gt;%
   ungroup() %&gt;%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, &quot;%&quot;)) %&gt;%
   ggplot(aes(x = edu, y = n)) +
@@ -410,10 +426,10 @@ data_part = data %&gt;%
 <p><img src="sample_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="ethnicity" class="section level2 tabset">
-<h2>Ethnicity</h2>
+<h2 class="tabset">Ethnicity</h2>
 <pre class="r"><code># Here we show code for analyzing the data by response instead of participant
 # data %&gt;%
-#   mutate(ethnic = factor(ethnic, levels = c(
+#   dplyr::mutate(ethnic = factor(ethnic, levels = c(
 #      &quot;American Indian/Alaskan Native&quot;,
 #      &quot;Asian&quot;,
 #      &quot;Black&quot;,
@@ -425,7 +441,7 @@ data_part = data %&gt;%
 #   group_by(ethnic) %&gt;%
 #   count() %&gt;%
 #   ungroup() %&gt;%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, &quot;%&quot;)) %&gt;%
 #   ggplot(aes(x = ethnic, y = n)) +
@@ -435,7 +451,7 @@ data_part = data %&gt;%
 #   theme_pubr() +
 #   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <pre class="r"><code>data_part %&gt;%
-  mutate(ethnic = factor(ethnic, levels = c(
+  dplyr::mutate(ethnic = factor(ethnic, levels = c(
      &quot;American Indian/Alaskan Native&quot;,
      &quot;Asian&quot;,
      &quot;Black&quot;,
@@ -447,7 +463,7 @@ data_part = data %&gt;%
   group_by(ethnic) %&gt;%
   count() %&gt;%
   ungroup() %&gt;%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, &quot;%&quot;)) %&gt;%
   ggplot(aes(x = ethnic, y = n)) +
@@ -459,10 +475,10 @@ data_part = data %&gt;%
 <p><img src="sample_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="household-income" class="section level2 tabset">
-<h2>Household income</h2>
+<h2 class="tabset">Household income</h2>
 <pre class="r"><code># Here we show code for analyzing the data by response instead of participant
 # data %&gt;%
-#   mutate(hhinc = factor(hhinc, levels = c(
+#   dplyr::mutate(hhinc = factor(hhinc, levels = c(
 #       &quot;&lt; 20K&quot;,
 #       &quot;20K-40K&quot;,
 #       &quot;40K-60K&quot;,
@@ -479,7 +495,7 @@ data_part = data %&gt;%
 #   group_by(hhinc) %&gt;%
 #   count() %&gt;%
 #   ungroup() %&gt;%
-#   mutate(percent = 100*(n/sum(n)),
+#   dplyr::mutate(percent = 100*(n/sum(n)),
 #          percent = round(percent),
 #          percent = paste(percent, &quot;%&quot;)) %&gt;%
 #   ggplot(aes(x = hhinc, y = n)) +
@@ -489,7 +505,7 @@ data_part = data %&gt;%
 #   theme_pubr() +
 #   theme(axis.text.x = element_text(angle = 65, vjust =1, hjust = 1))</code></pre>
 <pre class="r"><code>data_part %&gt;%
-  mutate(hhinc = factor(hhinc, levels = c(
+  dplyr::mutate(hhinc = factor(hhinc, levels = c(
       &quot;&lt; 20K&quot;,
       &quot;20K-40K&quot;,
       &quot;40K-60K&quot;,
@@ -506,7 +522,7 @@ data_part = data %&gt;%
   group_by(hhinc) %&gt;%
   count() %&gt;%
   ungroup() %&gt;%
-  mutate(percent = 100*(n/sum(n)),
+  dplyr::mutate(percent = 100*(n/sum(n)),
          percent = round(percent),
          percent = paste(percent, &quot;%&quot;)) %&gt;%
   ggplot(aes(x = hhinc, y = n)) +
@@ -518,7 +534,7 @@ data_part = data %&gt;%
 <p><img src="sample_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 <div id="state-of-residence" class="section level1 tabset">
-<h1>State of residence</h1>
+<h1 class="tabset">State of residence</h1>
 <div id="n-by-state" class="section level2">
 <h2>N by state</h2>
 <pre class="r"><code>data_part %&gt;% 
@@ -538,13 +554,14 @@ data_part = data %&gt;%
 
 data_part %&gt;% 
   with_groups(state, count) %&gt;% 
-  mutate(region = tolower(state)) %&gt;% 
+  dplyr::mutate(region = tolower(state)) %&gt;% 
   inner_join(MainStates) %&gt;% 
   ggplot() + 
   geom_polygon(aes(x=long, y=lat, group=group, fill = n),
                 color=&quot;black&quot;) +
   scale_x_continuous(breaks = NULL) +
   scale_y_continuous(breaks = NULL) +
+  scale_fill_gradient(low = &quot;white&quot;, high = &quot;darkblue&quot;) +
   labs(x = NULL, y = NULL) +
   theme_pubr()</code></pre>
 <p><img src="sample_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>

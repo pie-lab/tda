@@ -9,7 +9,7 @@ output:
 
 <u>To cite these data:</u>
 
-[add data paper reference here]
+[data paper reference would be added here]
 
 This page lists information from each of the two forms used to derive the [average proportion correct](https://pie-lab.github.io/tda/tda-difficulty.html) for each of the 2,818 unique trait descriptive adjectives. See the [top of this page](https://pie-lab.github.io/tda/tda-difficulty.html) for further explanation of the two different forms.
 
@@ -19,7 +19,7 @@ Note that we have intentionally omitted the definitions and distractor response 
 
 The mean proportion correct for each adjective across both forms can be found [here](https://pie-lab.github.io/tda/tda-difficulty.html).
 
-The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF).
+The data can be downloaded here [*disabled for peer review*]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Please consult the reference listed above for more information about this project.
 
@@ -29,20 +29,44 @@ knitr::opts_chunk$set(echo = T, message = F, warning = F)
 
 ```{r}
 library(here) # for engaging with working environment
-library(tidyverse) # for data cleaning and manipulation
 library(Hmisc) # for weighted means
 library(DT) # for viewing data tables
+library(conflicted)
+library(tidyverse) # for data cleaning and manipulation
+conflict_prefer("here", "here")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("count", "dplyr")
+conflict_prefer("mutate", "dplyr")
+conflict_prefer("summarise", "dplyr")
 
-data = read.csv(here("data/TDA_data_scored.csv"))
-masterKey = read.csv(here("data/masterkey.csv"))
-#data = read.csv("~/Downloads/PROPOSE UPDATE DROPS 20479 23832 TDA_data_scored.csv")
-#masterKey = read.csv("~/Downloads/PROPOSED UPDATE REMOVED TALL x 2 false blase masterkey.csv")
+
+# Download the data manually from Dataverse using the doi link above
+# https://doi.org/10.7910/DVN/5T80PF
+
+#data = read.csv(here("data/TDA_data_scored.csv"))
+#masterKey = read.csv(here("data/masterkey.csv"))
+
+# Or use the following lines to scrap the data file in directly
+library(dataverse)
+library(data.table)
+
+Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+writeBin(get_file("TDA_data_scored.tab", "doi:10.7910/DVN/5T80PF"), "TDA_data_scored.tab")
+TDA_data_scored.tab <- fread("TDA_data_scored.tab", na.strings=getOption("<NA>","NA"))
+data <- as.data.frame(TDA_data_scored.tab)
+rm(TDA_data_scored.tab)
+
+Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
+writeBin(get_file("masterkey.tab", "doi:10.7910/DVN/5T80PF"), "masterkey.tab")
+masterKey.tab <- fread("masterkey.tab", na.strings=getOption("<NA>","NA"))
+masterKey <- as.data.frame(masterKey.tab)
+rm(masterKey.tab)
 
 masterKey$adjective <- sub("blas\x8e", "blasé", masterKey$adjective)
 masterKey$adjective <- sub("FALSE", "false", masterKey$adjective)
 
 data = data %>%
-  filter(included == "Yes") %>% # remove participants screened out for demographic and quality reasons
+  dplyr::filter(included == "Yes") %>% # remove participants screened out for demographic and quality reasons
   select(starts_with("q_")) # select only TDA items
 
 data_means = colMeans(data, na.rm = T) #calculate column means
@@ -62,7 +86,7 @@ item_prop$N = colSums(!is.na(data)) # count non-missing
 # here's the code to calculate the distractor index
 # we removed this due to some uncertainty about interpretability
 # data_re = read_csv(here("data/TDA_data_recoded.csv")) # use recoded dataset
-# data_re = filter(data_re, included == "Yes") # remove participants screened out for demographic and quality reasons
+# data_re = dplyr::filter(data_re, included == "Yes") # remove participants screened out for demographic and quality reasons
 
 item_prop = item_prop %>%
   mutate(across(where(is.double), round, 2)) #round all numbers to 2 decimal places
@@ -87,5 +111,7 @@ item_prop %>%
 item_prop %>%
   select(item, adjective, N, prop_correct, form) %>%
   write_csv(file = here("data/item_difficulty.csv"))
+
+# This output file has been posted on Dataverse at the doi provided above.
 ```
 
