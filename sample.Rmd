@@ -301,8 +301,8 @@ data_part %>%
   count() %>% 
   ggplot(aes(x = reorder(state, n), y = n)) +
   geom_bar(stat = "identity") +
-  coord_flip() +
   labs(x = NULL, y = "Count") +
+  coord_flip() +
   theme_pubr() 
 ```
 
