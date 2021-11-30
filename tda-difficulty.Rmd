@@ -67,7 +67,7 @@ masterKey$adjective <- sub("blas\x8e", "blasé", masterKey$adjective)
 masterKey$adjective <- sub("FALSE", "false", masterKey$adjective)
 
 data = data %>%
-  filter(included == "Yes") %>% # remove participants screend out for demographic and quality reasons
+  dplyr::filter(included == "Yes") %>% # remove participants screend out for demographic and quality reasons
   select(starts_with("q_")) # select only TDA items
 
 data_means = colMeans(data, na.rm = T) #calculate column means
