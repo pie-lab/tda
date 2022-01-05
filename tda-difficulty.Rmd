@@ -7,9 +7,9 @@ output:
     code_folding: hide
 ---
 
-<u>To cite these data:</u>
+<u>Please cite these data with the following reference:</u>
 
-[data paper reference would be added here]
+<font size="2">Condon, D. M., Coughlin, J., & Weston, S. J. (2022). Personality Trait Descriptors: 2,818 Trait Descriptive Adjectives characterized by familiarity, frequency of use, and prior use in psycholexical research. *Journal of Open Psychology Data*.</font>
 
 The primary goal of this project was to identify the *average* "difficulty" of 2,818 trait descriptive adjectives (TDAs) in American English. Difficulty, in this usage, denotes the extent to which people in our sample correctly matched the personality-relevant definition for each adjective to the adjective itself when presented as one of six options. The other five options presented as choices were randomly sampled from the remaining 2,817 adjectives in the set. To control for inevitable error resulting from similarity between distractor choices and the matching definition-adjective pair, each TDA was administered twice, with two different sets of distractors. On this page, we report the total number of responses and the average proportion correct across both forms.
 
@@ -17,7 +17,7 @@ In our view, the total proportion correct reflects *both* familiarity of the adj
 
 Statistics from the individual administrations of each term (i.e., each version or "form") can be found [here](https://pie-lab.github.io/tda/item-difficulty.html).
 
-The data can be downloaded here [*disabled for peer review*]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
+The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF). NOTE that the csv version of these data may mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Then, for reference and subsequent use in other personality projects, we sought to characterize these terms in several additional ways. To evaluate the frequency of usage for each term, there are at least two good options. One is to use the [Corpus of Contemporary American English](https://www.wordfrequency.info/100k.asp) ("COCA") and the second is to use data openly available from the [Google Books](http://storage.googleapis.com/books/ngrams/books/datasetsv2.html) project. Though extremely useful, the COCA resource is proprietary so it is not possible to post the frequency of term usage based on this list. The Google Books data is less complete (and has been documented to be problematic in several respects) but publicly accessible. The "GBooks frequency" column below reflects z-scores based on frequency among the first 58,600 or so terms. See this post on [StackExchange](https://english.stackexchange.com/questions/161478/what-website-will-give-me-the-frequency-of-a-word-in-the-english-language) for more information and attribution. 
 

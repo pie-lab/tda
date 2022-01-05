@@ -7,9 +7,9 @@ output:
     code_folding: hide
 ---
 
-<u>To cite these data:</u>
+<u>Please cite these data with the following reference:</u>
 
-[data paper reference would be added here]
+<font size="2">Condon, D. M., Coughlin, J., & Weston, S. J. (2022). Personality Trait Descriptors: 2,818 Trait Descriptive Adjectives characterized by familiarity, frequency of use, and prior use in psycholexical research. *Journal of Open Psychology Data*.</font>
 
 This page lists information from each of the two forms used to derive the [average proportion correct](https://pie-lab.github.io/tda/tda-difficulty.html) for each of the 2,818 unique trait descriptive adjectives. See the [top of this page](https://pie-lab.github.io/tda/tda-difficulty.html) for further explanation of the two different forms.
 
@@ -19,7 +19,7 @@ Note that we have intentionally omitted the definitions and distractor response 
 
 The mean proportion correct for each adjective across both forms can be found [here](https://pie-lab.github.io/tda/tda-difficulty.html).
 
-The data can be downloaded here [*disabled for peer review*]. NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
+The data can be downloaded [here](https://doi.org/10.7910/DVN/5T80PF). NOTE that the csv version of these data will mis-read two adjectives when opened in MS Excel: "false" and "blasé". These must be fixed manually prior to working with the data in Excel (but it appears to work as expected in R).
 
 Please consult the reference listed above for more information about this project.
 
