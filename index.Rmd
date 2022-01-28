@@ -12,7 +12,7 @@ output:
 
 <u>To cite these data:</u>
 
-<font size="2">Condon, D. M., Coughlin, J., & Weston, S. J. (2022). Personality Trait Descriptors: 2,818 Trait Descriptive Adjectives characterized by familiarity, frequency of use, and prior use in psycholexical research. *Journal of Open Psychology Data*.</font>
+<font size="2">Condon, D. M., Coughlin, J., & Weston, S. J. (2022). Personality Trait Descriptors: 2,818 Trait Descriptive Adjectives characterized by familiarity, frequency of use, and prior use in psycholexical research. *Journal of Open Psychology Data, 10*(1), 1. DOI: [http://doi.org/10.5334/jopd.57](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.57/)</font>
 
 All data described on this website are available for download at [https://doi.org/10.7910/DVN/5T80PF](https://doi.org/10.7910/DVN/5T80PF).
 
